@@ -1,0 +1,5 @@
+import {useRef} from 'react';
+export function LessonNavigation({index,total,onOpen}){
+ const start=useRef(null);
+ return <nav className="lesson-navigation" aria-label="Lesson navigation" onTouchStart={e=>{if(e.touches.length===1)start.current={x:e.touches[0].clientX,y:e.touches[0].clientY};}} onTouchEnd={e=>{const p=start.current;start.current=null;if(!p||!e.changedTouches.length)return;const dx=e.changedTouches[0].clientX-p.x,dy=e.changedTouches[0].clientY-p.y;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*2){const next=index+(dx<0?1:-1);if(next>=0&&next<total)onOpen(next);}}} onTouchCancel={()=>{start.current=null;}}><div className="reader-controls"><button className="secondary" disabled={index===0} onClick={()=>onOpen(index-1)}>← Previous lesson</button><span>{index+1} / {total}</span><button className="secondary" disabled={index===total-1} onClick={()=>onOpen(index+1)}>Next lesson →</button></div><p className="muted">Swipe left here for next, right for previous. Moving lessons resets unfinished answers; it does not mark them complete.</p></nav>;
+}
