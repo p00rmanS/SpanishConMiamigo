@@ -1,0 +1,7 @@
+.workplace-lesson { max-width: 850px; }
+.workplace-lesson h3 { margin-top: 1.8rem; }
+.workplace-lesson .primary { margin: .65rem .65rem .65rem 0; }
+.workplace-dialogue { padding-left: 1.4rem; }
+.workplace-dialogue li { padding: 1rem; margin: .75rem 0; border-left: 3px solid var(--accent, #287b70); background: rgba(40,123,112,.04); }
+.workplace-dialogue p { margin: .5rem 0; }
+.workplace-lesson textarea { width: 100%; min-height: 100px; padding: .8rem; font: inherit; box-sizing: border-box; }

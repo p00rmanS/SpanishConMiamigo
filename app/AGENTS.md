@@ -11,3 +11,5 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 User preference: learning is self-paced. Do not add deadlines, day-count goals, mandatory schedules, or timed fluency targets. This supersedes the earlier 200-day request.
 
 User content preference: include familiar children's stories from Mexican and Spanish-speaking storytelling traditions, with learner-friendly Spanish and bilingual support. Clearly distinguish traditional adaptations from original stories and identify regional context without implying that every speaker knows a tale.
+
+User learning focus: practical bilingual customer service, technical support, billing, empathy, troubleshooting, and resolution. Teach Spanish phrases and technical vocabulary with visible English translations, pro tips, example conversations, and active response practice. Explain Mexico, broader Latin America, and Spain usage without stereotypes; keep learning self-paced.

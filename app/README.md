@@ -42,3 +42,7 @@ The timed study plan is replaced by self-paced Practice. No deadlines, day count
 
 ## Self-paced lesson expansion — 2026-09-15
 64 lessons (34 Beginner, 16 Intermediate, 14 Advanced) and 56 grammar guides. Added demonstratives, muy/mucho, seguir + gerund, desde hace, purpose clauses with para que, and future conjecture. Each includes English translations, Taglish notes, key ideas, pro tips, and guided/written exercises. Cansado and cansada are both accepted in the new tiredness translation exercise. No deadlines added. All 13 tests pass; browser shows 64 lessons.
+
+## Workplace Spanish
+
+Open Library → Workplace Spanish for 24 customer-care, empathy, technical-support, billing, resolution, and regional-communication lessons. Includes 24 original bilingual dialogues, 72 phrases with usage tips, 32 vocabulary entries, browser speech audio, hide-the-agent role-play, and model-based written recall. Each module links to a guided lesson and the existing saved review flow. Regional notes distinguish common wording without treating a country as one uniform dialect. Scenarios are fictional; actual service policies must be verified.

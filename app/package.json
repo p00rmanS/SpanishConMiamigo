@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "lint": "eslint src",
-    "test": "node --test --test-isolation=none tests/learning.test.mjs tests/sites-worker.test.mjs"
+    "test": "node --test --test-isolation=none tests/learning.test.mjs tests/sites-worker.test.mjs tests/workplace.test.mjs"
   },
   "dependencies": {
     "@fontsource/dm-sans": "^5.3.0",
