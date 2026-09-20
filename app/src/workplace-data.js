@@ -1,3 +1,5 @@
+import {accountTraining} from './account-training.js';
+import {fillerLessons} from './filler-training.js';
 // Original training scenarios. Amounts and policies are fictional, not employer commitments.
 // Each phrase has Spanish, English, and a usage tip; each dialogue turn is bilingual.
 const unit = (id, category, title, level, objective, phrases, dialogue, practice, model, coaching) => ({id:'work-'+id,category,title,level,objective,phrases,dialogue,practice,model,coaching});
@@ -146,13 +148,13 @@ export const workplaceModules = [
   ['¿Podés revisar tu correo?','Can you check your email? (vos, in some regions)','A voseo model used in places such as Argentina and Uruguay; voseo patterns differ across regions.']
  ],[['Agent','¿Prefiere que le hable de usted o de tú?','Would you prefer that I address you formally or informally?'],['Customer','De tú está bien.','Informally is fine.'],['Agent','Perfecto. ¿Puedes revisar tu correo?','Great. Can you check your email?'],['Customer','Sí, ya recibí el mensaje.','Yes, I have received the message.']],
  'Ask formally: Can you check your email?','¿Puede revisar su correo?','Use puede and su together for this usted model. Do not assume one country has a single politeness rule.')
-];
+,...accountTraining,...fillerLessons];
 
-export const workplaceLessons = workplaceModules.map(m => ({
+export const workplaceLessons = workplaceModules.map((m,index) => ({
  id:m.id,title:m.title,subtitle:m.objective,unit:'Workplace · '+m.category,track:m.level,level:m.level==='Beginner'?'A1–A2 practice':m.level==='Intermediate'?'B1 practice':'B2 practice',
  goal:m.objective,sentence:m.phrases[0][0],meaning:m.phrases[0][1],sound:'Listen to the model, then practice one phrase at a time.',
  taglish:m.objective,english:m.coaching,pattern:[m.phrases[0][0]],key:m.objective,tip:'Use the phrase with a clear next action.',tipDetail:m.phrases[0][2],mistake:m.coaching,
- prompt:'Choose the English meaning of: '+m.phrases[0][0],choices:[m.phrases[0][1],'The office is closed for the weekend.','Please send the package to another address.'],answer:m.phrases[0][1],reason:m.phrases[0][2],
+ prompt:'Choose the English meaning of: '+m.phrases[0][0],choices:[m.phrases[0][1],workplaceModules[(index+1)%workplaceModules.length].phrases[0][1],workplaceModules[(index+2)%workplaceModules.length].phrases[0][1]].map((_,i,all)=>all[(i+index)%all.length]),answer:m.phrases[0][1],reason:m.phrases[0][2],
  writing:m.practice,accepted:[m.model],reply:m.model,scene:m.practice,sceneHint:m.coaching,examples:m.phrases.map(p=>p.slice(0,2)),recap:[m.objective,m.coaching,m.phrases[0][2]]
 }));
 
@@ -192,6 +194,7 @@ export const workplaceVocabulary = [
 ];
 
 export const workplaceSources = [
+ ['Instituto Cervantes: discourse markers','https://cvc.cervantes.es/ensenanza/biblioteca_ele/diccio_ele/diccionario/marcadoresdiscurso.htm'],
  ['FundéuRAE: computadora / ordenador','https://www.fundeu.es/consulta/computadoraordenador-1215/'],
  ['RAE: voseo','https://www.rae.es/dpd/voseo'],
  ['INCIBE: password security policy','https://www.incibe.es/sites/default/files/contenidos/politicas/documentos/2024/Contrase%C3%B1as_Pol%C3%ADtica%20de%20seguridad_2024.pdf']

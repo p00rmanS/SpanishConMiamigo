@@ -13,3 +13,5 @@ User preference: learning is self-paced. Do not add deadlines, day-count goals, 
 User content preference: include familiar children's stories from Mexican and Spanish-speaking storytelling traditions, with learner-friendly Spanish and bilingual support. Clearly distinguish traditional adaptations from original stories and identify regional context without implying that every speaker knows a tale.
 
 User learning focus: practical bilingual customer service, technical support, billing, empathy, troubleshooting, and resolution. Teach Spanish phrases and technical vocabulary with visible English translations, pro tips, example conversations, and active response practice. Explain Mexico, broader Latin America, and Spain usage without stereotypes; keep learning self-paced.
+
+User requested expanded bilingual-account training and Spanish fillers with sentence placement, English meanings, pro tips, and daily-life examples. Distinguish hesitation fillers from useful discourse markers and explain casual versus professional usage.
