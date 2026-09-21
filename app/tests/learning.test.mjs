@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {scoreAnswer,nextReview} from '../src/learning.js';
 import {lessons} from '../src/content.js';
 import {verbs,grammar,phrases} from '../src/reference-data.js';
-test('expanded library is complete and bilingual',()=>{assert.equal(lessons.length,120);assert.equal(verbs.length,50);assert.equal(phrases.length,50);assert.equal(grammar.length,62);for(const v of verbs){assert.equal(v.forms.length,6);assert.ok(v.translation);assert.ok(v.note);}for(const p of phrases){assert.ok(p.spanish&&p.english&&p.note);}for(const g of grammar){assert.ok(g.english&&g.taglish&&g.examples.length>=3);}});
+test('expanded library is complete and bilingual',()=>{assert.equal(lessons.length,132);assert.equal(verbs.length,50);assert.equal(phrases.length,50);assert.equal(grammar.length,62);for(const v of verbs){assert.equal(v.forms.length,6);assert.ok(v.translation);assert.ok(v.note);}for(const p of phrases){assert.ok(p.spanish&&p.english&&p.note);}for(const g of grammar){assert.ok(g.english&&g.taglish&&g.examples.length>=3);}});
 test('ñ remains distinct from n',()=>assert.equal(scoreAnswer('Tengo veinte anos.',['Tengo veinte años.']).correct,false));
 test('accepts punctuation and casing without accepting a wrong verb',()=>{assert.equal(scoreAnswer(' HOLA, ME LLAMO ANA! ',['Hola, me llamo Ana.']).correct,true);assert.equal(scoreAnswer('Hola, me llama Ana.',['Hola, me llamo Ana.']).correct,false);});
 test('accent omission receives a warning',()=>{assert.deepEqual(scoreAnswer('un cafe',['Un café']),{correct:true,accent:true});});

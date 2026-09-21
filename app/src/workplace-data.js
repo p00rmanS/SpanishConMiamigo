@@ -1,3 +1,4 @@
+import {serviceLabs} from './service-labs.js';
 import {accountTraining} from './account-training.js';
 import {fillerLessons} from './filler-training.js';
 // Original training scenarios. Amounts and policies are fictional, not employer commitments.
@@ -148,7 +149,7 @@ export const workplaceModules = [
   ['¿Podés revisar tu correo?','Can you check your email? (vos, in some regions)','A voseo model used in places such as Argentina and Uruguay; voseo patterns differ across regions.']
  ],[['Agent','¿Prefiere que le hable de usted o de tú?','Would you prefer that I address you formally or informally?'],['Customer','De tú está bien.','Informally is fine.'],['Agent','Perfecto. ¿Puedes revisar tu correo?','Great. Can you check your email?'],['Customer','Sí, ya recibí el mensaje.','Yes, I have received the message.']],
  'Ask formally: Can you check your email?','¿Puede revisar su correo?','Use puede and su together for this usted model. Do not assume one country has a single politeness rule.')
-,...accountTraining,...fillerLessons];
+,...accountTraining,...fillerLessons,...serviceLabs];
 
 export const workplaceLessons = workplaceModules.map((m,index) => ({
  id:m.id,title:m.title,subtitle:m.objective,unit:'Workplace · '+m.category,track:m.level,level:m.level==='Beginner'?'A1–A2 practice':m.level==='Intermediate'?'B1 practice':'B2 practice',
@@ -194,6 +195,8 @@ export const workplaceVocabulary = [
 ];
 
 export const workplaceSources = [
+ ['Microsoft: Wi-Fi troubleshooting','https://support.microsoft.com/en-us/windows/experience/connectivity-networking/fix-wi-fi-connection-issues-in-windows'],
+ ['Apple: apps that close unexpectedly','https://support.apple.com/en-ca/119876'],
  ['Instituto Cervantes: discourse markers','https://cvc.cervantes.es/ensenanza/biblioteca_ele/diccio_ele/diccionario/marcadoresdiscurso.htm'],
  ['FundéuRAE: computadora / ordenador','https://www.fundeu.es/consulta/computadoraordenador-1215/'],
  ['RAE: voseo','https://www.rae.es/dpd/voseo'],
