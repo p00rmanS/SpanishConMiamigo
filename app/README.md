@@ -45,8 +45,8 @@ The timed study plan is replaced by self-paced Practice. No deadlines, day count
 
 ## Workplace Spanish
 
-Open Library → Workplace Spanish for 62 customer-care, empathy, technical-support, billing, resolution, and regional-communication lessons. Includes 62 original bilingual dialogues, 186 phrases with usage tips, 32 vocabulary entries, browser speech audio, hide-the-agent role-play, and model-based written recall. Each module links to a guided lesson and the existing saved review flow. Regional notes distinguish common wording without treating a country as one uniform dialect. Scenarios are fictional; actual service policies must be verified.
+Open Library → Workplace Spanish for 70 customer-care, empathy, technical-support, billing, resolution, and regional-communication lessons. Includes 70 original bilingual dialogues, 210 phrases with usage tips, 32 vocabulary entries, browser speech audio, hide-the-agent role-play, and model-based written recall. Each module links to a guided lesson and the existing saved review flow. Regional notes distinguish common wording without treating a country as one uniform dialect. Scenarios are fictional; actual service policies must be verified.
 
 The expanded library includes 10 bilingual-account lessons (call flow, discovery, consent, plain language, case notes, written support, quality coaching, and a mock call) and 16 filler/discourse-marker lessons. Open Filler guide for English meanings, placement patterns, register notes, work and daily-life examples, and professional alternatives. Casual practice uses Friend/You role-play.
 
-CSR/TSR practice labs: 12 additional scenarios (six per role) include three handling steps, six bilingual dialogue turns, a next-action decision with explained feedback, written recall, and an open transfer task. These bring Workplace Spanish to 62 lessons and 186 phrase models.
+CSR/TSR practice labs: 20 additional scenarios (ten per role) include three handling steps, six bilingual dialogue turns, a next-action decision with explained feedback, written recall, and an open transfer task. These bring Workplace Spanish to 70 lessons and 210 phrase models.

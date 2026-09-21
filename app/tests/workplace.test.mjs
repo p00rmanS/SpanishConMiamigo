@@ -8,8 +8,8 @@ import {accountTraining} from '../src/account-training.js';
 import {serviceLabs} from '../src/service-labs.js';
 
 test('CSR and TSR labs teach a sequence, a decision, and a transfer task',()=>{
- assert.equal(serviceLabs.length,12);
- for(const category of ['CSR practice labs','TSR practice labs'])assert.equal(serviceLabs.filter(l=>l.category===category).length,6);
+ assert.equal(serviceLabs.length,20);
+ for(const category of ['CSR practice labs','TSR practice labs'])assert.equal(serviceLabs.filter(l=>l.category===category).length,10);
  for(const l of serviceLabs){
   assert.equal(l.steps.length,3);
   assert.equal(l.dialogue.length,6);
@@ -39,8 +39,8 @@ test('filler reference links to complete daily-life and workplace practice',()=>
 });
 
 test('all workplace modules are reachable as lessons with working recall answers',()=>{
- assert.equal(workplaceModules.length,62);
- assert.equal(new Set(workplaceModules.map(m=>m.id)).size,62);
+ assert.equal(workplaceModules.length,70);
+ assert.equal(new Set(workplaceModules.map(m=>m.id)).size,70);
  for(const m of workplaceModules){
   const lesson=lessons.find(l=>l.id===m.id);
   assert.ok(lesson,m.id+' is reachable');
@@ -50,7 +50,7 @@ test('all workplace modules are reachable as lessons with working recall answers
   assert.equal(scoreAnswer('No entiendo.',lesson.accepted).correct,false);
   assert.ok(m.practice&&m.coaching);
  }
- assert.equal(workplaceLessons.length,62);
+ assert.equal(workplaceLessons.length,70);
 });
 test('every workplace phrase, dialogue turn, and term has bilingual support',()=>{
  for(const m of workplaceModules){
