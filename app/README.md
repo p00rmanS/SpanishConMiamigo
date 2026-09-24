@@ -50,3 +50,5 @@ Open Library → Workplace Spanish for 70 customer-care, empathy, technical-supp
 The expanded library includes 10 bilingual-account lessons (call flow, discovery, consent, plain language, case notes, written support, quality coaching, and a mock call) and 16 filler/discourse-marker lessons. Open Filler guide for English meanings, placement patterns, register notes, work and daily-life examples, and professional alternatives. Casual practice uses Friend/You role-play.
 
 CSR/TSR practice labs: 20 additional scenarios (ten per role) include three handling steps, six bilingual dialogue turns, a next-action decision with explained feedback, written recall, and an open transfer task. These bring Workplace Spanish to 70 lessons and 210 phrase models.
+
+Everyday life: eight additional lessons cover groceries, café orders, directions, plans, lateness, household chores, appointments, and neighbors. Each includes three translated phrase models with pro tips, a six-turn bilingual conversation, written recall, and a new situation to try independently. Find Everyday life in Library → Workplace Spanish; the shared catalog now contains 78 lessons and 234 phrase models.

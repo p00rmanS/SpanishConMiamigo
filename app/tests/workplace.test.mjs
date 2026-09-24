@@ -39,8 +39,8 @@ test('filler reference links to complete daily-life and workplace practice',()=>
 });
 
 test('all workplace modules are reachable as lessons with working recall answers',()=>{
- assert.equal(workplaceModules.length,70);
- assert.equal(new Set(workplaceModules.map(m=>m.id)).size,70);
+ assert.equal(workplaceModules.length,78);
+ assert.equal(new Set(workplaceModules.map(m=>m.id)).size,78);
  for(const m of workplaceModules){
   const lesson=lessons.find(l=>l.id===m.id);
   assert.ok(lesson,m.id+' is reachable');
@@ -50,7 +50,7 @@ test('all workplace modules are reachable as lessons with working recall answers
   assert.equal(scoreAnswer('No entiendo.',lesson.accepted).correct,false);
   assert.ok(m.practice&&m.coaching);
  }
- assert.equal(workplaceLessons.length,70);
+ assert.equal(workplaceLessons.length,78);
 });
 test('every workplace phrase, dialogue turn, and term has bilingual support',()=>{
  for(const m of workplaceModules){
@@ -59,7 +59,7 @@ test('every workplace phrase, dialogue turn, and term has bilingual support',()=
   assert.ok(m.dialogue.length>=4);
   assert.ok(m.dialogue.some(t=>t[0]===(m.practiceRole||'Agent')));
   assert.ok(new Set(m.dialogue.map(t=>t[0])).size>=2);
-  for(const [role,es,en] of m.dialogue){assert.ok(['Agent','Customer','You','Friend'].includes(role));assert.ok(es&&en);}
+  for(const [role,es,en] of m.dialogue){assert.ok(['Agent','Customer','You','Friend','Partner'].includes(role));assert.ok(es&&en);}
  }
  assert.equal(workplaceVocabulary.length,32);
  for(const row of workplaceVocabulary){assert.equal(row.length,3);assert.ok(row.every(Boolean));}
