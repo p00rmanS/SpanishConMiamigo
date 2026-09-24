@@ -52,3 +52,5 @@ The expanded library includes 10 bilingual-account lessons (call flow, discovery
 CSR/TSR practice labs: 20 additional scenarios (ten per role) include three handling steps, six bilingual dialogue turns, a next-action decision with explained feedback, written recall, and an open transfer task. These bring Workplace Spanish to 70 lessons and 210 phrase models.
 
 Everyday life: eight additional lessons cover groceries, café orders, directions, plans, lateness, household chores, appointments, and neighbors. Each includes three translated phrase models with pro tips, a six-turn bilingual conversation, written recall, and a new situation to try independently. Find Everyday life in Library → Workplace Spanish; the shared catalog now contains 78 lessons and 234 phrase models.
+
+Everyday life expansion: 20 more original scenarios add 60 translated phrase models, 20 six-turn dialogues, written recall, and personalized transfer exercises. Everyday life now has 28 lessons; the shared Workplace Spanish catalog has 98 lessons and 294 phrase models. Topics include routines, past events, social plans, travel, shopping, conversation repair, and everyday work communication.
