@@ -15,3 +15,5 @@ User content preference: include familiar children's stories from Mexican and Sp
 User learning focus: practical bilingual customer service, technical support, billing, empathy, troubleshooting, and resolution. Teach Spanish phrases and technical vocabulary with visible English translations, pro tips, example conversations, and active response practice. Explain Mexico, broader Latin America, and Spain usage without stereotypes; keep learning self-paced.
 
 User requested expanded bilingual-account training and Spanish fillers with sentence placement, English meanings, pro tips, and daily-life examples. Distinguish hesitation fillers from useful discourse markers and explain casual versus professional usage.
+
+User reading preference: include educational and history lessons, longer bilingual conversations, childhood stories, and horror fiction. Clearly identify fiction, historical sources, and original versus traditional stories; retain English translations and active comprehension practice.
