@@ -17,3 +17,7 @@ User learning focus: practical bilingual customer service, technical support, bi
 User requested expanded bilingual-account training and Spanish fillers with sentence placement, English meanings, pro tips, and daily-life examples. Distinguish hesitation fillers from useful discourse markers and explain casual versus professional usage.
 
 User reading preference: include educational and history lessons, longer bilingual conversations, childhood stories, and horror fiction. Clearly identify fiction, historical sources, and original versus traditional stories; retain English translations and active comprehension practice.
+
+User learning-support preference: every lesson and phrase should offer English translation, a pro tip, conjugation guidance, memory practice, and a Taglish explanation of how it is formed. Keep English available for learners who do not speak Tagalog. Show honest saved-progress charts without implying fluency or inventing learning history. Use inclusive learner-facing defaults rather than a hard-coded personal greeting.
+
+Teach conjugations explicitly in Practice lab: preterite, imperfect, fui/iba, estar, gerunds, and object pronouns. Include sentence production, English and Taglish reasoning, and self-paced scripted BPO simulations with honest scoring and locally saved completion.
