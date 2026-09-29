@@ -1,9 +1,10 @@
+import {bpoGrammar} from './bpo-expansion.js';
 const people=['yo','tú','él / ella / usted','nosotros/as','vosotros/as','ellos / ellas / ustedes'];
 const meanings=['I','you (informal singular)','he / she / you (formal singular)','we','you (informal plural, Spain)','they / you (plural)'];
 const forms=s=>s.split(',').map((form,i)=>[people[i],form,meanings[i]]);
 const task=(prompt,answer,hint,why,taglish)=>({prompt,answer,hint,why,taglish});
 const unit=(id,title,level,english,taglish,formula,table,examples,memory,tasks)=>({id:'lab-'+id,title,level,english,taglish,formula,table,examples,memory,tasks});
-export const grammarLab=[
+export const grammarLab=[...bpoGrammar,
  unit('present','Build a sentence: person → verb → detail','Beginner',
  'Start with the person, choose the verb form, then add what, where, or when. Regular present -ar verbs remove -ar and add -o, -as, -a, -amos, -áis, -an. Spanish often omits the subject because the verb ending identifies it.',
  'Sino ang gumagawa? Piliin muna iyon. Sa hablar, tanggalin ang -ar: habl-. Idagdag ang ending: yo hablo, tú hablas. Pagkatapos, idagdag ang detail: hablo español. Hindi kailangan ang yo sa bawat sentence.',
