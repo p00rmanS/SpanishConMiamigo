@@ -1,0 +1,15 @@
+import {useEffect,useRef,useState} from 'react';
+import {discoveryFor,localDay,shouldShowDiscovery} from './daily-discovery.js';
+import {pronouns} from './reference-data.js';
+import './daily-discovery.css';
+const key='espanol-daily-discovery-v1';
+function seen(){try{return localStorage.getItem(key);}catch{return null;}}
+export function DailyDiscovery(){
+ const dialog=useRef(null),trigger=useRef(null);
+ const [date,setDate]=useState(()=>new Date()),[open,setOpen]=useState(()=>shouldShowDiscovery(seen())),[draft,setDraft]=useState(''),[model,setModel]=useState(false),[storageError,setStorageError]=useState('');
+ const entry=discoveryFor(date),day=localDay(date);
+ useEffect(()=>{const tick=()=>{const next=new Date();setDate(next);if(shouldShowDiscovery(seen(),next))setOpen(true);};const timer=setInterval(tick,60000);window.addEventListener('focus',tick);return ()=>{clearInterval(timer);window.removeEventListener('focus',tick);};},[]);
+ useEffect(()=>{if(open&&!dialog.current.open)dialog.current.showModal();else if(!open&&dialog.current.open)dialog.current.close();},[open,day]);
+ function close(){try{localStorage.setItem(key,day);}catch{setStorageError('Daily dismissal could not be saved in this browser.');}setOpen(false);setDraft('');setModel(false);trigger.current?.focus();}
+ return <><button ref={trigger} className="daily-trigger" onClick={()=>setOpen(true)}>Today’s word / verb</button><dialog ref={dialog} className="daily-dialog" aria-labelledby="daily-title" onCancel={e=>{e.preventDefault();close();}}><button autoFocus className="daily-close" aria-label="Close daily word" onClick={close}>×</button><p className="eyebrow">DAILY DISCOVERY · {day} · {entry.kind}</p><h2 id="daily-title" lang="es">{entry.term}</h2><p><strong>{entry.meaning}</strong></p><p lang="es">{entry.example}</p><p>{entry.translation}</p><h3>How to form it</h3><p>{entry.explanation}</p><p lang="fil"><strong>Taglish:</strong> {entry.taglish}</p>{entry.forms&&<div className="daily-table"><table><caption>Present tense · match person to form</caption><thead><tr><th>Person</th><th>English</th><th>Form</th></tr></thead><tbody>{entry.forms.map((f,i)=><tr key={i}><td>{pronouns[i][0]}</td><td>{pronouns[i][1]}</td><td lang="es">{f}</td></tr>)}</tbody></table></div>}<p><strong>Pro tip:</strong> {entry.tip}</p><h3>Remember and build</h3><p>Cover the example. Use the English meaning to rebuild it, then change one detail. Taglish: takpan, recall, ikumpara, saka palitan ang isang detail.</p><label htmlFor="daily-draft">Your sentence · self-check</label><textarea id="daily-draft" value={draft} onChange={e=>setDraft(e.target.value)}/><button className="text-button" onClick={()=>setModel(!model)}>{model?'Hide comparison':'Show comparison'}</button>{model&&<p lang="es">{entry.example}</p>}<p className="muted">This draft is self-assessed and is not saved. Find more tenses in Library → Verbs, and sentence exercises in Practice lab → Grammar.</p><button className="primary" onClick={close}>Continue learning</button></dialog>{storageError&&<p className="daily-error" role="status">{storageError}</p>}</>;
+}

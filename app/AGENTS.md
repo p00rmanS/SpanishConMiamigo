@@ -21,3 +21,5 @@ User reading preference: include educational and history lessons, longer bilingu
 User learning-support preference: every lesson and phrase should offer English translation, a pro tip, conjugation guidance, memory practice, and a Taglish explanation of how it is formed. Keep English available for learners who do not speak Tagalog. Show honest saved-progress charts without implying fluency or inventing learning history. Use inclusive learner-facing defaults rather than a hard-coded personal greeting.
 
 Teach conjugations explicitly in Practice lab: preterite, imperfect, fui/iba, estar, gerunds, and object pronouns. Include sentence production, English and Taglish reasoning, and self-paced scripted BPO simulations with honest scoring and locally saved completion.
+
+User daily-learning preference: show a dated verb or vocabulary window once per local calendar day, with a persistent reopen control, English meaning, Taglish construction, conjugations where applicable, memory practice, and pro tips. Keep learning self-paced.
