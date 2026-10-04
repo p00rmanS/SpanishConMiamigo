@@ -6,3 +6,5 @@
 
 /* Keep the host badge visible without covering the mobile learning navigation. */
 @media(max-width:740px){#nl-badge-frame{bottom:78px!important}}
+
+.practice-lab input[type=search]{display:block;width:100%;padding:12px;margin:10px 0;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);font:inherit}
