@@ -1,14 +1,15 @@
 // Turns the flat lesson list into courses → levels → units → lessons.
 // Levels describe the difficulty of the authored practice; they are not CEFR certification.
 import { lessons } from './content.js';
+import { FOUNDATION_UNITS } from './curriculum.js';
 
 export const MINUTES_PER_LESSON = 6;
-export const CEFR_ORDER = ['A1', 'A2', 'B1', 'B2'];
+export const CEFR_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1'];
 
 export function cefrOf(lesson) {
   const match = (lesson.level || 'A1').match(/[ABC][12]/);
   const code = match ? match[0] : 'A1';
-  return CEFR_ORDER.includes(code) ? code : 'B2';
+  return CEFR_ORDER.includes(code) ? code : 'C1';
 }
 
 const FOUNDATION_LEVELS = [
@@ -18,8 +19,9 @@ const FOUNDATION_LEVELS = [
   [
     'B2',
     'Upper intermediate',
-    'Explore mood, hypotheses and nuance. These are focused lessons, not a full B2 syllabus.',
+    'Handle hypotheticals, mood and formal writing with growing precision.',
   ],
+  ['C1', 'Advanced', 'Argue, hedge and write with the precision of a professional.'],
 ];
 
 const CAREER_LEVELS = [
@@ -75,9 +77,25 @@ function groupUnits(levelId, items) {
   return units;
 }
 
+function curriculumUnits(levelId, code, items) {
+  const byId = new Map(items.map((l) => [l.id, l]));
+  const units = (FOUNDATION_UNITS[code] ?? []).map(([title, ids], i) => ({
+    id: `${levelId}-${i + 1}`,
+    title,
+    lessons: ids.map((id) => byId.get(id)).filter(Boolean),
+  }));
+  const placed = new Set(units.flatMap((u) => u.lessons.map((l) => l.id)));
+  const rest = items.filter((l) => !placed.has(l.id));
+  if (rest.length) units.push({ id: `${levelId}-more`, title: 'More practice', lessons: rest });
+  return units.filter((u) => u.lessons.length);
+}
+
 function makeLevel(courseId, key, code, title, blurb, items) {
   const id = `${courseId}-${key}`.toLowerCase();
-  return { id, code, title, blurb, lessons: items, units: groupUnits(id, items) };
+  const units =
+    courseId === 'foundations' ? curriculumUnits(id, code, items) : groupUnits(id, items);
+  // Lessons follow the unit order so "next lesson" matches what the curriculum shows.
+  return { id, code, title, blurb, lessons: units.flatMap((u) => u.lessons), units };
 }
 
 export function buildCourses(all) {
@@ -88,9 +106,9 @@ export function buildCourses(all) {
   const foundations = {
     id: 'foundations',
     title: 'Spanish Foundations',
-    tagline: 'A1 to B2 · Grammar, vocabulary and conversation',
+    tagline: 'A1 to C1 · Grammar, vocabulary and conversation',
     description:
-      'A structured path from your first hello to hypotheses and nuance. Every lesson pairs a real sentence with a pattern, a pro tip, a conjugation guide and speaking practice.',
+      'A structured path from your first hello to professional-level nuance. Every lesson pairs a real sentence with a pattern, a pro tip, a conjugation guide and speaking practice. Levels follow CEFR-style descriptors loosely and are not a certification.',
     outcomes: [
       'Introduce yourself and handle everyday situations',
       'Use present, past and future verbs with confidence',

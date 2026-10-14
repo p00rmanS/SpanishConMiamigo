@@ -164,3 +164,21 @@ test('hash routes parse names, params and queries', () => {
   assert.equal(parseHash('').name, 'home');
   assert.equal(parseHash('#/library/dictionary?q=casa').query.q, 'casa');
 });
+
+test('every foundations lesson is placed in a curriculum unit', () => {
+  for (const level of courses[0].levels) {
+    assert.ok(
+      !level.units.some((u) => u.title === 'More practice'),
+      `${level.code} has lessons missing from curriculum.js`,
+    );
+  }
+  assert.deepEqual(
+    courses[0].levels.map((l) => l.code),
+    ['A1', 'A2', 'B1', 'B2', 'C1'],
+  );
+});
+
+test('each course level has enough lessons to be a real level', () => {
+  for (const level of courses[0].levels) assert.ok(level.lessons.length >= 12, level.code);
+  for (const level of courses[1].levels) assert.ok(level.lessons.length >= 6, level.id);
+});

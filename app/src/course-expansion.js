@@ -419,68 +419,70 @@ const rows = [
   ...nextLessons,
   ...readingLessons,
 ];
-export const expandedLessons = rows.map(
-  ([
-    id,
-    track,
-    level,
-    title,
-    unit,
-    sentence,
-    meaning,
-    taglish,
-    english,
-    formula,
-    key,
-    tip,
-    tipDetail,
-    prompt,
-    choices,
-    answer,
-    reason,
-    reply,
-    scene,
-    ex1,
-    ex2,
-  ]) => ({
-    id,
-    track,
-    level,
-    title,
-    unit,
-    sentence,
-    meaning,
-    taglish,
-    english,
-    pattern: formula.split(' + '),
-    key,
-    tip,
-    tipDetail,
-    prompt,
-    choices,
-    answer,
-    reason,
-    reply,
-    scene,
-    subtitle: meaning,
-    goal: 'Kaya mong gamitin: ' + sentence,
-    sound: 'Listen, notice the pattern, then say it naturally.',
-    writing: 'Write in Spanish: ' + meaning,
-    accepted:
-      id === 'mucho-muy'
-        ? [reply, 'Estoy muy cansada.']
-        : id === 'past-counterfactual'
-          ? [reply, 'Si hubiese estudiado, habría aprobado.']
-          : id === 'hypothetical-si'
-            ? [reply, 'Si tuviese tiempo, viajaría.']
-            : [reply],
-    sceneHint: 'Use the model, then change one detail to make it your own.',
-    mistake: reason,
-    recap: [key, tip, sentence + ' = ' + meaning],
-    examples: [[sentence, meaning], ex1, ex2],
-    strictAccents: track !== 'Beginner',
-  }),
-);
+// Row layout: [id, track, level, title, unit, sentence, meaning, taglish, english, formula, key, tip,
+// tipDetail, prompt, choices, answer, reason, reply, scene, example1, example2, extraAcceptedAnswers?]
+export const buildLesson = ([
+  id,
+  track,
+  level,
+  title,
+  unit,
+  sentence,
+  meaning,
+  taglish,
+  english,
+  formula,
+  key,
+  tip,
+  tipDetail,
+  prompt,
+  choices,
+  answer,
+  reason,
+  reply,
+  scene,
+  ex1,
+  ex2,
+  alts = [],
+]) => ({
+  id,
+  track,
+  level,
+  title,
+  unit,
+  sentence,
+  meaning,
+  taglish,
+  english,
+  pattern: formula.split(' + '),
+  key,
+  tip,
+  tipDetail,
+  prompt,
+  choices,
+  answer,
+  reason,
+  reply,
+  scene,
+  subtitle: meaning,
+  goal: 'Kaya mong gamitin: ' + sentence,
+  sound: 'Listen, notice the pattern, then say it naturally.',
+  writing: 'Write in Spanish: ' + meaning,
+  accepted:
+    id === 'mucho-muy'
+      ? [reply, 'Estoy muy cansada.']
+      : id === 'past-counterfactual'
+        ? [reply, 'Si hubiese estudiado, habría aprobado.']
+        : id === 'hypothetical-si'
+          ? [reply, 'Si tuviese tiempo, viajaría.']
+          : [reply, ...alts],
+  sceneHint: 'Use the model, then change one detail to make it your own.',
+  mistake: reason,
+  recap: [key, tip, sentence + ' = ' + meaning],
+  examples: [[sentence, meaning], ex1, ex2],
+  strictAccents: track !== 'Beginner',
+});
+export const expandedLessons = rows.map(buildLesson);
 export const expandedGrammar = expandedLessons.map((l) => ({
   id: l.id,
   title: l.title,

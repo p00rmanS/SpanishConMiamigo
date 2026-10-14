@@ -44,8 +44,8 @@ test('filler reference links to complete daily-life and workplace practice', () 
 });
 
 test('all workplace modules are reachable as lessons with working recall answers', () => {
-  assert.equal(workplaceModules.length, 98);
-  assert.equal(new Set(workplaceModules.map((m) => m.id)).size, 98);
+  assert.equal(workplaceModules.length, 112);
+  assert.equal(new Set(workplaceModules.map((m) => m.id)).size, 112);
   for (const m of workplaceModules) {
     const lesson = lessons.find((l) => l.id === m.id);
     assert.ok(lesson, m.id + ' is reachable');
@@ -55,7 +55,7 @@ test('all workplace modules are reachable as lessons with working recall answers
     assert.equal(scoreAnswer('No entiendo.', lesson.accepted).correct, false);
     assert.ok(m.practice && m.coaching);
   }
-  assert.equal(workplaceLessons.length, 98);
+  assert.equal(workplaceLessons.length, 112);
 });
 test('every workplace phrase, dialogue turn, and term has bilingual support', () => {
   for (const m of workplaceModules) {

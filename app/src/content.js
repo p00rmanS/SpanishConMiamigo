@@ -2,6 +2,9 @@ import { workplaceLessons } from './workplace-data.js';
 import { expandedLessons } from './course-expansion.js';
 import { moreLessons } from './more-lessons.js';
 import { pronounce } from './lib/pronounce.js';
+import { foundationsA } from './foundations-a.js';
+import { foundationsB } from './foundations-b.js';
+import { foundationsC } from './foundations-c.js';
 const authored = [
   {
     id: 'hello',
@@ -186,6 +189,9 @@ const authored = [
   },
   ...moreLessons,
   ...expandedLessons,
+  ...foundationsA,
+  ...foundationsB,
+  ...foundationsC,
   ...workplaceLessons,
 ];
 

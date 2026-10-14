@@ -4,6 +4,7 @@ import { serviceLabs } from './service-labs.js';
 import { accountTraining } from './account-training.js';
 import { fillerLessons } from './filler-training.js';
 import { workplaceSupport } from './workplace-support.js';
+import { careerExpansion } from './career-expansion.js';
 import { pronounce } from './lib/pronounce.js';
 // Original training scenarios. Amounts and policies are fictional, not employer commitments.
 // Each phrase has Spanish, English, and a usage tip; each dialogue turn is bilingual.
@@ -1024,6 +1025,7 @@ export const workplaceModules = [
   ...serviceLabs,
   ...everydayLessons,
   ...everydayExpansion,
+  ...careerExpansion,
 ];
 
 const supportById = new Map(workplaceSupport.map(([id, ...rest]) => [id, rest]));
