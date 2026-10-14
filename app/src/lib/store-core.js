@@ -216,3 +216,28 @@ export function lastSevenDays(days, now = new Date()) {
   }
   return out;
 }
+
+// Daily streak: consecutive practice days. Today does not break the streak until it ends,
+// so a streak that reached yesterday is still alive and can be extended today.
+export function streakInfo(days, now = new Date()) {
+  const set = new Set(days);
+  const step = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const practicedToday = set.has(dayKey(now));
+  let cursor = practicedToday ? now : step(now, -1);
+  let current = 0;
+  while (set.has(dayKey(cursor))) {
+    current += 1;
+    cursor = step(cursor, -1);
+  }
+  let longest = 0;
+  let run = 0;
+  let previous = null;
+  for (const key of [...set].sort()) {
+    const [y, m, d] = key.split('-').map(Number);
+    const date = new Date(y, m - 1, d);
+    run = previous && dayKey(step(previous, 1)) === key ? run + 1 : 1;
+    longest = Math.max(longest, run);
+    previous = date;
+  }
+  return { current, longest, practicedToday };
+}

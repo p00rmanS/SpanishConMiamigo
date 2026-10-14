@@ -182,3 +182,18 @@ test('each course level has enough lessons to be a real level', () => {
   for (const level of courses[0].levels) assert.ok(level.lessons.length >= 12, level.code);
   for (const level of courses[1].levels) assert.ok(level.lessons.length >= 6, level.id);
 });
+
+test('daily streak counts consecutive days and stays alive until the day ends', async () => {
+  const { streakInfo } = await import('../src/lib/store-core.js');
+  const today = new Date(2026, 5, 10);
+  assert.deepEqual(streakInfo([], today), { current: 0, longest: 0, practicedToday: false });
+  const run = ['2026-06-08', '2026-06-09', '2026-06-10'];
+  assert.deepEqual(streakInfo(run, today), { current: 3, longest: 3, practicedToday: true });
+  assert.equal(streakInfo(['2026-06-08', '2026-06-09'], today).current, 2);
+  assert.equal(streakInfo(['2026-06-07'], today).current, 0);
+  assert.equal(
+    streakInfo(['2026-05-01', '2026-05-02', '2026-05-03', '2026-06-10'], today).longest,
+    3,
+  );
+  assert.equal(streakInfo(['2026-05-31', '2026-06-01'], new Date(2026, 5, 1)).current, 2);
+});

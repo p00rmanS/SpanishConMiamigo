@@ -9,12 +9,14 @@ import {
   ChartLineUp,
   GearSix,
   Lightning,
+  Fire,
   MagnifyingGlass,
   SunHorizon,
   Books,
 } from '@phosphor-icons/react';
 import { useRoute, navigate, href } from './lib/router.js';
 import { useProgress } from './lib/store.js';
+import { streakInfo } from './lib/store-core.js';
 import { SettingsDialog } from './components/SettingsDialog.jsx';
 import { Home } from './pages/Home.jsx';
 import { Courses, CourseDetail } from './pages/Courses.jsx';
@@ -93,6 +95,7 @@ function useTheme(theme) {
 function Shell({ route, children, onSettings, progress, dueCount }) {
   const [query, setQuery] = useState('');
   const current = activeNav(route);
+  const streak = streakInfo(progress.days);
   return (
     <div className="shell">
       <a className="skip" href="#main">
@@ -161,6 +164,18 @@ function Shell({ route, children, onSettings, progress, dueCount }) {
             />
           </form>
           <div className="top-actions">
+            <span
+              className={'chip streak' + (streak.practicedToday ? ' lit' : '')}
+              title={
+                streak.practicedToday
+                  ? 'Daily streak: you practiced today'
+                  : 'Daily streak: practice today to keep it going'
+              }
+            >
+              <Fire weight="fill" size={18} aria-hidden="true" />
+              {streak.current}
+              <span className="sr-only"> day streak</span>
+            </span>
             <span className="chip xp" title="Experience points from lessons and checkpoints">
               <Lightning weight="fill" size={18} aria-hidden="true" />
               {progress.xp} XP

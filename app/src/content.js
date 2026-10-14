@@ -5,6 +5,7 @@ import { pronounce } from './lib/pronounce.js';
 import { foundationsA } from './foundations-a.js';
 import { foundationsB } from './foundations-b.js';
 import { foundationsC } from './foundations-c.js';
+import { foundationsD } from './foundations-d.js';
 const authored = [
   {
     id: 'hello',
@@ -192,6 +193,7 @@ const authored = [
   ...foundationsA,
   ...foundationsB,
   ...foundationsC,
+  ...foundationsD,
   ...workplaceLessons,
 ];
 

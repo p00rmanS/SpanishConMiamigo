@@ -1,8 +1,9 @@
-import { Lightning, CalendarCheck, Check, Trophy, GearSix } from '@phosphor-icons/react';
+import { Fire, Lightning, CalendarCheck, Check, Trophy, GearSix } from '@phosphor-icons/react';
 import { ProgressDashboard } from '../ProgressDashboard.jsx';
 import { ProgressBar } from '../components/ui.jsx';
 import { lessons } from '../content.js';
 import { courses, courseStats, countDone } from '../course.js';
+import { streakInfo } from '../lib/store-core.js';
 import { navigate, href } from '../lib/router.js';
 
 export function ProgressPage({ progress, now, onSettings }) {
@@ -27,6 +28,11 @@ export function ProgressPage({ progress, now, onSettings }) {
           <Lightning size={24} weight="fill" aria-hidden="true" />
           <strong>{progress.xp}</strong>
           <span>XP earned</span>
+        </div>
+        <div className="card stat">
+          <Fire size={24} weight="fill" aria-hidden="true" />
+          <strong>{streakInfo(progress.days).current}</strong>
+          <span>day streak (best {streakInfo(progress.days).longest})</span>
         </div>
         <div className="card stat">
           <CalendarCheck size={24} aria-hidden="true" />

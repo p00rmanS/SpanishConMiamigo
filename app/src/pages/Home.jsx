@@ -1,4 +1,5 @@
 import {
+  Fire,
   ArrowRight,
   Compass,
   ArrowsClockwise,
@@ -7,7 +8,7 @@ import {
   BookOpenText,
 } from '@phosphor-icons/react';
 import { href } from '../lib/router.js';
-import { lastSevenDays } from '../lib/store-core.js';
+import { lastSevenDays, streakInfo } from '../lib/store-core.js';
 import { ProgressBar } from '../components/ui.jsx';
 import { CourseCard, courseIcon } from './Courses.jsx';
 import {
@@ -18,6 +19,13 @@ import {
   levelOf,
   MINUTES_PER_LESSON,
 } from '../course.js';
+
+function streakMessage(streak) {
+  if (streak.current === 0) return 'Complete one lesson today to start a streak.';
+  if (!streak.practicedToday)
+    return `Your ${streak.current}-day streak is alive. Practice today to extend it. Longest: ${streak.longest}.`;
+  return `You practiced today. Longest streak: ${streak.longest} day${streak.longest === 1 ? '' : 's'}.`;
+}
 
 function activeCourse(progress) {
   const recent = Object.entries(progress.lessonStats).sort((a, b) => b[1].last - a[1].last)[0];
@@ -33,7 +41,7 @@ export function Home({ progress, dueCount }) {
   const stats = courseStats(course, progress.completed);
   const where = next && levelOf(next.id);
   const week = lastSevenDays(progress.days);
-  const practiced = week.filter((d) => d.active).length;
+  const streak = streakInfo(progress.days);
   const Icon = courseIcon(course.icon);
   return (
     <div className="page">
@@ -47,7 +55,10 @@ export function Home({ progress, dueCount }) {
           </p>
         </div>
         <div className="week card" aria-label="Practice this week">
-          <p className="card-title">This week</p>
+          <p className="card-title streak-title">
+            <Fire weight="fill" size={22} aria-hidden="true" />
+            {streak.current}-day streak
+          </p>
           <ol className="week-dots">
             {week.map((d) => (
               <li key={d.key} className={d.active ? 'on' : ''}>
@@ -58,11 +69,7 @@ export function Home({ progress, dueCount }) {
               </li>
             ))}
           </ol>
-          <p className="muted small">
-            {practiced
-              ? `You practiced on ${practiced} of the last 7 days.`
-              : 'No pressure. Practice when it suits you.'}
-          </p>
+          <p className="muted small">{streakMessage(streak)}</p>
         </div>
       </section>
 

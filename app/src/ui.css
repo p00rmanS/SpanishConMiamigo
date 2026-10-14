@@ -1748,3 +1748,18 @@ body[data-focus] .daily-trigger {
   display: inline-block;
   padding: 8px 0;
 }
+
+.chip.streak {
+  background: var(--surface-2);
+  color: var(--muted);
+}
+.chip.streak.lit {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.streak-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+}

@@ -19,6 +19,7 @@ export const FOUNDATION_UNITS = {
         'possessives',
         'demonstratives',
         'colors-adjectives',
+        'place-prepositions',
       ],
     ],
     [
@@ -33,19 +34,38 @@ export const FOUNDATION_UNITS = {
         'querer',
         'hay',
         'reflexive',
+        'present-ir',
       ],
     ],
     [
       'People and plans',
-      ['family', 'weather', 'future', 'obligation', 'frequency', 'ability-saber'],
+      [
+        'family',
+        'weather',
+        'future',
+        'obligation',
+        'frequency',
+        'ability-saber',
+        'personality-adjectives',
+      ],
     ],
     ['Connecting ideas', ['connect', 'because', 'mucho-muy', 'personal-a', 'story-sequence']],
   ],
   A2: [
-    ['Pronouns and requests', ['object-pronoun', 'indirect-object', 'positive-command']],
+    [
+      'Pronouns and requests',
+      ['object-pronoun', 'indirect-object', 'positive-command', 'negatives'],
+    ],
     [
       'The body and daily life',
-      ['doler', 'tener-expressions', 'stem-changing', 'irregular-yo', 'progressive'],
+      [
+        'doler',
+        'tener-expressions',
+        'stem-changing',
+        'irregular-yo',
+        'progressive',
+        'saber-conocer',
+      ],
     ],
     [
       'Talking about the past',
@@ -59,12 +79,20 @@ export const FOUNDATION_UNITS = {
         'hace-ago',
         'ya-todavia',
         'recent-acabar',
+        'reflexive-past',
       ],
     ],
     ['Storytelling', ['imperfect', 'imperfect-irregular', 'story-possession']],
     [
       'Comparing and planning',
-      ['comparisons', 'superlatives', 'future-simple', 'por-para', 'duration-desde'],
+      [
+        'comparisons',
+        'superlatives',
+        'future-simple',
+        'por-para',
+        'duration-desde',
+        'adverbs-mente',
+      ],
     ],
   ],
   B1: [
@@ -99,6 +127,7 @@ export const FOUNDATION_UNITS = {
         'reported-speech',
         'relative-pronouns',
         'connectors-basic',
+        'conditional-advice',
       ],
     ],
     [
@@ -111,6 +140,8 @@ export const FOUNDATION_UNITS = {
         'por-para-uses',
         'equal-comparisons',
         'preposition-infinitive',
+        'passive-se',
+        'alguno-ninguno',
       ],
     ],
     ['Professional Spanish', ['formal-email']],
@@ -135,6 +166,8 @@ export const FOUNDATION_UNITS = {
         'past-counterfactual',
         'reported-past',
         'future-probability',
+        'imperfect-wish',
+        'como-si',
       ],
     ],
     [
@@ -148,22 +181,47 @@ export const FOUNDATION_UNITS = {
         'false-friends',
         'story-correction',
         'story-inference',
+        'por-que-forms',
       ],
     ],
     [
       'Formal and written Spanish',
-      ['passive-voice', 'impersonal-se', 'concession', 'discourse-markers', 'formal-complaint'],
+      [
+        'passive-voice',
+        'impersonal-se',
+        'concession',
+        'discourse-markers',
+        'formal-complaint',
+        'lo-cual',
+      ],
     ],
   ],
   C1: [
     [
       'Argument and nuance',
-      ['concession-por-mucho-que', 'no-solo-sino-que', 'a-pesar-de', 'no-es-que', 'hedging'],
+      [
+        'concession-por-mucho-que',
+        'no-solo-sino-que',
+        'a-pesar-de',
+        'no-es-que',
+        'hedging',
+        'cualquier',
+        'ni-siquiera',
+      ],
     ],
     [
       'Formal and professional Spanish',
       ['courteous-request', 'impersonal-reports', 'perfect-gerund', 'future-perfect'],
     ],
-    ['Fluent precision', ['verb-preposition-pairs', 'professional-collocations', 'regional-you']],
+    [
+      'Fluent precision',
+      [
+        'verb-preposition-pairs',
+        'professional-collocations',
+        'regional-you',
+        'idioms-money',
+        'verbs-of-change',
+      ],
+    ],
   ],
 };

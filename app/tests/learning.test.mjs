@@ -4,7 +4,7 @@ import { scoreAnswer, nextReview } from '../src/learning.js';
 import { lessons } from '../src/content.js';
 import { verbs, grammar, phrases } from '../src/reference-data.js';
 test('expanded library is complete and bilingual', () => {
-  assert.equal(lessons.length, 240);
+  assert.equal(lessons.length, 258);
   assert.equal(verbs.length, 50);
   assert.equal(phrases.length, 50);
   assert.equal(grammar.length, 62);

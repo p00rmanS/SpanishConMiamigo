@@ -24,7 +24,7 @@ npm run build
 
 | Area | What you get |
 | --- | --- |
-| **Courses** | *Spanish Foundations* (A1 to C1, 128 lessons in 5 levels and 23 units), *Bilingual Career Spanish* (customer care, technical support, billing, 3 levels, 68 lessons), *Spanish for Daily Life* (44 lessons) |
+| **Courses** | *Spanish Foundations* (A1 to C1, 146 lessons in 5 levels and 23 units), *Bilingual Career Spanish* (customer care, technical support, billing, 3 levels, 68 lessons), *Spanish for Daily Life* (44 lessons) |
 | **Lesson player** | Learn → choose → write → speak, with audio, a generated pronunciation guide, pattern chips, conjugation and memory support, a pro tip, a common-mistake note, immediate feedback and XP |
 | **Checkpoints** | A 10-question quiz per level, best score saved, plus a placement check that suggests a starting level |
 | **Review** | Spaced repetition (boxes 0–5), a mistake notebook and a due-count badge |
@@ -36,8 +36,9 @@ npm run build
 
 ## Design decisions
 
-- **Self-paced.** There are no deadlines, streak penalties, daily goals or required schedules. The
-  week view only shows which days you practiced.
+- **Self-paced with a daily streak.** There are no deadlines or required schedules. A daily streak
+  counts consecutive practice days (today does not break it until the day ends) and never locks
+  content.
 - **Honest measurement.** Completion is not a fluency score. Checkpoints and the placement check are
   study aids, not CEFR certification. Speaking is self-assessed and recordings never leave the tab.
 - **Bilingual support.** Explanations can be shown in English, Taglish or both (Settings).
