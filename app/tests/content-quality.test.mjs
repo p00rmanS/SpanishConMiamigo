@@ -35,3 +35,14 @@ test('pronunciation helper syllabifies and stresses Spanish words', () => {
   assert.equal(pronounceWord('jueves'), 'HUE·bes');
   assert.equal(pronounce('¿Cómo estás?'), 'KO·mo es·TAS');
 });
+
+test('dictionary entries are complete and searchable in English, Spanish and Tagalog', async () => {
+  const { dictionary, findWords } = await import('../src/dictionary-data.js');
+  assert.ok(dictionary.length >= 350);
+  for (const w of dictionary) {
+    assert.ok(w.word && w.meaning && w.example && w.translation, `${w.word} is incomplete`);
+  }
+  assert.ok(findWords('palengke').some((w) => w.word === 'mercado'));
+  assert.ok(findWords('contraseña').some((w) => w.type === 'Noun'));
+  assert.ok(findWords('however').some((w) => w.word === 'sin embargo'));
+});

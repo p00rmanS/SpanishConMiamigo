@@ -1,6 +1,23 @@
 import { StudySupport } from './StudySupport';
 import { useState } from 'react';
 import { dictionary, findWords, lookupUrl } from './dictionary-data';
+const GENDER = { el: 'masculine', la: 'feminine', 'el/la': 'masculine or feminine' };
+const genderLabel = (w) => {
+  if (!w.article) return '';
+  if (w.word === 'agua') return ' · feminine';
+  return ' · ' + (GENDER[w.article] ?? 'masculine');
+};
+const TYPES = [
+  'All',
+  'Noun',
+  'Verb',
+  'Adjective',
+  'Adverb',
+  'Preposition',
+  'Conjunction',
+  'Phrase',
+];
+
 export function Dictionary({ initialQuery = '' }) {
   const [query, setQuery] = useState(initialQuery),
     [type, setType] = useState('All'),
@@ -37,7 +54,7 @@ export function Dictionary({ initialQuery = '' }) {
         placeholder="Try casa, water, tengo, or fui"
       />
       <div className="category-filters">
-        {['All', 'Noun', 'Verb'].map((t) => (
+        {TYPES.map((t) => (
           <button key={t} aria-pressed={type === t} onClick={() => setType(t)}>
             {t}
           </button>
@@ -55,7 +72,7 @@ export function Dictionary({ initialQuery = '' }) {
         </p>
       )}
       <p className="muted">
-        Our starter dictionary includes selected meanings and original learning notes. External
+        Our built-in dictionary includes selected meanings and original learning notes. External
         lookup is a link, not a live dictionary feed or affiliation.
       </p>
       {!results.length && (
@@ -69,16 +86,14 @@ export function Dictionary({ initialQuery = '' }) {
           <article className="phrase-entry" key={w.word}>
             <span className="section-kicker">
               {w.type}
-              {w.article
-                ? ' · ' +
-                  (w.word === 'agua' ? 'feminine' : w.article === 'la' ? 'feminine' : 'masculine')
-                : ''}
+              {genderLabel(w)}
             </span>
             <h3 lang="es">
               {w.article && <small>{w.article} </small>}
               {w.word}
             </h3>
             <strong>{w.meaning}</strong>
+            {w.tagalog && <p className="muted">Tagalog: {w.tagalog}</p>}
             <button className="text-button" onClick={() => listen(w.word)}>
               Listen to {w.word}
             </button>

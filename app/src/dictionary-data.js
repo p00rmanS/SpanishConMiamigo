@@ -1,5 +1,6 @@
 import { verbs } from './reference-data.js';
 import { tenseTables } from './verb-tenses.js';
+import { vocabulary } from './vocabulary-data.js';
 const words = [
   [
     'casa',
@@ -162,7 +163,7 @@ const words = [
     'Viaje is a noun; viajar is to travel.',
   ],
 ];
-export const dictionary = [
+const baseEntries = [
   ...verbs.map((v) => ({
     word: v.infinitive,
     type: 'Verb',
@@ -183,6 +184,8 @@ export const dictionary = [
     forms: [],
   })),
 ];
+const known = new Set(baseEntries.map((w) => w.word));
+export const dictionary = [...baseEntries, ...vocabulary.filter((w) => !known.has(w.word))];
 export const dictionaryKey = (s) =>
   s
     .toLowerCase()
@@ -196,7 +199,10 @@ export function findWords(query, type = 'All') {
     .filter(
       (w) =>
         (type === 'All' || w.type === type) &&
-        (!q || [w.word, w.meaning, ...w.forms].some((s) => dictionaryKey(s).includes(q))),
+        (!q ||
+          [w.word, w.meaning, w.tagalog ?? '', ...w.forms].some((s) =>
+            dictionaryKey(s).includes(q),
+          )),
     )
     .sort(
       (a, b) =>

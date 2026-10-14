@@ -1700,3 +1700,51 @@ body[data-focus] .daily-trigger {
 .done .eyebrow {
   display: none;
 }
+
+/* Keep the top bar inside narrow screens. */
+.topbar {
+  min-width: 0;
+}
+.search-box {
+  min-width: 0;
+  flex: 1 1 0;
+}
+.search-box input {
+  width: 100%;
+}
+.top-actions {
+  flex-shrink: 0;
+}
+.page > * {
+  min-width: 0;
+}
+@media (max-width: 480px) {
+  .chip.xp {
+    padding: 4px 10px;
+  }
+}
+.study-library,
+.practice-lab,
+.progress-dashboard,
+.reading-room {
+  min-width: 0;
+  max-width: 100%;
+}
+.study-library > * {
+  min-width: 0;
+  max-width: 100%;
+}
+.table-scroll,
+.support-table-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.reference-audio .icon-button {
+  width: 40px;
+  height: 40px;
+}
+.crumbs a,
+.section-head a {
+  display: inline-block;
+  padding: 8px 0;
+}
