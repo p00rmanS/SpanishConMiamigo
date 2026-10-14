@@ -1,189 +1,1136 @@
 // Original scenario-based language training. Follow verified product and employer procedures.
-function lab(id,category,title,objective,phrases,customer,steps,decision,practice,model,coaching,transfer){
- return {id:'work-lab-'+id,category,title,objective,level:'Intermediate',phrases,
-  dialogue:customer.flatMap((line,i)=>[['Customer',...line],['Agent',...phrases[i].slice(0,2)]]),
-  steps,decision,practice,model,coaching,transfer};
+function lab(
+  id,
+  category,
+  title,
+  objective,
+  phrases,
+  customer,
+  steps,
+  decision,
+  practice,
+  model,
+  coaching,
+  transfer,
+) {
+  return {
+    id: 'work-lab-' + id,
+    category,
+    title,
+    objective,
+    level: 'Intermediate',
+    phrases,
+    dialogue: customer.flatMap((line, i) => [
+      ['Customer', ...line],
+      ['Agent', ...phrases[i].slice(0, 2)],
+    ]),
+    steps,
+    decision,
+    practice,
+    model,
+    coaching,
+    transfer,
+  };
 }
-export const serviceLabs=[
- lab('delivery','CSR practice labs','A delivery says “delivered”—but is missing','Investigate a missing delivery without blaming the customer or promising a replacement.',[
-  ['Entiendo que esperaba recibirlo hoy. Revisemos la información de entrega.','I understand you expected to receive it today. Let us review the delivery information.','Acknowledge the impact before asking the customer to repeat details.'],
-  ['¿La dirección que aparece en su pedido es correcta?','Is the address shown on your order correct?','Use the approved verification flow and avoid reading private details aloud unnecessarily.'],
-  ['Voy a solicitar una investigación de la entrega. Aún no puedo confirmar un reemplazo.','I am going to request a delivery investigation. I cannot confirm a replacement yet.','Only offer an investigation if it is an available action. A delivery status is evidence, not proof of receipt by this customer.']
- ],[['El sistema dice entregado, pero no recibí nada.','The system says delivered, but I received nothing.'],['Necesito saber dónde está mi pedido.','I need to know where my order is.'],['Sí, la dirección es correcta. ¿Me enviarán otro?','Yes, the address is correct. Will you send another one?']],
- ['Confirm the order and review the delivery event through approved tools.','Ask one neutral question about the recorded address; do not imply the customer is lying.','Explain the investigation process and the next verified contact step.'],
- {prompt:'The address is correct, but receipt is unconfirmed. Choose the best next statement.',options:[['Usted debe haber perdido el paquete.','You must have lost the package.'],['Voy a revisar las opciones de investigación disponibles.','I am going to review the available investigation options.'],['Le garantizo un reemplazo hoy.','I guarantee a replacement today.']],answer:1,why:'Investigate the evidence and available process. Neither blame nor an unapproved replacement guarantee follows from the known facts.'},
- 'Say: I am going to review the delivery information.','Voy a revisar la información de entrega.','Voy a + infinitive describes your next action. Entrega means delivery.',
- 'Now the customer says the address is wrong. Explain that you will check the correction options before promising a reroute.'),
- lab('wrong-item','CSR practice labs','The customer received the wrong product','Confirm the mismatch and explain the return or replacement process clearly.',[
-  ['Lamento que haya recibido un producto diferente.','I am sorry you received a different product.','Haya recibido follows this expression of regret. Acknowledge what the customer reports.'],
-  ['¿Qué modelo pidió y cuál recibió?','Which model did you order, and which did you receive?','Compare the order with the received item before choosing a return process.'],
-  ['Voy a comprobar las opciones de cambio y explicarle los pasos.','I am going to check the exchange options and explain the steps to you.','Check eligibility, costs, and instructions; do not invent free shipping or tell the customer to discard the item.']
- ],[['Pedí unos audífonos y recibí otro modelo.','I ordered headphones and received a different model.'],['Los que llegaron no son los que necesito.','The ones that arrived are not the ones I need.'],['Pedí el modelo A y recibí el B. ¿Cómo lo cambio?','I ordered model A and received B. How do I exchange it?']],
- ['Identify the expected item and received item.','Review the applicable exchange procedure and any evidence needed.','Explain one step at a time and ask the customer to confirm the next action.'],
- {prompt:'You have confirmed a model mismatch but have not checked the return terms. What do you say?',options:[['Puede tirarlo; le enviaremos otro gratis.','You can throw it away; we will send another for free.'],['No hay nada que hacer.','Nothing can be done.'],['Primero verificaré las condiciones del cambio.','First I will verify the exchange terms.']],answer:2,why:'A confirmed mismatch does not establish the exact remedy or shipping conditions. Verify those before promising them.'},
- 'Ask: Which model did you receive?','¿Qué modelo recibió?','Recibió is the past usted form; recibo means I receive.',
- 'The replacement option is unavailable in this fictional scenario. Offer to explain the verified alternatives without pressuring the customer.'),
- lab('plan-fit','CSR practice labs','Compare plans without overselling','Find the customer’s need, compare relevant terms, and confirm an informed choice.',[
-  ['¿Qué necesita hacer con el servicio?','What do you need to do with the service?','Start with the task the customer needs, not the most expensive plan.'],
-  ['Comparemos el precio, lo que incluye y las condiciones de renovación.','Let us compare the price, what is included, and the renewal terms.','Mention relevant recurring charges and restrictions from the actual plan information.'],
-  ['No cambiaré su plan hasta que confirme la opción que prefiere.','I will not change your plan until you confirm the option you prefer.','Asking about a plan is not permission to change it.']
- ],[['Quiero un plan más barato.','I want a cheaper plan.'],['Solo uso el servicio para mensajes.','I only use the service for messages.'],['¿Me puede explicar las opciones antes de cambiarlo?','Can you explain the options before changing it?']],
- ['Ask which features matter and what the customer wants to spend.','Compare only verified prices, features, limitations, and renewal conditions.','Restate the chosen option and obtain the required confirmation before any change.'],
- {prompt:'The customer asks whether a cheaper plan exists. What is the appropriate action?',options:[['Explique las opciones verificadas y espere la elección del cliente.','Explain verified options and wait for the customer’s choice.'],['Cambie el plan de inmediato porque más barato siempre es mejor.','Switch immediately because cheaper is always better.'],['Evite mencionar las limitaciones.','Avoid mentioning limitations.']],answer:0,why:'The customer needs a comparison, not an automatic account change. Explain limitations and confirm the choice.'},
- 'Ask: What do you need to do with the service?','¿Qué necesita hacer con el servicio?','Necesita hacer combines a conjugated verb and an infinitive. Keep the question open.',
- 'The cheaper plan lacks a feature the customer uses. Explain that tradeoff and let the customer decide.'),
- lab('supervisor','CSR practice labs','Handle a supervisor request professionally','Acknowledge the request, explain the escalation path, and preserve the customer’s story.',[
-  ['Entiendo que desea hablar con un supervisor.','I understand you would like to speak with a supervisor.','Do not argue about whether the customer deserves escalation.'],
-  ['Voy a comprobar la disponibilidad y explicarle cómo continuar.','I am going to check availability and explain how to proceed.','Do not claim immediate availability if you have not verified it.'],
-  ['Dejaré un resumen de su solicitud para que no tenga que repetir todo.','I will leave a summary of your request so you do not have to repeat everything.','Document the facts and desired outcome; follow the actual handoff process.']
- ],[['Quiero hablar con su supervisor.','I want to speak with your supervisor.'],['No quiero volver a explicar el problema.','I do not want to explain the problem again.'],['¿La otra persona sabrá lo que pasó?','Will the other person know what happened?']],
- ['Acknowledge the requested escalation without becoming defensive.','Check the approved route and actual availability.','Summarize the issue, previous actions, and requested outcome for the next owner.'],
- {prompt:'No supervisor is immediately available. Which statement is best?',options:[['No puede hablar con nadie más.','You cannot speak with anyone else.'],['Voy a verificar las opciones de seguimiento disponibles.','I am going to verify the available follow-up options.'],['Le llamarán en cinco minutos, seguro.','They will definitely call you in five minutes.']],answer:1,why:'Check the real follow-up process. Neither blocking escalation nor inventing a callback promise is justified.'},
- 'Say: I understand you would like to speak with a supervisor.','Entiendo que desea hablar con un supervisor.','Desea is a courteous usted form. Acknowledge the request without promising the supervisor’s decision.',
- 'Practice summarizing a disputed charge for the supervisor in two sentences: what the customer reports and what has been checked.'),
- lab('callback','CSR practice labs','Arrange a callback precisely','Confirm the contact route, date, time zone, and reason for follow-up.',[
-  ['¿En qué horario puede recibir la llamada?','At what time can you receive the call?','Offer only the scheduling options actually supported by your team.'],
-  ['¿A qué zona horaria se refiere?','Which time zone do you mean?','Do not assume that you and the customer share a time zone.'],
-  ['Voy a confirmar la disponibilidad antes de programarla.','I am going to confirm availability before scheduling it.','A requested time is not a confirmed appointment.']
- ],[['¿Me pueden llamar mañana por la tarde?','Can you call me tomorrow afternoon?'],['A las tres estaría bien.','Three o’clock would work.'],['A la hora de Ciudad de México.','Mexico City time.']],
- ['Ask for a suitable time and verify the approved callback channel.','State the calendar date, time, and named time zone unambiguously.','Check availability, confirm only the booked arrangement, and document its purpose.'],
- {prompt:'The customer says “tomorrow at three.” What still needs clarification?',options:[['Nada; prográmela en su propia zona horaria.','Nothing; schedule it in your own time zone.'],['Pida su contraseña.','Ask for their password.'],['Confirme la fecha, si es por la mañana o por la tarde, y la zona horaria.','Confirm the date, morning or afternoon, and time zone.']],answer:2,why:'Relative dates and unqualified times can cause missed calls. Clarify them before booking.'},
- 'Ask: Which time zone do you mean?','¿A qué zona horaria se refiere?','Referirse a means to refer to. Do not compute an offset from memory when booking a real call.',
- 'The requested time is unavailable. Offer two verified alternatives and ask which works, without booking either prematurely.'),
- lab('currency','CSR practice labs','Resolve a confusing amount','Confirm currency, decimal amounts, billing period, and the customer’s concern.',[
-  ['Para evitar confusiones, ¿en qué moneda aparece el importe?','To avoid confusion, in which currency does the amount appear?','A currency symbol alone may be ambiguous. Ask for the currency name.'],
-  ['¿Ese total corresponde a un mes o a varios meses?','Does that total cover one month or several months?','Separate billing period from payment date.'],
-  ['Voy a comparar el total con el desglose de ese período.','I am going to compare the total with the breakdown for that period.','Read decimals and currency clearly; do not assume that punctuation conventions match yours.']
- ],[['Me dijeron cien, pero veo doscientos en la factura.','They told me one hundred, but I see two hundred on the bill.'],['Aparece en pesos mexicanos.','It appears in Mexican pesos.'],['Parece que incluye dos meses.','It looks like it includes two months.']],
- ['Confirm the currency and full amount.','Check the exact dates covered and each line item.','Explain the verified calculation and ask whether the difference is now clear.'],
- {prompt:'The total is double the expected monthly price. What should you do before calling it an error?',options:[['Revise el período y el desglose de cargos.','Check the covered period and itemized charges.'],['Prometa quitar la mitad.','Promise to remove half of it.'],['Suponga que deben ser impuestos.','Assume it must be taxes.']],answer:0,why:'The same total can have different causes. Verify the billing period and line items instead of guessing.'},
- 'Ask: In which currency does the amount appear?','¿En qué moneda aparece el importe?','Moneda means currency here. Importe means amount, not import.',
- 'Explain a fictional bill of two monthly charges of one hundred Mexican pesos each. State the period and total in Spanish.'),
- lab('slow-connection','TSR practice labs','Slow connection or complete disconnection?','Separate symptoms and isolate the affected device, location, or service.',[
-  ['¿La conexión es lenta o se interrumpe por completo?','Is the connection slow, or does it disconnect completely?','Different symptoms suggest different next questions.'],
-  ['¿Ocurre también en otro dispositivo conectado a la misma red?','Does it also happen on another device connected to the same network?','A comparison helps narrow the scope; it does not prove a cause by itself.'],
-  ['Comparemos el resultado cerca del enrutador, si puede hacerlo.','Let us compare the result near the router, if you can do so.','Check whether the comparison is practical; never insist that a customer move equipment unsafely.']
- ],[['Internet funciona muy mal.','The internet works very poorly.'],['Los videos tardan en cargar, pero no se desconecta.','Videos take a long time to load, but it does not disconnect.'],['Solo pasa con mi teléfono cuando estoy lejos del enrutador.','It only happens on my phone when I am far from the router.']],
- ['Clarify slow performance versus a dropped connection.','Compare another device or service while keeping track of what changed.','If location appears relevant, compare in a practical nearby location before making a diagnosis.'],
- {prompt:'Only one phone is slow in one room. What is the best next step?',options:[['Restablezca todos los dispositivos de fábrica.','Restore all devices to factory settings.'],['Compare la conexión del mismo teléfono en otro lugar.','Compare the same phone’s connection in another location.'],['Declare una interrupción nacional confirmada.','Declare a confirmed nationwide outage.']],answer:1,why:'Change one relevant variable and observe the result. A single-device, location-dependent symptom does not establish a widespread outage.'},
- 'Ask: Is the connection slow?','¿La conexión es lenta?','Lenta agrees with conexión. Ask the customer to describe the symptom before naming a cause.',
- 'Now every device fails everywhere in the home. Ask a question that distinguishes a Wi-Fi link from internet access, then check service status.'),
- lab('app-crash','TSR practice labs','An app closes unexpectedly','Find a reproducible trigger and avoid losing local data.',[
-  ['¿La aplicación se cierra al abrirla o al realizar una acción específica?','Does the app close when you open it or when you perform a specific action?','The trigger is more informative than the general phrase it does not work.'],
-  ['Antes de repetir la prueba, guarde los cambios que pueda.','Before repeating the test, save any changes you can.','Do not ask for repeated crashes that could destroy unsaved work.'],
-  ['Voy a registrar la versión y el paso exacto en el que se cierra.','I am going to record the version and the exact step where it closes.','Use verified product guidance for updates or recovery. Reinstallation can remove locally stored data.']
- ],[['La aplicación se cierra sola.','The app closes by itself.'],['Se cierra cuando intento adjuntar una foto.','It closes when I try to attach a photo.'],['Ya guardé lo que pude. Sigue cerrándose al adjuntar la foto.','I saved what I could. It still closes when I attach the photo.']],
- ['Identify the action, app version, device, and when the problem began.','Protect unsaved work and follow the product’s least disruptive approved checks.','Capture the reproducible steps and escalate with the observed result if unresolved.'],
- {prompt:'The app contains unsynced notes. Should you immediately uninstall it?',options:[['Sí, eliminar datos siempre es inofensivo.','Yes, deleting data is always harmless.'],['Sí, sin explicar el efecto.','Yes, without explaining the effect.'],['Primero verifique las opciones de copia o recuperación y los efectos de eliminarla.','First verify backup or recovery options and the effects of removal.']],answer:2,why:'Reinstallation may remove local data. Confirm the product-specific consequences and customer agreement before disruptive actions.'},
- 'Say: The app closes when I try to attach a photo.','La aplicación se cierra cuando intento adjuntar una foto.','Se cierra describes it closing; intento adjuntar means I try to attach.',
- 'The crash happens only with one file. Ask about the file type and size without requesting private content.'),
- lab('notifications','TSR practice labs','Notifications do not arrive','Distinguish message delivery from notification display and sound.',[
-  ['¿El mensaje aparece cuando abre la aplicación?','Does the message appear when you open the app?','If the message is present, delivery and notification display may be separate issues.'],
-  ['¿Falta el aviso en pantalla, el sonido o ambos?','Is the on-screen alert missing, the sound, or both?','Ask which signal is missing before changing settings.'],
-  ['Revisemos los permisos de notificación de esta aplicación.','Let us review this app’s notification permissions.','Use instructions for the actual device; avoid turning off unrelated security controls.']
- ],[['No me llegan los mensajes.','My messages are not coming through.'],['Sí aparecen al abrir la aplicación.','They do appear when I open the app.'],['No veo el aviso ni escucho el sonido.','I do not see the alert or hear the sound.']],
- ['Check whether content arrives inside the app.','Clarify whether visual alerts, sound, or both are missing.','Review relevant app and device notification settings, then test with a non-sensitive message.'],
- {prompt:'Messages are present inside the app but no alert appears. What should you investigate next?',options:[['Los permisos y modos de notificación del dispositivo.','Notification permissions and relevant device notification modes.'],['Suponga que se borraron todos los mensajes.','Assume all messages were deleted.'],['Pida que compre un teléfono nuevo.','Ask the customer to buy a new phone.']],answer:0,why:'The observed problem concerns alerts. Focus on that layer before proposing unrelated or costly actions.'},
- 'Ask: Does the message appear when you open the app?','¿El mensaje aparece cuando abre la aplicación?','Abre is the usted form here. The question helps separate delivery from notification behavior.',
- 'Only sound is missing; the on-screen alert works. Ask a narrower follow-up and explain what you will test.'),
- lab('audio','TSR practice labs','The customer cannot be heard on a call','Check the direction of the audio problem and the selected microphone.',[
-  ['¿Usted no escucha a la otra persona, o la otra persona no le escucha?','Can you not hear the other person, or can the other person not hear you?','Separate incoming sound from outgoing microphone audio.'],
-  ['¿Qué micrófono está seleccionado en la aplicación?','Which microphone is selected in the app?','A connected headset and the built-in microphone may be different inputs.'],
-  ['Hagamos una prueba breve con el micrófono seleccionado.','Let us run a brief test with the selected microphone.','Explain the test and use non-sensitive speech; do not claim permission alone guarantees working audio.']
- ],[['No funciona el audio de la llamada.','The call audio does not work.'],['Yo escucho, pero la otra persona no me escucha.','I can hear, but the other person cannot hear me.'],['Aparece el micrófono del equipo, pero estoy usando audífonos con micrófono.','The built-in microphone appears, but I am using a headset.']],
- ['Identify whether input, output, or both are affected.','Check mute status, selected input, and relevant app permission using the correct product instructions.','After an agreed change, test the same call function and ask the customer to report the result.'],
- {prompt:'The customer hears others, but others cannot hear the customer. Which path should you investigate first?',options:[['Solo el brillo de la pantalla.','Only the screen brightness.'],['La entrada del micrófono, el silencio y el permiso.','Microphone input, mute status, and permission.'],['Solo el volumen de los altavoces.','Only speaker volume.']],answer:1,why:'The reported direction points to outgoing audio. Speaker volume controls incoming sound and does not explain this symptom by itself.'},
- 'Ask: Which microphone is selected in the app?','¿Qué micrófono está seleccionado en la aplicación?','Está seleccionado describes a selection state. Micrófono needs its written accent.',
- 'Reverse the situation: the customer cannot hear others, but others hear them. Ask about the selected speaker or headset output.'),
- lab('sync','TSR practice labs','A file is missing on the second device','Distinguish local saving, synchronization, and backup.',[
-  ['¿El archivo sigue visible en el dispositivo original?','Is the file still visible on the original device?','Locate the known copy before changing or deleting anything.'],
-  ['¿Ambos dispositivos usan la misma cuenta?','Do both devices use the same account?','Ask the customer to check the account through the approved interface; do not request a password.'],
-  ['Antes de hacer cambios, confirmemos dónde está guardada la copia disponible.','Before making changes, let us confirm where the available copy is saved.','Sync can propagate changes or deletions. Do not assume it is an independent backup.']
- ],[['Guardé el archivo, pero no aparece en mi otro equipo.','I saved the file, but it does not appear on my other device.'],['Sí, todavía lo veo en el primer equipo.','Yes, I can still see it on the first device.'],['No estoy seguro de que sea la misma cuenta.','I am not sure it is the same account.']],
- ['Identify the available copy and avoid actions that might remove it.','Compare account, save location, and sync status using verified product guidance.','Confirm the file appears on the target device before declaring success.'],
- {prompt:'A file exists locally but is missing on another device. What should you avoid?',options:[['Comprobar la cuenta en ambos dispositivos.','Checking the account on both devices.'],['Comprobar dónde se guardó el archivo.','Checking the file’s saved location.'],['Borrar la única copia conocida para forzar la sincronización.','Deleting the only known copy to force synchronization.']],answer:2,why:'Preserve the available copy. Deleting it may lose data or propagate deletion rather than repair synchronization.'},
- 'Ask: Do both devices use the same account?','¿Ambos dispositivos usan la misma cuenta?','Ambos means both. Usan is plural because dispositivos is plural.',
- 'The accounts match, but the file was saved in a local folder. Explain the difference without promising that every folder syncs automatically.'),
- lab('bug-report','TSR practice labs','Escalate a reproducible bug','Turn a vague complaint into a useful technical report and customer update.',[
-  ['¿Qué esperaba que ocurriera y qué ocurrió en realidad?','What did you expect to happen, and what actually happened?','Capture expected versus actual behavior before naming the cause.'],
-  ['¿Puede indicar los pasos sin incluir datos privados?','Can you describe the steps without including private information?','Use a non-sensitive test example or redacted evidence.'],
-  ['Enviaré los pasos y el resultado al equipo técnico; aún no hay una fecha de solución confirmada.','I will send the steps and result to the technical team; there is no confirmed fix date yet.','A useful escalation includes environment, version, steps, impact, and attempted checks.']
- ],[['El botón Guardar no sirve.','The Save button does not work.'],['Esperaba guardar el formulario, pero vuelve a la página anterior.','I expected to save the form, but it returns to the previous page.'],['Abro el formulario, completo los campos y pulso Guardar. Pasa siempre.','I open the form, fill in the fields, and press Save. It happens every time.']],
- ['Record the expected behavior, actual result, frequency, and impact.','Gather reproducible steps and the relevant environment without credentials or private form contents.','Route to the correct owner, give a case reference when available, and distinguish an update from a fix promise.'],
- {prompt:'The issue is reproducible, but the technical team has not estimated a fix. What should you tell the customer?',options:[['Documentaré el problema y confirmaré el proceso de seguimiento disponible.','I will document the issue and confirm the available follow-up process.'],['Seguro que estará resuelto mañana.','It will definitely be fixed tomorrow.'],['El cliente causó el error.','The customer caused the bug.']],answer:0,why:'Communicate what you can verify and own the handoff. Reproduction alone does not establish blame or a repair deadline.'},
- 'Ask: What did you expect to happen?','¿Qué esperaba que ocurriera?','Esperaba que uses ocurriera here to describe an expected outcome. Keep observed behavior separate from a guessed cause.',
- 'Write a four-line bug summary in Spanish: expected result, actual result, reproduction steps, and next owner. Practice saying it without reading.')
-,
- lab('interruptions','CSR practice labs','Guide a conversation without talking over the customer','Listen fully, ask permission to clarify, and bring the conversation back to one useful question.',[
-  ['Quiero asegurarme de entenderle antes de continuar.','I want to make sure I understand you before continuing.','Signal attention rather than competing for the speaking turn.'],
-  ['Disculpe la interrupción. ¿Puedo confirmar un detalle?','Sorry for interrupting. May I confirm one detail?','Use a brief interruption only when necessary; then let the customer answer.'],
-  ['Gracias. Entonces, revisaremos primero ese cargo.','Thank you. Then we will review that charge first.','Summarize the agreed focus; do not silently drop the other concerns.']
- ],[['Ya llamé, mandé un correo y nadie me explica qué pasó.','I already called and sent an email, and nobody explains what happened.'],['Además, tengo dos facturas y no sé cuál pagué.','Also, I have two bills and do not know which one I paid.'],['Sí. Lo que más me preocupa es el cargo de la última factura.','Yes. What worries me most is the charge on the latest bill.']],
- ['Let the customer finish a thought and acknowledge the concern.','Ask permission for one clarification that identifies the priority.','Confirm that priority and record any remaining questions for later.'],
- {prompt:'The customer is describing several concerns at once. Which response best helps you focus?',options:[['Tiene que dejar de hablar.','You have to stop talking.'],['¿Puedo confirmar qué le preocupa más en este momento?','May I confirm what concerns you most right now?'],['Voy a ignorar las otras preguntas.','I am going to ignore the other questions.']],answer:1,why:'A respectful clarification gives the customer a role in setting the priority. It neither dismisses their concerns nor demands silence.'},
- 'Ask: May I confirm one detail?','¿Puedo confirmar un detalle?','Puedo confirmar asks for permission to clarify. Use it with a calm pause, not as a repeated interruption.',
- 'A customer switches from a charge dispute to a service outage. Ask which problem needs attention first, then summarize both concerns.'),
- lab('language-repair','CSR practice labs','Recover when you miss a word or switch languages','Ask for clarification without blaming an accent, and confirm the preferred language.',[
-  ['Disculpe, no alcancé a escuchar la última parte.','Sorry, I did not catch the last part.','Describe what you missed without criticizing how the customer speaks.'],
-  ['¿Podría decirlo de otra manera, por favor?','Could you say it another way, please?','A paraphrase can help more than repeated requests to speak louder.'],
-  ['Podemos continuar en español. Le pediré que confirme los datos importantes.','We can continue in Spanish. I will ask you to confirm important details.','Use this when you can provide service in Spanish; follow the approved language-assistance route when needed.']
- ],[['Lo que necesito es aclarar ese cobro.','What I need is to clarify that charge.'],['El que salió después del cambio de plan.','The one that appeared after the plan change.'],['Quiero saber por qué me cobraron después del cambio. Prefiero hablar en español.','I want to know why I was charged after the change. I prefer to speak Spanish.']],
- ['Identify the particular word, number, or part you missed.','Ask for repetition or rephrasing and summarize your understanding.','Respect the language preference and use qualified help if the case exceeds your language ability.'],
- {prompt:'You are unsure whether the customer said fifteen or fifty. What is the best response?',options:[['¿Dijo quince o cincuenta? Quiero confirmar el importe.','Did you say fifteen or fifty? I want to confirm the amount.'],['Voy a suponer que dijo cincuenta.','I am going to assume you said fifty.'],['Su acento es el problema.','Your accent is the problem.']],answer:0,why:'Confirm the specific ambiguity. Guessing can change an account action, and blaming an accent does not resolve it.'},
- 'Ask: Could you say it another way, please?','¿Podría decirlo de otra manera, por favor?','Podría softens the request. Decirlo means to say it; de otra manera means another way.',
- 'Practice reading back a date, amount, and case number. Ask the customer to correct any detail you misunderstood.'),
- lab('accessible-help','CSR practice labs','Adapt your instructions to the customer','Offer a workable pace and channel without assuming ability or confidence with technology.',[
-  ['¿Prefiere que vayamos paso a paso?','Would you prefer that we go step by step?','Offer support without describing the customer as slow or incapable.'],
-  ['Dígame qué opciones aparecen y revisamos una a la vez.','Tell me which options appear, and we will review one at a time.','Use the customer’s actual interface instead of assuming they see your screen.'],
-  ['Podemos buscar otra forma de completar el proceso.','We can look for another way to complete the process.','Check which accessible or assisted routes are actually available; do not bypass required verification.']
- ],[['No entiendo estas instrucciones.','I do not understand these instructions.'],['Sí, por favor. Hay demasiadas opciones.','Yes, please. There are too many options.'],['No puedo usar ese método de verificación.','I cannot use that verification method.']],
- ['Ask about the preferred pace or communication method.','Give one instruction, then wait for the customer to report the result.','If a method is unusable, check approved alternatives while preserving the required protections.'],
- {prompt:'The customer cannot use the usual verification method. What should you do?',options:[['Omita la verificación para cualquier cambio de cuenta.','Skip verification for every account change.'],['Repita las mismas instrucciones más rápido.','Repeat the same instructions faster.'],['Compruebe qué métodos alternativos autorizados están disponibles.','Check which approved alternative methods are available.']],answer:2,why:'Find a usable approved route. Neither rushing nor bypassing verification addresses the actual need.'},
- 'Say: We can look for another way to complete the process.','Podemos buscar otra forma de completar el proceso.','Podemos buscar offers exploration, not a guarantee that a particular alternative exists.',
- 'Rewrite three long instructions as three short sentences. After each sentence, add a question that checks what the customer sees.'),
- lab('unresolved-close','CSR practice labs','Close an unresolved contact with a clear plan','State what remains unresolved, who owns the next step, and how the customer can follow up.',[
-  ['El problema aún no está resuelto. Este es el siguiente paso.','The problem is not resolved yet. This is the next step.','Do not label a case resolved simply because you are ending the conversation.'],
-  ['El equipo de facturación revisará los cargos que identificamos.','The billing team will review the charges we identified.','Use a named owner only when the handoff has been arranged through the real process.'],
-  ['Le daré el número de caso y confirmaré cómo consultar las novedades.','I will give you the case number and confirm how to check for updates.','Distinguish a way to check status from a guaranteed resolution time.']
- ],[['Entonces, ¿ya está solucionado?','So, is it solved now?'],['¿Quién va a revisarlo?','Who is going to review it?'],['¿Cómo sabré si hay una respuesta?','How will I know if there is a response?']],
- ['Summarize what was checked and what remains open.','Identify the confirmed next owner and action.','Provide the actual case reference and available follow-up method; ask the customer to repeat the next step in their own words.'],
- {prompt:'The investigation is open and there is no confirmed deadline. Which close is accurate?',options:[['Todo está resuelto.','Everything is resolved.'],['El caso sigue abierto; le explicaré cómo consultar el estado.','The case is still open; I will explain how to check its status.'],['Mañana estará solucionado sin falta.','It will definitely be solved tomorrow.']],answer:1,why:'A clear unresolved close gives ownership and a follow-up path without changing the actual case status or inventing a deadline.'},
- 'Say: The problem is not resolved yet.','El problema aún no está resuelto.','Problema is masculine despite ending in -a, so use resuelto. Aún means still or yet.',
- 'Close an unresolved technical case in three sentences: current status, next owner, and verified follow-up route.'),
- lab('failed-fix','TSR practice labs','The suggested fix did not work','Acknowledge the failed attempt, record its result, and choose a different evidence-based check.',[
-  ['Gracias por probarlo. Veo que el problema continúa.','Thank you for trying it. I see that the problem continues.','A failed test is useful information; do not blame the customer for the result.'],
-  ['No repetiremos ese paso sin una razón concreta.','We will not repeat that step without a specific reason.','If a repeat is justified by new conditions, explain what is different.'],
-  ['Voy a revisar qué otra prueba nos ayudaría a identificar la causa.','I am going to review which other test would help us identify the cause.','Choose a relevant comparison rather than stacking unrelated changes.']
- ],[['Lo reinicié y sigue igual.','I restarted it and it is still the same.'],['Ya lo hice tres veces.','I have already done it three times.'],['¿Qué podemos intentar ahora?','What can we try now?']],
- ['Confirm what was tried and the exact result.','Record the failed step so the next person does not repeat it unnecessarily.','Choose a relevant new check or escalate when the approved troubleshooting path is exhausted.'],
- {prompt:'Three restarts have produced the same result. What is the best next action?',options:[['Registre el resultado y elija otra comprobación pertinente.','Record the result and select a different relevant check.'],['Reinicie indefinidamente.','Restart indefinitely.'],['Dígale al cliente que el problema debe estar resuelto.','Tell the customer the problem must be solved.']],answer:0,why:'Repeated unchanged results call for a new justified check or escalation, not an endless loop.'},
- 'Say: Thank you for trying it. The problem continues.','Gracias por probarlo. El problema continúa.','Probarlo means to try or test it. Continúa has an accent and means it continues.',
- 'A browser change also failed. Summarize both failed checks in Spanish and explain why you are escalating.'),
- lab('feature-availability','TSR practice labs','A feature is missing from the screen','Check product version, account eligibility, and the visible interface before calling it a fault.',[
-  ['¿Qué función esperaba encontrar?','Which feature did you expect to find?','Ask about the intended task as well as the feature’s name.'],
-  ['Voy a comprobar si está disponible en su versión y en su plan.','I am going to check whether it is available in your version and plan.','A missing option can reflect availability or account permissions, not necessarily a bug.'],
-  ['Antes de cambiar algo, le explicaré las opciones que sí están disponibles.','Before changing anything, I will explain the options that are available.','Do not silently upgrade a plan or grant access merely to expose a feature.']
- ],[['No encuentro el botón que aparece en el tutorial.','I cannot find the button shown in the tutorial.'],['Quiero exportar el informe.','I want to export the report.'],['Uso una versión diferente a la del video.','I use a different version from the one in the video.']],
- ['Clarify the task and the expected option.','Check the actual version, account role, and plan against current product guidance.','Explain a supported route or verified limitation, then confirm the customer’s choice before any account change.'],
- {prompt:'A tutorial shows a button that the customer does not see. What should you check first?',options:[['Suponga que el cliente borró el botón.','Assume the customer deleted the button.'],['Compre un plan superior sin preguntar.','Buy a higher plan without asking.'],['Compare la versión del producto y los requisitos de acceso a la función.','Compare the product version and feature eligibility.']],answer:2,why:'Confirm the environment and availability first. The tutorial may describe a different version or account capability.'},
- 'Ask: Which feature did you expect to find?','¿Qué función esperaba encontrar?','Función means feature here; it does not refer to a mathematical function in this context.',
- 'The feature is unavailable in the current plan. Explain a supported alternative without promising that an upgrade is necessary or sufficient.'),
- lab('evidence','TSR practice labs','Request useful evidence without private details','Describe exactly what a screenshot or error report should include and what to omit.',[
-  ['Necesito ver el mensaje de error, no sus datos personales.','I need to see the error message, not your personal details.','Request only evidence relevant to this case.'],
-  ['Antes de enviarlo, oculte los datos privados que aparezcan.','Before sending it, hide any private details that appear.','Use the approved upload channel; do not ask for passwords, sign-in codes, or private documents.'],
-  ['Si no puede enviar una captura, puede escribir el mensaje exacto.','If you cannot send a screenshot, you can type the exact message.','Offer a text alternative when an image is unnecessary or difficult to provide.']
- ],[['¿Necesita una captura de toda la pantalla?','Do you need a screenshot of the whole screen?'],['Se ve mi dirección y parte de mi cuenta.','My address and part of my account are visible.'],['No sé cómo ocultarlos en la imagen.','I do not know how to hide them in the image.']],
- ['Specify the relevant error and the minimum evidence needed.','Ask the customer to omit private details and use the approved channel.','Offer a plain-text error description where sufficient, and confirm it accurately captures the issue.'],
- {prompt:'A screenshot would include private account details that the customer cannot hide. What is a useful alternative?',options:[['Pida que escriba el mensaje de error pertinente sin datos privados.','Ask them to type the relevant error message without private data.'],['Exija toda la pantalla de todos modos.','Demand the entire screen anyway.'],['Pida su contraseña en su lugar.','Ask for their password instead.']],answer:0,why:'A text error report may provide the needed evidence without exposing unrelated details.'},
- 'Say: You can type the exact message.','Puede escribir el mensaje exacto.','Puede escribir addresses usted; escribir stays in the infinitive. Exacto asks for the wording, not extra private content.',
- 'Explain in Spanish what to include in a bug report: the error wording, the action that triggered it, and the product version.'),
- lab('one-change','TSR practice labs','Change one thing and check the result','Explain a test’s purpose, agree on the change, and compare the same action afterward.',[
-  ['Vamos a cambiar una sola opción y comprobar el resultado.','We are going to change just one option and check the result.','A focused test makes its outcome easier to interpret.'],
-  ['Primero anotaremos la configuración actual.','First we will note the current setting.','Preserve the original value when appropriate so an approved change can be reversed.'],
-  ['Ahora intente la misma acción y dígame qué ocurre.','Now try the same action and tell me what happens.','Compare like with like; success on a different task does not establish that the original issue is fixed.']
- ],[['¿Tengo que cambiar todas estas opciones?','Do I have to change all these options?'],['¿Y si después queda peor?','What if it gets worse afterward?'],['Ya hice el cambio que acordamos.','I have made the change we agreed on.']],
- ['Explain why the specific setting is relevant and what changing it may affect.','Record the original value and obtain any required agreement before the change.','Repeat the original action, document the result, and follow the approved restore or next-step procedure.'],
- {prompt:'You changed a setting to fix file uploads. How should you confirm the result?',options:[['Solo compruebe si carga la página de inicio.','Only check whether the home page loads.'],['Repita la carga original con un archivo de prueba adecuado y no confidencial.','Repeat the original upload task with an appropriate non-sensitive test file.'],['Declare el éxito en cuanto cambie la configuración.','Declare success immediately after the setting changes.']],answer:1,why:'Test the original symptom under comparable conditions. A saved setting alone is not evidence that uploads work.'},
- 'Say: First we will note the current setting.','Primero anotaremos la configuración actual.','Actual means current here, not actual in the English sense of real. Anotaremos means we will note.',
- 'The test fails after the change. Explain the observed result and the approved next step without making another unexplained change.')
+export const serviceLabs = [
+  lab(
+    'delivery',
+    'CSR practice labs',
+    'A delivery says “delivered”—but is missing',
+    'Investigate a missing delivery without blaming the customer or promising a replacement.',
+    [
+      [
+        'Entiendo que esperaba recibirlo hoy. Revisemos la información de entrega.',
+        'I understand you expected to receive it today. Let us review the delivery information.',
+        'Acknowledge the impact before asking the customer to repeat details.',
+      ],
+      [
+        '¿La dirección que aparece en su pedido es correcta?',
+        'Is the address shown on your order correct?',
+        'Use the approved verification flow and avoid reading private details aloud unnecessarily.',
+      ],
+      [
+        'Voy a solicitar una investigación de la entrega. Aún no puedo confirmar un reemplazo.',
+        'I am going to request a delivery investigation. I cannot confirm a replacement yet.',
+        'Only offer an investigation if it is an available action. A delivery status is evidence, not proof of receipt by this customer.',
+      ],
+    ],
+    [
+      [
+        'El sistema dice entregado, pero no recibí nada.',
+        'The system says delivered, but I received nothing.',
+      ],
+      ['Necesito saber dónde está mi pedido.', 'I need to know where my order is.'],
+      [
+        'Sí, la dirección es correcta. ¿Me enviarán otro?',
+        'Yes, the address is correct. Will you send another one?',
+      ],
+    ],
+    [
+      'Confirm the order and review the delivery event through approved tools.',
+      'Ask one neutral question about the recorded address; do not imply the customer is lying.',
+      'Explain the investigation process and the next verified contact step.',
+    ],
+    {
+      prompt: 'The address is correct, but receipt is unconfirmed. Choose the best next statement.',
+      options: [
+        ['Usted debe haber perdido el paquete.', 'You must have lost the package.'],
+        [
+          'Voy a revisar las opciones de investigación disponibles.',
+          'I am going to review the available investigation options.',
+        ],
+        ['Le garantizo un reemplazo hoy.', 'I guarantee a replacement today.'],
+      ],
+      answer: 1,
+      why: 'Investigate the evidence and available process. Neither blame nor an unapproved replacement guarantee follows from the known facts.',
+    },
+    'Say: I am going to review the delivery information.',
+    'Voy a revisar la información de entrega.',
+    'Voy a + infinitive describes your next action. Entrega means delivery.',
+    'Now the customer says the address is wrong. Explain that you will check the correction options before promising a reroute.',
+  ),
+  lab(
+    'wrong-item',
+    'CSR practice labs',
+    'The customer received the wrong product',
+    'Confirm the mismatch and explain the return or replacement process clearly.',
+    [
+      [
+        'Lamento que haya recibido un producto diferente.',
+        'I am sorry you received a different product.',
+        'Haya recibido follows this expression of regret. Acknowledge what the customer reports.',
+      ],
+      [
+        '¿Qué modelo pidió y cuál recibió?',
+        'Which model did you order, and which did you receive?',
+        'Compare the order with the received item before choosing a return process.',
+      ],
+      [
+        'Voy a comprobar las opciones de cambio y explicarle los pasos.',
+        'I am going to check the exchange options and explain the steps to you.',
+        'Check eligibility, costs, and instructions; do not invent free shipping or tell the customer to discard the item.',
+      ],
+    ],
+    [
+      [
+        'Pedí unos audífonos y recibí otro modelo.',
+        'I ordered headphones and received a different model.',
+      ],
+      [
+        'Los que llegaron no son los que necesito.',
+        'The ones that arrived are not the ones I need.',
+      ],
+      [
+        'Pedí el modelo A y recibí el B. ¿Cómo lo cambio?',
+        'I ordered model A and received B. How do I exchange it?',
+      ],
+    ],
+    [
+      'Identify the expected item and received item.',
+      'Review the applicable exchange procedure and any evidence needed.',
+      'Explain one step at a time and ask the customer to confirm the next action.',
+    ],
+    {
+      prompt:
+        'You have confirmed a model mismatch but have not checked the return terms. What do you say?',
+      options: [
+        [
+          'Puede tirarlo; le enviaremos otro gratis.',
+          'You can throw it away; we will send another for free.',
+        ],
+        ['No hay nada que hacer.', 'Nothing can be done.'],
+        [
+          'Primero verificaré las condiciones del cambio.',
+          'First I will verify the exchange terms.',
+        ],
+      ],
+      answer: 2,
+      why: 'A confirmed mismatch does not establish the exact remedy or shipping conditions. Verify those before promising them.',
+    },
+    'Ask: Which model did you receive?',
+    '¿Qué modelo recibió?',
+    'Recibió is the past usted form; recibo means I receive.',
+    'The replacement option is unavailable in this fictional scenario. Offer to explain the verified alternatives without pressuring the customer.',
+  ),
+  lab(
+    'plan-fit',
+    'CSR practice labs',
+    'Compare plans without overselling',
+    'Find the customer’s need, compare relevant terms, and confirm an informed choice.',
+    [
+      [
+        '¿Qué necesita hacer con el servicio?',
+        'What do you need to do with the service?',
+        'Start with the task the customer needs, not the most expensive plan.',
+      ],
+      [
+        'Comparemos el precio, lo que incluye y las condiciones de renovación.',
+        'Let us compare the price, what is included, and the renewal terms.',
+        'Mention relevant recurring charges and restrictions from the actual plan information.',
+      ],
+      [
+        'No cambiaré su plan hasta que confirme la opción que prefiere.',
+        'I will not change your plan until you confirm the option you prefer.',
+        'Asking about a plan is not permission to change it.',
+      ],
+    ],
+    [
+      ['Quiero un plan más barato.', 'I want a cheaper plan.'],
+      ['Solo uso el servicio para mensajes.', 'I only use the service for messages.'],
+      [
+        '¿Me puede explicar las opciones antes de cambiarlo?',
+        'Can you explain the options before changing it?',
+      ],
+    ],
+    [
+      'Ask which features matter and what the customer wants to spend.',
+      'Compare only verified prices, features, limitations, and renewal conditions.',
+      'Restate the chosen option and obtain the required confirmation before any change.',
+    ],
+    {
+      prompt: 'The customer asks whether a cheaper plan exists. What is the appropriate action?',
+      options: [
+        [
+          'Explique las opciones verificadas y espere la elección del cliente.',
+          'Explain verified options and wait for the customer’s choice.',
+        ],
+        [
+          'Cambie el plan de inmediato porque más barato siempre es mejor.',
+          'Switch immediately because cheaper is always better.',
+        ],
+        ['Evite mencionar las limitaciones.', 'Avoid mentioning limitations.'],
+      ],
+      answer: 0,
+      why: 'The customer needs a comparison, not an automatic account change. Explain limitations and confirm the choice.',
+    },
+    'Ask: What do you need to do with the service?',
+    '¿Qué necesita hacer con el servicio?',
+    'Necesita hacer combines a conjugated verb and an infinitive. Keep the question open.',
+    'The cheaper plan lacks a feature the customer uses. Explain that tradeoff and let the customer decide.',
+  ),
+  lab(
+    'supervisor',
+    'CSR practice labs',
+    'Handle a supervisor request professionally',
+    'Acknowledge the request, explain the escalation path, and preserve the customer’s story.',
+    [
+      [
+        'Entiendo que desea hablar con un supervisor.',
+        'I understand you would like to speak with a supervisor.',
+        'Do not argue about whether the customer deserves escalation.',
+      ],
+      [
+        'Voy a comprobar la disponibilidad y explicarle cómo continuar.',
+        'I am going to check availability and explain how to proceed.',
+        'Do not claim immediate availability if you have not verified it.',
+      ],
+      [
+        'Dejaré un resumen de su solicitud para que no tenga que repetir todo.',
+        'I will leave a summary of your request so you do not have to repeat everything.',
+        'Document the facts and desired outcome; follow the actual handoff process.',
+      ],
+    ],
+    [
+      ['Quiero hablar con su supervisor.', 'I want to speak with your supervisor.'],
+      ['No quiero volver a explicar el problema.', 'I do not want to explain the problem again.'],
+      ['¿La otra persona sabrá lo que pasó?', 'Will the other person know what happened?'],
+    ],
+    [
+      'Acknowledge the requested escalation without becoming defensive.',
+      'Check the approved route and actual availability.',
+      'Summarize the issue, previous actions, and requested outcome for the next owner.',
+    ],
+    {
+      prompt: 'No supervisor is immediately available. Which statement is best?',
+      options: [
+        ['No puede hablar con nadie más.', 'You cannot speak with anyone else.'],
+        [
+          'Voy a verificar las opciones de seguimiento disponibles.',
+          'I am going to verify the available follow-up options.',
+        ],
+        ['Le llamarán en cinco minutos, seguro.', 'They will definitely call you in five minutes.'],
+      ],
+      answer: 1,
+      why: 'Check the real follow-up process. Neither blocking escalation nor inventing a callback promise is justified.',
+    },
+    'Say: I understand you would like to speak with a supervisor.',
+    'Entiendo que desea hablar con un supervisor.',
+    'Desea is a courteous usted form. Acknowledge the request without promising the supervisor’s decision.',
+    'Practice summarizing a disputed charge for the supervisor in two sentences: what the customer reports and what has been checked.',
+  ),
+  lab(
+    'callback',
+    'CSR practice labs',
+    'Arrange a callback precisely',
+    'Confirm the contact route, date, time zone, and reason for follow-up.',
+    [
+      [
+        '¿En qué horario puede recibir la llamada?',
+        'At what time can you receive the call?',
+        'Offer only the scheduling options actually supported by your team.',
+      ],
+      [
+        '¿A qué zona horaria se refiere?',
+        'Which time zone do you mean?',
+        'Do not assume that you and the customer share a time zone.',
+      ],
+      [
+        'Voy a confirmar la disponibilidad antes de programarla.',
+        'I am going to confirm availability before scheduling it.',
+        'A requested time is not a confirmed appointment.',
+      ],
+    ],
+    [
+      ['¿Me pueden llamar mañana por la tarde?', 'Can you call me tomorrow afternoon?'],
+      ['A las tres estaría bien.', 'Three o’clock would work.'],
+      ['A la hora de Ciudad de México.', 'Mexico City time.'],
+    ],
+    [
+      'Ask for a suitable time and verify the approved callback channel.',
+      'State the calendar date, time, and named time zone unambiguously.',
+      'Check availability, confirm only the booked arrangement, and document its purpose.',
+    ],
+    {
+      prompt: 'The customer says “tomorrow at three.” What still needs clarification?',
+      options: [
+        [
+          'Nada; prográmela en su propia zona horaria.',
+          'Nothing; schedule it in your own time zone.',
+        ],
+        ['Pida su contraseña.', 'Ask for their password.'],
+        [
+          'Confirme la fecha, si es por la mañana o por la tarde, y la zona horaria.',
+          'Confirm the date, morning or afternoon, and time zone.',
+        ],
+      ],
+      answer: 2,
+      why: 'Relative dates and unqualified times can cause missed calls. Clarify them before booking.',
+    },
+    'Ask: Which time zone do you mean?',
+    '¿A qué zona horaria se refiere?',
+    'Referirse a means to refer to. Do not compute an offset from memory when booking a real call.',
+    'The requested time is unavailable. Offer two verified alternatives and ask which works, without booking either prematurely.',
+  ),
+  lab(
+    'currency',
+    'CSR practice labs',
+    'Resolve a confusing amount',
+    'Confirm currency, decimal amounts, billing period, and the customer’s concern.',
+    [
+      [
+        'Para evitar confusiones, ¿en qué moneda aparece el importe?',
+        'To avoid confusion, in which currency does the amount appear?',
+        'A currency symbol alone may be ambiguous. Ask for the currency name.',
+      ],
+      [
+        '¿Ese total corresponde a un mes o a varios meses?',
+        'Does that total cover one month or several months?',
+        'Separate billing period from payment date.',
+      ],
+      [
+        'Voy a comparar el total con el desglose de ese período.',
+        'I am going to compare the total with the breakdown for that period.',
+        'Read decimals and currency clearly; do not assume that punctuation conventions match yours.',
+      ],
+    ],
+    [
+      [
+        'Me dijeron cien, pero veo doscientos en la factura.',
+        'They told me one hundred, but I see two hundred on the bill.',
+      ],
+      ['Aparece en pesos mexicanos.', 'It appears in Mexican pesos.'],
+      ['Parece que incluye dos meses.', 'It looks like it includes two months.'],
+    ],
+    [
+      'Confirm the currency and full amount.',
+      'Check the exact dates covered and each line item.',
+      'Explain the verified calculation and ask whether the difference is now clear.',
+    ],
+    {
+      prompt:
+        'The total is double the expected monthly price. What should you do before calling it an error?',
+      options: [
+        [
+          'Revise el período y el desglose de cargos.',
+          'Check the covered period and itemized charges.',
+        ],
+        ['Prometa quitar la mitad.', 'Promise to remove half of it.'],
+        ['Suponga que deben ser impuestos.', 'Assume it must be taxes.'],
+      ],
+      answer: 0,
+      why: 'The same total can have different causes. Verify the billing period and line items instead of guessing.',
+    },
+    'Ask: In which currency does the amount appear?',
+    '¿En qué moneda aparece el importe?',
+    'Moneda means currency here. Importe means amount, not import.',
+    'Explain a fictional bill of two monthly charges of one hundred Mexican pesos each. State the period and total in Spanish.',
+  ),
+  lab(
+    'slow-connection',
+    'TSR practice labs',
+    'Slow connection or complete disconnection?',
+    'Separate symptoms and isolate the affected device, location, or service.',
+    [
+      [
+        '¿La conexión es lenta o se interrumpe por completo?',
+        'Is the connection slow, or does it disconnect completely?',
+        'Different symptoms suggest different next questions.',
+      ],
+      [
+        '¿Ocurre también en otro dispositivo conectado a la misma red?',
+        'Does it also happen on another device connected to the same network?',
+        'A comparison helps narrow the scope; it does not prove a cause by itself.',
+      ],
+      [
+        'Comparemos el resultado cerca del enrutador, si puede hacerlo.',
+        'Let us compare the result near the router, if you can do so.',
+        'Check whether the comparison is practical; never insist that a customer move equipment unsafely.',
+      ],
+    ],
+    [
+      ['Internet funciona muy mal.', 'The internet works very poorly.'],
+      [
+        'Los videos tardan en cargar, pero no se desconecta.',
+        'Videos take a long time to load, but it does not disconnect.',
+      ],
+      [
+        'Solo pasa con mi teléfono cuando estoy lejos del enrutador.',
+        'It only happens on my phone when I am far from the router.',
+      ],
+    ],
+    [
+      'Clarify slow performance versus a dropped connection.',
+      'Compare another device or service while keeping track of what changed.',
+      'If location appears relevant, compare in a practical nearby location before making a diagnosis.',
+    ],
+    {
+      prompt: 'Only one phone is slow in one room. What is the best next step?',
+      options: [
+        [
+          'Restablezca todos los dispositivos de fábrica.',
+          'Restore all devices to factory settings.',
+        ],
+        [
+          'Compare la conexión del mismo teléfono en otro lugar.',
+          'Compare the same phone’s connection in another location.',
+        ],
+        ['Declare una interrupción nacional confirmada.', 'Declare a confirmed nationwide outage.'],
+      ],
+      answer: 1,
+      why: 'Change one relevant variable and observe the result. A single-device, location-dependent symptom does not establish a widespread outage.',
+    },
+    'Ask: Is the connection slow?',
+    '¿La conexión es lenta?',
+    'Lenta agrees with conexión. Ask the customer to describe the symptom before naming a cause.',
+    'Now every device fails everywhere in the home. Ask a question that distinguishes a Wi-Fi link from internet access, then check service status.',
+  ),
+  lab(
+    'app-crash',
+    'TSR practice labs',
+    'An app closes unexpectedly',
+    'Find a reproducible trigger and avoid losing local data.',
+    [
+      [
+        '¿La aplicación se cierra al abrirla o al realizar una acción específica?',
+        'Does the app close when you open it or when you perform a specific action?',
+        'The trigger is more informative than the general phrase it does not work.',
+      ],
+      [
+        'Antes de repetir la prueba, guarde los cambios que pueda.',
+        'Before repeating the test, save any changes you can.',
+        'Do not ask for repeated crashes that could destroy unsaved work.',
+      ],
+      [
+        'Voy a registrar la versión y el paso exacto en el que se cierra.',
+        'I am going to record the version and the exact step where it closes.',
+        'Use verified product guidance for updates or recovery. Reinstallation can remove locally stored data.',
+      ],
+    ],
+    [
+      ['La aplicación se cierra sola.', 'The app closes by itself.'],
+      ['Se cierra cuando intento adjuntar una foto.', 'It closes when I try to attach a photo.'],
+      [
+        'Ya guardé lo que pude. Sigue cerrándose al adjuntar la foto.',
+        'I saved what I could. It still closes when I attach the photo.',
+      ],
+    ],
+    [
+      'Identify the action, app version, device, and when the problem began.',
+      'Protect unsaved work and follow the product’s least disruptive approved checks.',
+      'Capture the reproducible steps and escalate with the observed result if unresolved.',
+    ],
+    {
+      prompt: 'The app contains unsynced notes. Should you immediately uninstall it?',
+      options: [
+        ['Sí, eliminar datos siempre es inofensivo.', 'Yes, deleting data is always harmless.'],
+        ['Sí, sin explicar el efecto.', 'Yes, without explaining the effect.'],
+        [
+          'Primero verifique las opciones de copia o recuperación y los efectos de eliminarla.',
+          'First verify backup or recovery options and the effects of removal.',
+        ],
+      ],
+      answer: 2,
+      why: 'Reinstallation may remove local data. Confirm the product-specific consequences and customer agreement before disruptive actions.',
+    },
+    'Say: The app closes when I try to attach a photo.',
+    'La aplicación se cierra cuando intento adjuntar una foto.',
+    'Se cierra describes it closing; intento adjuntar means I try to attach.',
+    'The crash happens only with one file. Ask about the file type and size without requesting private content.',
+  ),
+  lab(
+    'notifications',
+    'TSR practice labs',
+    'Notifications do not arrive',
+    'Distinguish message delivery from notification display and sound.',
+    [
+      [
+        '¿El mensaje aparece cuando abre la aplicación?',
+        'Does the message appear when you open the app?',
+        'If the message is present, delivery and notification display may be separate issues.',
+      ],
+      [
+        '¿Falta el aviso en pantalla, el sonido o ambos?',
+        'Is the on-screen alert missing, the sound, or both?',
+        'Ask which signal is missing before changing settings.',
+      ],
+      [
+        'Revisemos los permisos de notificación de esta aplicación.',
+        'Let us review this app’s notification permissions.',
+        'Use instructions for the actual device; avoid turning off unrelated security controls.',
+      ],
+    ],
+    [
+      ['No me llegan los mensajes.', 'My messages are not coming through.'],
+      ['Sí aparecen al abrir la aplicación.', 'They do appear when I open the app.'],
+      ['No veo el aviso ni escucho el sonido.', 'I do not see the alert or hear the sound.'],
+    ],
+    [
+      'Check whether content arrives inside the app.',
+      'Clarify whether visual alerts, sound, or both are missing.',
+      'Review relevant app and device notification settings, then test with a non-sensitive message.',
+    ],
+    {
+      prompt:
+        'Messages are present inside the app but no alert appears. What should you investigate next?',
+      options: [
+        [
+          'Los permisos y modos de notificación del dispositivo.',
+          'Notification permissions and relevant device notification modes.',
+        ],
+        ['Suponga que se borraron todos los mensajes.', 'Assume all messages were deleted.'],
+        ['Pida que compre un teléfono nuevo.', 'Ask the customer to buy a new phone.'],
+      ],
+      answer: 0,
+      why: 'The observed problem concerns alerts. Focus on that layer before proposing unrelated or costly actions.',
+    },
+    'Ask: Does the message appear when you open the app?',
+    '¿El mensaje aparece cuando abre la aplicación?',
+    'Abre is the usted form here. The question helps separate delivery from notification behavior.',
+    'Only sound is missing; the on-screen alert works. Ask a narrower follow-up and explain what you will test.',
+  ),
+  lab(
+    'audio',
+    'TSR practice labs',
+    'The customer cannot be heard on a call',
+    'Check the direction of the audio problem and the selected microphone.',
+    [
+      [
+        '¿Usted no escucha a la otra persona, o la otra persona no le escucha?',
+        'Can you not hear the other person, or can the other person not hear you?',
+        'Separate incoming sound from outgoing microphone audio.',
+      ],
+      [
+        '¿Qué micrófono está seleccionado en la aplicación?',
+        'Which microphone is selected in the app?',
+        'A connected headset and the built-in microphone may be different inputs.',
+      ],
+      [
+        'Hagamos una prueba breve con el micrófono seleccionado.',
+        'Let us run a brief test with the selected microphone.',
+        'Explain the test and use non-sensitive speech; do not claim permission alone guarantees working audio.',
+      ],
+    ],
+    [
+      ['No funciona el audio de la llamada.', 'The call audio does not work.'],
+      [
+        'Yo escucho, pero la otra persona no me escucha.',
+        'I can hear, but the other person cannot hear me.',
+      ],
+      [
+        'Aparece el micrófono del equipo, pero estoy usando audífonos con micrófono.',
+        'The built-in microphone appears, but I am using a headset.',
+      ],
+    ],
+    [
+      'Identify whether input, output, or both are affected.',
+      'Check mute status, selected input, and relevant app permission using the correct product instructions.',
+      'After an agreed change, test the same call function and ask the customer to report the result.',
+    ],
+    {
+      prompt:
+        'The customer hears others, but others cannot hear the customer. Which path should you investigate first?',
+      options: [
+        ['Solo el brillo de la pantalla.', 'Only the screen brightness.'],
+        [
+          'La entrada del micrófono, el silencio y el permiso.',
+          'Microphone input, mute status, and permission.',
+        ],
+        ['Solo el volumen de los altavoces.', 'Only speaker volume.'],
+      ],
+      answer: 1,
+      why: 'The reported direction points to outgoing audio. Speaker volume controls incoming sound and does not explain this symptom by itself.',
+    },
+    'Ask: Which microphone is selected in the app?',
+    '¿Qué micrófono está seleccionado en la aplicación?',
+    'Está seleccionado describes a selection state. Micrófono needs its written accent.',
+    'Reverse the situation: the customer cannot hear others, but others hear them. Ask about the selected speaker or headset output.',
+  ),
+  lab(
+    'sync',
+    'TSR practice labs',
+    'A file is missing on the second device',
+    'Distinguish local saving, synchronization, and backup.',
+    [
+      [
+        '¿El archivo sigue visible en el dispositivo original?',
+        'Is the file still visible on the original device?',
+        'Locate the known copy before changing or deleting anything.',
+      ],
+      [
+        '¿Ambos dispositivos usan la misma cuenta?',
+        'Do both devices use the same account?',
+        'Ask the customer to check the account through the approved interface; do not request a password.',
+      ],
+      [
+        'Antes de hacer cambios, confirmemos dónde está guardada la copia disponible.',
+        'Before making changes, let us confirm where the available copy is saved.',
+        'Sync can propagate changes or deletions. Do not assume it is an independent backup.',
+      ],
+    ],
+    [
+      [
+        'Guardé el archivo, pero no aparece en mi otro equipo.',
+        'I saved the file, but it does not appear on my other device.',
+      ],
+      ['Sí, todavía lo veo en el primer equipo.', 'Yes, I can still see it on the first device.'],
+      ['No estoy seguro de que sea la misma cuenta.', 'I am not sure it is the same account.'],
+    ],
+    [
+      'Identify the available copy and avoid actions that might remove it.',
+      'Compare account, save location, and sync status using verified product guidance.',
+      'Confirm the file appears on the target device before declaring success.',
+    ],
+    {
+      prompt: 'A file exists locally but is missing on another device. What should you avoid?',
+      options: [
+        ['Comprobar la cuenta en ambos dispositivos.', 'Checking the account on both devices.'],
+        ['Comprobar dónde se guardó el archivo.', 'Checking the file’s saved location.'],
+        [
+          'Borrar la única copia conocida para forzar la sincronización.',
+          'Deleting the only known copy to force synchronization.',
+        ],
+      ],
+      answer: 2,
+      why: 'Preserve the available copy. Deleting it may lose data or propagate deletion rather than repair synchronization.',
+    },
+    'Ask: Do both devices use the same account?',
+    '¿Ambos dispositivos usan la misma cuenta?',
+    'Ambos means both. Usan is plural because dispositivos is plural.',
+    'The accounts match, but the file was saved in a local folder. Explain the difference without promising that every folder syncs automatically.',
+  ),
+  lab(
+    'bug-report',
+    'TSR practice labs',
+    'Escalate a reproducible bug',
+    'Turn a vague complaint into a useful technical report and customer update.',
+    [
+      [
+        '¿Qué esperaba que ocurriera y qué ocurrió en realidad?',
+        'What did you expect to happen, and what actually happened?',
+        'Capture expected versus actual behavior before naming the cause.',
+      ],
+      [
+        '¿Puede indicar los pasos sin incluir datos privados?',
+        'Can you describe the steps without including private information?',
+        'Use a non-sensitive test example or redacted evidence.',
+      ],
+      [
+        'Enviaré los pasos y el resultado al equipo técnico; aún no hay una fecha de solución confirmada.',
+        'I will send the steps and result to the technical team; there is no confirmed fix date yet.',
+        'A useful escalation includes environment, version, steps, impact, and attempted checks.',
+      ],
+    ],
+    [
+      ['El botón Guardar no sirve.', 'The Save button does not work.'],
+      [
+        'Esperaba guardar el formulario, pero vuelve a la página anterior.',
+        'I expected to save the form, but it returns to the previous page.',
+      ],
+      [
+        'Abro el formulario, completo los campos y pulso Guardar. Pasa siempre.',
+        'I open the form, fill in the fields, and press Save. It happens every time.',
+      ],
+    ],
+    [
+      'Record the expected behavior, actual result, frequency, and impact.',
+      'Gather reproducible steps and the relevant environment without credentials or private form contents.',
+      'Route to the correct owner, give a case reference when available, and distinguish an update from a fix promise.',
+    ],
+    {
+      prompt:
+        'The issue is reproducible, but the technical team has not estimated a fix. What should you tell the customer?',
+      options: [
+        [
+          'Documentaré el problema y confirmaré el proceso de seguimiento disponible.',
+          'I will document the issue and confirm the available follow-up process.',
+        ],
+        ['Seguro que estará resuelto mañana.', 'It will definitely be fixed tomorrow.'],
+        ['El cliente causó el error.', 'The customer caused the bug.'],
+      ],
+      answer: 0,
+      why: 'Communicate what you can verify and own the handoff. Reproduction alone does not establish blame or a repair deadline.',
+    },
+    'Ask: What did you expect to happen?',
+    '¿Qué esperaba que ocurriera?',
+    'Esperaba que uses ocurriera here to describe an expected outcome. Keep observed behavior separate from a guessed cause.',
+    'Write a four-line bug summary in Spanish: expected result, actual result, reproduction steps, and next owner. Practice saying it without reading.',
+  ),
+  lab(
+    'interruptions',
+    'CSR practice labs',
+    'Guide a conversation without talking over the customer',
+    'Listen fully, ask permission to clarify, and bring the conversation back to one useful question.',
+    [
+      [
+        'Quiero asegurarme de entenderle antes de continuar.',
+        'I want to make sure I understand you before continuing.',
+        'Signal attention rather than competing for the speaking turn.',
+      ],
+      [
+        'Disculpe la interrupción. ¿Puedo confirmar un detalle?',
+        'Sorry for interrupting. May I confirm one detail?',
+        'Use a brief interruption only when necessary; then let the customer answer.',
+      ],
+      [
+        'Gracias. Entonces, revisaremos primero ese cargo.',
+        'Thank you. Then we will review that charge first.',
+        'Summarize the agreed focus; do not silently drop the other concerns.',
+      ],
+    ],
+    [
+      [
+        'Ya llamé, mandé un correo y nadie me explica qué pasó.',
+        'I already called and sent an email, and nobody explains what happened.',
+      ],
+      [
+        'Además, tengo dos facturas y no sé cuál pagué.',
+        'Also, I have two bills and do not know which one I paid.',
+      ],
+      [
+        'Sí. Lo que más me preocupa es el cargo de la última factura.',
+        'Yes. What worries me most is the charge on the latest bill.',
+      ],
+    ],
+    [
+      'Let the customer finish a thought and acknowledge the concern.',
+      'Ask permission for one clarification that identifies the priority.',
+      'Confirm that priority and record any remaining questions for later.',
+    ],
+    {
+      prompt:
+        'The customer is describing several concerns at once. Which response best helps you focus?',
+      options: [
+        ['Tiene que dejar de hablar.', 'You have to stop talking.'],
+        [
+          '¿Puedo confirmar qué le preocupa más en este momento?',
+          'May I confirm what concerns you most right now?',
+        ],
+        ['Voy a ignorar las otras preguntas.', 'I am going to ignore the other questions.'],
+      ],
+      answer: 1,
+      why: 'A respectful clarification gives the customer a role in setting the priority. It neither dismisses their concerns nor demands silence.',
+    },
+    'Ask: May I confirm one detail?',
+    '¿Puedo confirmar un detalle?',
+    'Puedo confirmar asks for permission to clarify. Use it with a calm pause, not as a repeated interruption.',
+    'A customer switches from a charge dispute to a service outage. Ask which problem needs attention first, then summarize both concerns.',
+  ),
+  lab(
+    'language-repair',
+    'CSR practice labs',
+    'Recover when you miss a word or switch languages',
+    'Ask for clarification without blaming an accent, and confirm the preferred language.',
+    [
+      [
+        'Disculpe, no alcancé a escuchar la última parte.',
+        'Sorry, I did not catch the last part.',
+        'Describe what you missed without criticizing how the customer speaks.',
+      ],
+      [
+        '¿Podría decirlo de otra manera, por favor?',
+        'Could you say it another way, please?',
+        'A paraphrase can help more than repeated requests to speak louder.',
+      ],
+      [
+        'Podemos continuar en español. Le pediré que confirme los datos importantes.',
+        'We can continue in Spanish. I will ask you to confirm important details.',
+        'Use this when you can provide service in Spanish; follow the approved language-assistance route when needed.',
+      ],
+    ],
+    [
+      ['Lo que necesito es aclarar ese cobro.', 'What I need is to clarify that charge.'],
+      ['El que salió después del cambio de plan.', 'The one that appeared after the plan change.'],
+      [
+        'Quiero saber por qué me cobraron después del cambio. Prefiero hablar en español.',
+        'I want to know why I was charged after the change. I prefer to speak Spanish.',
+      ],
+    ],
+    [
+      'Identify the particular word, number, or part you missed.',
+      'Ask for repetition or rephrasing and summarize your understanding.',
+      'Respect the language preference and use qualified help if the case exceeds your language ability.',
+    ],
+    {
+      prompt:
+        'You are unsure whether the customer said fifteen or fifty. What is the best response?',
+      options: [
+        [
+          '¿Dijo quince o cincuenta? Quiero confirmar el importe.',
+          'Did you say fifteen or fifty? I want to confirm the amount.',
+        ],
+        ['Voy a suponer que dijo cincuenta.', 'I am going to assume you said fifty.'],
+        ['Su acento es el problema.', 'Your accent is the problem.'],
+      ],
+      answer: 0,
+      why: 'Confirm the specific ambiguity. Guessing can change an account action, and blaming an accent does not resolve it.',
+    },
+    'Ask: Could you say it another way, please?',
+    '¿Podría decirlo de otra manera, por favor?',
+    'Podría softens the request. Decirlo means to say it; de otra manera means another way.',
+    'Practice reading back a date, amount, and case number. Ask the customer to correct any detail you misunderstood.',
+  ),
+  lab(
+    'accessible-help',
+    'CSR practice labs',
+    'Adapt your instructions to the customer',
+    'Offer a workable pace and channel without assuming ability or confidence with technology.',
+    [
+      [
+        '¿Prefiere que vayamos paso a paso?',
+        'Would you prefer that we go step by step?',
+        'Offer support without describing the customer as slow or incapable.',
+      ],
+      [
+        'Dígame qué opciones aparecen y revisamos una a la vez.',
+        'Tell me which options appear, and we will review one at a time.',
+        'Use the customer’s actual interface instead of assuming they see your screen.',
+      ],
+      [
+        'Podemos buscar otra forma de completar el proceso.',
+        'We can look for another way to complete the process.',
+        'Check which accessible or assisted routes are actually available; do not bypass required verification.',
+      ],
+    ],
+    [
+      ['No entiendo estas instrucciones.', 'I do not understand these instructions.'],
+      ['Sí, por favor. Hay demasiadas opciones.', 'Yes, please. There are too many options.'],
+      ['No puedo usar ese método de verificación.', 'I cannot use that verification method.'],
+    ],
+    [
+      'Ask about the preferred pace or communication method.',
+      'Give one instruction, then wait for the customer to report the result.',
+      'If a method is unusable, check approved alternatives while preserving the required protections.',
+    ],
+    {
+      prompt: 'The customer cannot use the usual verification method. What should you do?',
+      options: [
+        [
+          'Omita la verificación para cualquier cambio de cuenta.',
+          'Skip verification for every account change.',
+        ],
+        ['Repita las mismas instrucciones más rápido.', 'Repeat the same instructions faster.'],
+        [
+          'Compruebe qué métodos alternativos autorizados están disponibles.',
+          'Check which approved alternative methods are available.',
+        ],
+      ],
+      answer: 2,
+      why: 'Find a usable approved route. Neither rushing nor bypassing verification addresses the actual need.',
+    },
+    'Say: We can look for another way to complete the process.',
+    'Podemos buscar otra forma de completar el proceso.',
+    'Podemos buscar offers exploration, not a guarantee that a particular alternative exists.',
+    'Rewrite three long instructions as three short sentences. After each sentence, add a question that checks what the customer sees.',
+  ),
+  lab(
+    'unresolved-close',
+    'CSR practice labs',
+    'Close an unresolved contact with a clear plan',
+    'State what remains unresolved, who owns the next step, and how the customer can follow up.',
+    [
+      [
+        'El problema aún no está resuelto. Este es el siguiente paso.',
+        'The problem is not resolved yet. This is the next step.',
+        'Do not label a case resolved simply because you are ending the conversation.',
+      ],
+      [
+        'El equipo de facturación revisará los cargos que identificamos.',
+        'The billing team will review the charges we identified.',
+        'Use a named owner only when the handoff has been arranged through the real process.',
+      ],
+      [
+        'Le daré el número de caso y confirmaré cómo consultar las novedades.',
+        'I will give you the case number and confirm how to check for updates.',
+        'Distinguish a way to check status from a guaranteed resolution time.',
+      ],
+    ],
+    [
+      ['Entonces, ¿ya está solucionado?', 'So, is it solved now?'],
+      ['¿Quién va a revisarlo?', 'Who is going to review it?'],
+      ['¿Cómo sabré si hay una respuesta?', 'How will I know if there is a response?'],
+    ],
+    [
+      'Summarize what was checked and what remains open.',
+      'Identify the confirmed next owner and action.',
+      'Provide the actual case reference and available follow-up method; ask the customer to repeat the next step in their own words.',
+    ],
+    {
+      prompt:
+        'The investigation is open and there is no confirmed deadline. Which close is accurate?',
+      options: [
+        ['Todo está resuelto.', 'Everything is resolved.'],
+        [
+          'El caso sigue abierto; le explicaré cómo consultar el estado.',
+          'The case is still open; I will explain how to check its status.',
+        ],
+        ['Mañana estará solucionado sin falta.', 'It will definitely be solved tomorrow.'],
+      ],
+      answer: 1,
+      why: 'A clear unresolved close gives ownership and a follow-up path without changing the actual case status or inventing a deadline.',
+    },
+    'Say: The problem is not resolved yet.',
+    'El problema aún no está resuelto.',
+    'Problema is masculine despite ending in -a, so use resuelto. Aún means still or yet.',
+    'Close an unresolved technical case in three sentences: current status, next owner, and verified follow-up route.',
+  ),
+  lab(
+    'failed-fix',
+    'TSR practice labs',
+    'The suggested fix did not work',
+    'Acknowledge the failed attempt, record its result, and choose a different evidence-based check.',
+    [
+      [
+        'Gracias por probarlo. Veo que el problema continúa.',
+        'Thank you for trying it. I see that the problem continues.',
+        'A failed test is useful information; do not blame the customer for the result.',
+      ],
+      [
+        'No repetiremos ese paso sin una razón concreta.',
+        'We will not repeat that step without a specific reason.',
+        'If a repeat is justified by new conditions, explain what is different.',
+      ],
+      [
+        'Voy a revisar qué otra prueba nos ayudaría a identificar la causa.',
+        'I am going to review which other test would help us identify the cause.',
+        'Choose a relevant comparison rather than stacking unrelated changes.',
+      ],
+    ],
+    [
+      ['Lo reinicié y sigue igual.', 'I restarted it and it is still the same.'],
+      ['Ya lo hice tres veces.', 'I have already done it three times.'],
+      ['¿Qué podemos intentar ahora?', 'What can we try now?'],
+    ],
+    [
+      'Confirm what was tried and the exact result.',
+      'Record the failed step so the next person does not repeat it unnecessarily.',
+      'Choose a relevant new check or escalate when the approved troubleshooting path is exhausted.',
+    ],
+    {
+      prompt: 'Three restarts have produced the same result. What is the best next action?',
+      options: [
+        [
+          'Registre el resultado y elija otra comprobación pertinente.',
+          'Record the result and select a different relevant check.',
+        ],
+        ['Reinicie indefinidamente.', 'Restart indefinitely.'],
+        [
+          'Dígale al cliente que el problema debe estar resuelto.',
+          'Tell the customer the problem must be solved.',
+        ],
+      ],
+      answer: 0,
+      why: 'Repeated unchanged results call for a new justified check or escalation, not an endless loop.',
+    },
+    'Say: Thank you for trying it. The problem continues.',
+    'Gracias por probarlo. El problema continúa.',
+    'Probarlo means to try or test it. Continúa has an accent and means it continues.',
+    'A browser change also failed. Summarize both failed checks in Spanish and explain why you are escalating.',
+  ),
+  lab(
+    'feature-availability',
+    'TSR practice labs',
+    'A feature is missing from the screen',
+    'Check product version, account eligibility, and the visible interface before calling it a fault.',
+    [
+      [
+        '¿Qué función esperaba encontrar?',
+        'Which feature did you expect to find?',
+        'Ask about the intended task as well as the feature’s name.',
+      ],
+      [
+        'Voy a comprobar si está disponible en su versión y en su plan.',
+        'I am going to check whether it is available in your version and plan.',
+        'A missing option can reflect availability or account permissions, not necessarily a bug.',
+      ],
+      [
+        'Antes de cambiar algo, le explicaré las opciones que sí están disponibles.',
+        'Before changing anything, I will explain the options that are available.',
+        'Do not silently upgrade a plan or grant access merely to expose a feature.',
+      ],
+    ],
+    [
+      [
+        'No encuentro el botón que aparece en el tutorial.',
+        'I cannot find the button shown in the tutorial.',
+      ],
+      ['Quiero exportar el informe.', 'I want to export the report.'],
+      [
+        'Uso una versión diferente a la del video.',
+        'I use a different version from the one in the video.',
+      ],
+    ],
+    [
+      'Clarify the task and the expected option.',
+      'Check the actual version, account role, and plan against current product guidance.',
+      'Explain a supported route or verified limitation, then confirm the customer’s choice before any account change.',
+    ],
+    {
+      prompt:
+        'A tutorial shows a button that the customer does not see. What should you check first?',
+      options: [
+        ['Suponga que el cliente borró el botón.', 'Assume the customer deleted the button.'],
+        ['Compre un plan superior sin preguntar.', 'Buy a higher plan without asking.'],
+        [
+          'Compare la versión del producto y los requisitos de acceso a la función.',
+          'Compare the product version and feature eligibility.',
+        ],
+      ],
+      answer: 2,
+      why: 'Confirm the environment and availability first. The tutorial may describe a different version or account capability.',
+    },
+    'Ask: Which feature did you expect to find?',
+    '¿Qué función esperaba encontrar?',
+    'Función means feature here; it does not refer to a mathematical function in this context.',
+    'The feature is unavailable in the current plan. Explain a supported alternative without promising that an upgrade is necessary or sufficient.',
+  ),
+  lab(
+    'evidence',
+    'TSR practice labs',
+    'Request useful evidence without private details',
+    'Describe exactly what a screenshot or error report should include and what to omit.',
+    [
+      [
+        'Necesito ver el mensaje de error, no sus datos personales.',
+        'I need to see the error message, not your personal details.',
+        'Request only evidence relevant to this case.',
+      ],
+      [
+        'Antes de enviarlo, oculte los datos privados que aparezcan.',
+        'Before sending it, hide any private details that appear.',
+        'Use the approved upload channel; do not ask for passwords, sign-in codes, or private documents.',
+      ],
+      [
+        'Si no puede enviar una captura, puede escribir el mensaje exacto.',
+        'If you cannot send a screenshot, you can type the exact message.',
+        'Offer a text alternative when an image is unnecessary or difficult to provide.',
+      ],
+    ],
+    [
+      [
+        '¿Necesita una captura de toda la pantalla?',
+        'Do you need a screenshot of the whole screen?',
+      ],
+      [
+        'Se ve mi dirección y parte de mi cuenta.',
+        'My address and part of my account are visible.',
+      ],
+      ['No sé cómo ocultarlos en la imagen.', 'I do not know how to hide them in the image.'],
+    ],
+    [
+      'Specify the relevant error and the minimum evidence needed.',
+      'Ask the customer to omit private details and use the approved channel.',
+      'Offer a plain-text error description where sufficient, and confirm it accurately captures the issue.',
+    ],
+    {
+      prompt:
+        'A screenshot would include private account details that the customer cannot hide. What is a useful alternative?',
+      options: [
+        [
+          'Pida que escriba el mensaje de error pertinente sin datos privados.',
+          'Ask them to type the relevant error message without private data.',
+        ],
+        ['Exija toda la pantalla de todos modos.', 'Demand the entire screen anyway.'],
+        ['Pida su contraseña en su lugar.', 'Ask for their password instead.'],
+      ],
+      answer: 0,
+      why: 'A text error report may provide the needed evidence without exposing unrelated details.',
+    },
+    'Say: You can type the exact message.',
+    'Puede escribir el mensaje exacto.',
+    'Puede escribir addresses usted; escribir stays in the infinitive. Exacto asks for the wording, not extra private content.',
+    'Explain in Spanish what to include in a bug report: the error wording, the action that triggered it, and the product version.',
+  ),
+  lab(
+    'one-change',
+    'TSR practice labs',
+    'Change one thing and check the result',
+    'Explain a test’s purpose, agree on the change, and compare the same action afterward.',
+    [
+      [
+        'Vamos a cambiar una sola opción y comprobar el resultado.',
+        'We are going to change just one option and check the result.',
+        'A focused test makes its outcome easier to interpret.',
+      ],
+      [
+        'Primero anotaremos la configuración actual.',
+        'First we will note the current setting.',
+        'Preserve the original value when appropriate so an approved change can be reversed.',
+      ],
+      [
+        'Ahora intente la misma acción y dígame qué ocurre.',
+        'Now try the same action and tell me what happens.',
+        'Compare like with like; success on a different task does not establish that the original issue is fixed.',
+      ],
+    ],
+    [
+      ['¿Tengo que cambiar todas estas opciones?', 'Do I have to change all these options?'],
+      ['¿Y si después queda peor?', 'What if it gets worse afterward?'],
+      ['Ya hice el cambio que acordamos.', 'I have made the change we agreed on.'],
+    ],
+    [
+      'Explain why the specific setting is relevant and what changing it may affect.',
+      'Record the original value and obtain any required agreement before the change.',
+      'Repeat the original action, document the result, and follow the approved restore or next-step procedure.',
+    ],
+    {
+      prompt: 'You changed a setting to fix file uploads. How should you confirm the result?',
+      options: [
+        ['Solo compruebe si carga la página de inicio.', 'Only check whether the home page loads.'],
+        [
+          'Repita la carga original con un archivo de prueba adecuado y no confidencial.',
+          'Repeat the original upload task with an appropriate non-sensitive test file.',
+        ],
+        [
+          'Declare el éxito en cuanto cambie la configuración.',
+          'Declare success immediately after the setting changes.',
+        ],
+      ],
+      answer: 1,
+      why: 'Test the original symptom under comparable conditions. A saved setting alone is not evidence that uploads work.',
+    },
+    'Say: First we will note the current setting.',
+    'Primero anotaremos la configuración actual.',
+    'Actual means current here, not actual in the English sense of real. Anotaremos means we will note.',
+    'The test fails after the change. Explain the observed result and the approved next step without making another unexplained change.',
+  ),
 ];

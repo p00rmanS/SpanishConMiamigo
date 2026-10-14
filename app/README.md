@@ -1,62 +1,101 @@
 # Español Para Sa’yo
 
-Working local first slice of the selected Sunlit Editorial design.
+A self-paced Spanish course platform for bilingual learners. It combines structured, leveled courses
+(in the spirit of Coursera and Udemy), short interactive lessons with spaced review (in the spirit of
+Duolingo), and reference tools such as a dictionary and verb conjugator (in the spirit of
+SpanishDict). Every lesson offers English and Taglish explanations.
 
 ## Run
-Node.js and npm are required. Run `npm install`, then `npm run dev -- --host 127.0.0.1 --port 4185` from this directory.
 
-`npm run build` creates the production bundle. `npm test` checks answer scoring, review scheduling, and authored content. `npm run test:sites` checks bundled hosting behavior.
+Node.js 20 or newer and npm are required.
 
-## Included
-20 authored beginner lessons, 50 present-tense verbs with conjugation drills, 12 bilingual grammar guides, 50 practical phrases with English translations, Taglish and optional English explanations, key ideas, pro tips, answer keys, guided choice and written production, speech synthesis with fallback, optional microphone record/replay, lesson completion, local review scheduling, mistake notebook, searchable lesson reference, responsive layout, and light/dark appearance.
+```sh
+npm install
+npm run dev        # http://localhost:5173
+npm run lint
+npm test           # builds first, then runs all tests
+npm run build
+```
 
-## Honest limits
-This is a React/Vite local prototype, not the complete production specification. Progress is browser-local, without accounts or cross-device sync. The 20 lessons cover foundations and selected A1 patterns; complete A1–C1 courses and other verb tenses are planned. No proficiency certification or automatic speech grading is offered. Synthesized audio depends on installed browser voices and may need a connection. Microphone recording requires permission and a supported secure browser context. Recordings are session-only. No offline lesson download or installable PWA is implemented. There is no database migration or seed step yet; content is in src/content.js, src/more-lessons.js, and src/reference-data.js. No API key or environment variable is required.
+`npm run format` applies Prettier. CI (`.github/workflows/ci.yml`) runs lint, tests and
+`npm audit --audit-level=high`.
 
-## Validation
-`npm run lint` checks JavaScript/JSX. `npm test` runs ten content/scoring/scheduling/hosting tests. This starter uses JavaScript; TypeScript checking is not configured. Browser evidence and visual review are recorded in design-qa.md.
+## What is in the app
 
+| Area | What you get |
+| --- | --- |
+| **Courses** | *Spanish Foundations* (A1 to C1, 128 lessons in 5 levels and 23 units), *Bilingual Career Spanish* (customer care, technical support, billing, 3 levels, 68 lessons), *Spanish for Daily Life* (44 lessons) |
+| **Lesson player** | Learn → choose → write → speak, with audio, a generated pronunciation guide, pattern chips, conjugation and memory support, a pro tip, a common-mistake note, immediate feedback and XP |
+| **Checkpoints** | A 10-question quiz per level, best score saved, plus a placement check that suggests a starting level |
+| **Review** | Spaced repetition (boxes 0–5), a mistake notebook and a due-count badge |
+| **Dictionary** | About 355 entries with Spanish ↔ English ↔ Tagalog search, part of speech, gender, examples and audio; conjugated forms are searchable |
+| **Verb conjugator** | 50 essential verbs, with extra tenses for 12 core verbs |
+| **Reading room** | Stories and conversations with line-by-line translation and comprehension checks |
+| **Practice lab** | Conjugation drills and scripted customer-call simulations |
+| **Progress** | Lessons, XP, days practiced, level checkpoints, review stages |
 
-## Curriculum expansion — 2026-09-14
-38 guided lessons: 26 Beginner, 6 Intermediate, 6 Advanced. Library includes 30 grammar guides, 50 phrases, 50 present-tense verbs, and six additional tense tables for 12 core verbs (preterite/indefinido, imperfect, present perfect, future, conditional, present subjunctive).
+## Design decisions
 
-Six original stories and six original conversations offer sentence-by-sentence English translations, optional browser audio, vocabulary keys, Taglish explanations, tips, pro tips, and comprehension checks. Reading completion is saved locally. These focused tracks are not a complete CEFR course or certification. Speech availability depends on the browser.
+- **Self-paced.** There are no deadlines, streak penalties, daily goals or required schedules. The
+  week view only shows which days you practiced.
+- **Honest measurement.** Completion is not a fluency score. Checkpoints and the placement check are
+  study aids, not CEFR certification. Speaking is self-assessed and recordings never leave the tab.
+- **Bilingual support.** Explanations can be shown in English, Taglish or both (Settings).
+- **No accounts, no API keys.** Progress is stored in `localStorage`.
 
-Terminology and conjugation reference: [RAE conjugation tables](https://www.rae.es/diccionario-estudiante/docs/conjugaciones-verbales.pdf). Reading texts and teaching explanations are original.
+## Project layout
 
-## Latest lesson expansion — 2026-09-14
-Added 12 lessons and corresponding grammar guides. Current totals: 50 lessons (30 Beginner, 10 Intermediate, 10 Advanced), 42 grammar guides. New topics: clock time, comparisons, weather, porque/por qué, present progressive, por/para, affirmative and negative commands, future cuando clauses, relative clauses with subjunctive, reported speech, and impersonal se. Each new lesson includes English meaning, Taglish explanation, a key idea, pro tip, guided and written practice, and three bilingual examples in its grammar guide.
+```
+src/
+  App.jsx                  shell, routing, theme
+  pages/                   Home, Courses, LessonPlayer, Quiz, Review, Library, Progress, Practice
+  components/              shared UI (progress bars, audio, recorder, dialog, settings)
+  lib/
+    store-core.js          pure progress logic (XP, review, backup, migration) - unit tested
+    store.js               React binding (useSyncExternalStore) and persistence
+    router.js              hash router (deep links such as #/lesson/hello)
+    speech.js              text-to-speech helper
+    pronounce.js           Spanish respelling and syllable stress generator
+  course.js                courses → levels → units → lessons, quizzes, placement
+  curriculum.js            unit structure for Spanish Foundations
+  content.js               merges every lesson source into one list
+  foundations-*.js         A1–C1 lesson rows
+  career-expansion.js      career lessons; workplace-support.js holds their Taglish and tips
+  vocabulary-data.js       dictionary vocabulary
+  ui.css                   design tokens, shell, pages, lesson player (loaded last)
+  styles.css, *.css        styles for the library and practice screens
+tests/                     node:test suites for content, scoring, storage, routing and hosting
+```
 
-## Dictionary — 2026-09-14
-Added Library → Dictionary: 70 local entries (50 verbs, 20 nouns), Spanish/English and conjugated-form search, noun gender, bilingual examples, learning notes, and browser speech. Search ignores acute accents but preserves ñ. External lookup links open SpanishDictionary.com; there is no API integration, copied dictionary database, or affiliation. Selected meanings only. Lint and 13 tests pass.
+### Adding a lesson
 
-## Additional practice — 2026-09-14
-Current curriculum: 56 lessons (32 Beginner, 12 Intermediate, 12 Advanced), 48 grammar guides. Six new lessons cover saber/poder, frequency, acabar de, double object pronouns, past counterfactuals, and present perfect subjunctive. Each includes translated examples, Taglish teaching notes, key ideas, pro tips, and guided/written practice. The past-counterfactual exercise accepts both hubiera and hubiese. Existing lesson IDs remain stable.
+1. Add a row to `foundations-a.js`, `foundations-b.js` or `foundations-c.js` (the row layout is
+   documented on `buildLesson` in `course-expansion.js`).
+2. List its id in the right unit in `curriculum.js`.
+3. Run `npm test`. Tests fail if a lesson is missing from the curriculum, repeats a sentence, has a
+   generic Taglish explanation, or has an invalid answer key.
 
-## Simplified study tools — 2026-09-15
-58 lessons and 50 grammar guides. Added preterite spelling and shared ser/ir lessons, a one-line lesson takeaway, Previous/Next controls, and touch swipes on the labeled navigation strip (left = next, right = previous; unfinished answers reset). Library includes Cheat sheets with regular endings, irregular stems, spelling changes, essential tables, and bounded memory cues. RAE reference is linked. The 200 days tab provides day-selectable practice, repeated retrieval, speaking tasks, and weekly checkpoints; it is a study target, not a fluency guarantee. Plan day selection is session-only. Navigation buttons verified in browser; touch gestures require device testing. Lint, 13 tests, and build checked.
+Career lessons are added in `career-expansion.js`, with their Taglish line, key idea and tip in
+`workplace-support.js`.
 
+## Data and privacy
 
-## Current preference — 2026-09-15
-The timed study plan is replaced by self-paced Practice. No deadlines, day counters, scheduled milestones, or required daily duration. Choose a level and lesson freely. This supersedes earlier 200-day planning notes.
+Progress lives in `localStorage` under `espanol-store-v2` (earlier `espanol-progress-v1` data is
+migrated automatically). Settings → *Download backup* exports every key as JSON; *Restore backup*
+validates the file before replacing anything. Progress does not sync between devices.
 
-## Self-paced lesson expansion — 2026-09-15
-64 lessons (34 Beginner, 16 Intermediate, 14 Advanced) and 56 grammar guides. Added demonstratives, muy/mucho, seguir + gerund, desde hace, purpose clauses with para que, and future conjecture. Each includes English translations, Taglish notes, key ideas, pro tips, and guided/written exercises. Cansado and cansada are both accepted in the new tiredness translation exercise. No deadlines added. All 13 tests pass; browser shows 64 lessons.
+## Hosting
 
-## Workplace Spanish
+`netlify.toml` builds the app and serves `dist/client` with an SPA fallback. The build also leaves
+`dist/server/index.js` and `dist/.openai/hosting.json` for the Sites handoff, which
+`tests/sites-worker.test.mjs` checks.
 
-Open Library → Workplace Spanish for 70 customer-care, empathy, technical-support, billing, resolution, and regional-communication lessons. Includes 70 original bilingual dialogues, 210 phrases with usage tips, 32 vocabulary entries, browser speech audio, hide-the-agent role-play, and model-based written recall. Each module links to a guided lesson and the existing saved review flow. Regional notes distinguish common wording without treating a country as one uniform dialect. Scenarios are fictional; actual service policies must be verified.
+## Known limits
 
-The expanded library includes 10 bilingual-account lessons (call flow, discovery, consent, plain language, case notes, written support, quality coaching, and a mock call) and 16 filler/discourse-marker lessons. Open Filler guide for English meanings, placement patterns, register notes, work and daily-life examples, and professional alternatives. Casual practice uses Friend/You role-play.
+- Foundations B2 and C1 are focused lessons rather than a full syllabus.
+- Browser text-to-speech depends on installed voices; there is no automatic pronunciation scoring.
+- No offline mode or installable PWA yet, and no accounts or cross-device sync.
+- Scenario amounts and policies in the career course are fictional; verify real policies.
 
-CSR/TSR practice labs: 20 additional scenarios (ten per role) include three handling steps, six bilingual dialogue turns, a next-action decision with explained feedback, written recall, and an open transfer task. These bring Workplace Spanish to 70 lessons and 210 phrase models.
-
-Everyday life: eight additional lessons cover groceries, café orders, directions, plans, lateness, household chores, appointments, and neighbors. Each includes three translated phrase models with pro tips, a six-turn bilingual conversation, written recall, and a new situation to try independently. Find Everyday life in Library → Workplace Spanish; the shared catalog now contains 78 lessons and 234 phrase models.
-
-Everyday life expansion: 20 more original scenarios add 60 translated phrase models, 20 six-turn dialogues, written recall, and personalized transfer exercises. Everyday life now has 28 lessons; the shared Workplace Spanish catalog has 98 lessons and 294 phrase models. Topics include routines, past events, social plans, travel, shopping, conversation repair, and everyday work communication.
-
-Reading adventures: Library → Stories now includes two sourced history lessons, two educational stories, two original childhood stories, and two non-graphic horror stories. Library → Conversations adds two 24-turn dialogues. All ten texts include line-by-line English, four vocabulary items, language tips, and three explained comprehension questions. History introductions distinguish source-based facts from invented scenes; horror and childhood fiction are labeled.
-
-Study support: lessons, library phrases and examples, workplace phrases and dialogue, filler examples, reading passages, and dictionary examples have an expandable Understand and remember panel with English, Taglish, pattern guidance, memory practice, and a conjugation reference. Form matching is explicitly a reference, not a sentence parser; the starter tables cover 50 present-tense verbs and 12 core verbs in additional tenses. The Progress navigation page charts unique lesson completion by level, completed readings, due reviews, and review stages using existing local records. It does not invent historical activity or estimate fluency.
-
-Teach conjugations explicitly in Practice lab: preterite, imperfect, fui/iba, estar, gerunds, and object pronouns. Include sentence production, English and Taglish reasoning, and self-paced scripted BPO simulations with honest scoring and locally saved completion.
+Terminology and conjugation reference: [RAE conjugation tables](https://www.rae.es/diccionario-estudiante/docs/conjugaciones-verbales.pdf).
+Reading texts and teaching explanations are original.

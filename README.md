@@ -1,6 +1,6 @@
 # SpanishConMiamigo
 
-A self-paced Spanish learning app with bilingual lessons, reading practice, grammar references, and vocabulary tools.
+A self-paced Spanish course platform for bilingual learners: leveled courses (A1 to C1, plus bilingual career Spanish), interactive lessons with spaced review, a dictionary and verb conjugator, readings, and call-simulation practice. Explanations are available in English and Taglish.
 
 The React/Vite application is in [`app/`](app/). See the [app README](app/README.md) for setup, features, and project notes.
 
@@ -9,7 +9,7 @@ The React/Vite application is in [`app/`](app/). See the [app README](app/README
 ```sh
 cd app
 npm install
-npm run dev
+npm run dev   # http://localhost:5173
 ```
 
 ## Checks
@@ -17,7 +17,7 @@ npm run dev
 ```sh
 cd app
 npm run lint
-npm test
+npm test      # builds first, then runs every test
 npm run build
 ```
 
