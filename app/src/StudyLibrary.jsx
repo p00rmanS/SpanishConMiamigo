@@ -3,6 +3,7 @@ import { WorkplaceSpanish } from './WorkplaceSpanish';
 import { CheatSheets } from './CheatSheets';
 import { StudyPlan } from './StudyPlan';
 import { Dictionary } from './Dictionary';
+import { dictionary } from './dictionary-data';
 import { ReadingRoom } from './ReadingRoom';
 import { readings } from './reading-data';
 import { tenseInfo, getForms } from './verb-tenses';
@@ -212,8 +213,14 @@ function LightbulbLabel() {
   return <strong className="section-kicker">KEY IDEA</strong>;
 }
 
-export function StudyLibrary({ lessons, onOpenLesson }) {
-  const [section, setSection] = useState('Workplace Spanish'),
+export function StudyLibrary({
+  lessons,
+  onOpenLesson,
+  initialSection = 'Workplace Spanish',
+  initialQuery = '',
+  onSection,
+}) {
+  const [section, setSection] = useState(initialSection),
     [query, setQuery] = useState(''),
     [selected, setSelected] = useState('ser'),
     [category, setCategory] = useState('All'),
@@ -243,7 +250,7 @@ export function StudyLibrary({ lessons, onOpenLesson }) {
           ['Workplace Spanish', lessons.filter((l) => l.id.startsWith('work-')).length],
           ['Cheat sheets', 'Quick'],
           ['Practice', 'Your pace'],
-          ['Dictionary', 70],
+          ['Dictionary', dictionary.length],
           ['Verbs', verbs.length],
           ['Grammar', grammar.length],
           ['Phrases', phrases.length],
@@ -258,6 +265,7 @@ export function StudyLibrary({ lessons, onOpenLesson }) {
             onClick={() => {
               setSection(label);
               setQuery('');
+              onSection?.(label);
             }}
           >
             {label}
@@ -272,7 +280,7 @@ export function StudyLibrary({ lessons, onOpenLesson }) {
       ) : section === 'Practice' ? (
         <StudyPlan lessons={lessons} onOpen={onOpenLesson} />
       ) : section === 'Dictionary' ? (
-        <Dictionary />
+        <Dictionary initialQuery={initialQuery} />
       ) : reading ? (
         <ReadingRoom key={section} kind={section} />
       ) : (

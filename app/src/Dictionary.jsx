@@ -1,8 +1,8 @@
 import { StudySupport } from './StudySupport';
 import { useState } from 'react';
 import { dictionary, findWords, lookupUrl } from './dictionary-data';
-export function Dictionary() {
-  const [query, setQuery] = useState(''),
+export function Dictionary({ initialQuery = '' }) {
+  const [query, setQuery] = useState(initialQuery),
     [type, setType] = useState('All'),
     [status, setStatus] = useState('');
   const results = findWords(query, type);

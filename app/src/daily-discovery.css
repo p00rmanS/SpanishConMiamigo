@@ -88,12 +88,7 @@
     padding-right: 20px;
   }
 }
-
 @media (max-width: 740px) {
-  html {
-    scroll-padding-top: 100px;
-    scroll-padding-bottom: 100px;
-  }
   .practice-lab {
     padding-bottom: 100px;
   }

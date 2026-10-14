@@ -13,7 +13,7 @@
 .workplace-dialogue li {
   padding: 1rem;
   margin: 0.75rem 0;
-  border-left: 3px solid var(--accent, #287b70);
+  border-left: 3px solid var(--accent, var(--success));
   background: rgba(40, 123, 112, 0.04);
 }
 .workplace-dialogue p {

@@ -1,6 +1,6 @@
 .study-support {
   margin: 1rem 0;
-  border: 1px solid var(--line, #d9dfdc);
+  border: 1px solid var(--line, var(--line));
   border-radius: 12px;
   padding: 1rem;
   max-width: 100%;
@@ -23,9 +23,9 @@
   width: 100%;
   max-width: 100%;
   padding: 0.7rem;
-  background: var(--paper, #fff);
+  background: var(--paper, var(--surface));
   color: inherit;
-  border: 1px solid var(--line, #ccc);
+  border: 1px solid var(--line, var(--line));
   border-radius: 8px;
 }
 .study-support-body textarea {
@@ -48,7 +48,7 @@
   gap: 0.7rem;
 }
 .support-words div {
-  border: 1px solid var(--line, #ddd);
+  border: 1px solid var(--line, var(--line));
   border-radius: 8px;
   padding: 0.5rem 0.8rem;
 }
@@ -73,7 +73,7 @@
 .study-support td {
   text-align: left;
   padding: 0.55rem;
-  border-bottom: 1px solid var(--line, #ddd);
+  border-bottom: 1px solid var(--line, var(--line));
 }
 .progress-dashboard {
   max-width: 960px;
@@ -85,7 +85,7 @@
   margin: 1.6rem 0;
 }
 .progress-stats > div {
-  border: 1px solid var(--line, #ddd);
+  border: 1px solid var(--line, var(--line));
   border-radius: 12px;
   padding: 1rem;
 }
@@ -116,7 +116,7 @@
   display: block;
   width: 100%;
   height: 20px;
-  accent-color: #237f75;
+  accent-color: var(--success);
 }
 .review-chart {
   display: grid;
@@ -137,7 +137,7 @@
   margin: 2rem 0;
 }
 .study-support summary:focus-visible {
-  outline: 3px solid #237f75;
+  outline: 3px solid var(--success);
   outline-offset: 5px;
 }
 @media (max-width: 650px) {
@@ -157,7 +157,6 @@
     padding: 0.8rem;
   }
 }
-
 .practice-lab textarea {
   display: block;
   width: 100%;
@@ -174,7 +173,7 @@
 .practice-lab td {
   padding: 10px;
   text-align: left;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--line);
 }
 .practice-lab .choice {
   display: block;
@@ -193,36 +192,15 @@
   overflow-x: auto;
 }
 @media (max-width: 700px) {
-  .sidebar nav {
-    overflow-x: auto;
-  }
-  .nav-item {
-    flex-shrink: 0;
-  }
   .practice-lab .lesson-link {
     flex-wrap: wrap;
   }
 }
-
-@media (min-width: 741px) {
-  .sidebar-bottom {
-    top: 555px;
-    height: auto;
-  }
-}
-@media (min-width: 741px) and (max-height: 820px) {
-  .sidebar-bottom .handwriting {
-    display: none;
-  }
-}
-
-/* Keep the host badge visible without covering the mobile learning navigation. */
 @media (max-width: 740px) {
   #nl-badge-frame {
     bottom: 78px !important;
   }
 }
-
 .practice-lab input[type='search'] {
   display: block;
   width: 100%;

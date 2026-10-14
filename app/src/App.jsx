@@ -1,751 +1,295 @@
-import { PracticeLab } from './PracticeLab';
-import { StudySupport } from './StudySupport';
-import { ProgressDashboard } from './ProgressDashboard';
-import { LessonNavigation } from './LessonNavigation';
-import { CourseMap } from './CourseMap';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  SunHorizon,
-  Sun,
-  BookOpen,
-  ArrowsClockwise,
-  Books,
-  Lightbulb,
+  House,
   GraduationCap,
-  Key,
-  CaretDown,
-  ArrowRight,
-  Play,
-  Check,
-  Microphone,
-  Stop,
+  ArrowsClockwise,
+  PencilSimpleLine,
+  Translate,
+  BookOpenText,
+  ChartLineUp,
   GearSix,
-  X,
-  Moon,
-  SpeakerHigh,
+  Lightning,
+  MagnifyingGlass,
+  SunHorizon,
+  Books,
 } from '@phosphor-icons/react';
-import { lessons } from './content';
-import { StudyLibrary } from './StudyLibrary';
-import { loadProgress, nextReview, scoreAnswer } from './learning';
+import { useRoute, navigate, href } from './lib/router.js';
+import { useProgress } from './lib/store.js';
+import { SettingsDialog } from './components/SettingsDialog.jsx';
+import { Home } from './pages/Home.jsx';
+import { Courses, CourseDetail } from './pages/Courses.jsx';
+import { LessonPlayer } from './pages/LessonPlayer.jsx';
+import { Quiz } from './pages/Quiz.jsx';
+import { Review } from './pages/Review.jsx';
+import { Library } from './pages/Library.jsx';
+import { ProgressPage } from './pages/ProgressPage.jsx';
+import { PracticePage } from './pages/PracticePage.jsx';
+import { lessons } from './content.js';
 
-function Recorder({ sentence }) {
-  const [recording, setRecording] = useState(false),
-    [url, setUrl] = useState(''),
-    [error, setError] = useState('');
-  const recorder = useRef(null),
-    stream = useRef(null),
-    audioUrl = useRef('');
-  useEffect(
-    () => () => {
-      if (recorder.current?.state === 'recording') recorder.current.stop();
-      stream.current?.getTracks().forEach((t) => t.stop());
-      URL.revokeObjectURL(audioUrl.current);
-    },
-    [],
-  );
-  async function start() {
-    setError('');
-    try {
-      if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) throw Error();
-      stream.current = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const r = new MediaRecorder(stream.current);
-      recorder.current = r;
-      const chunks = [];
-      r.ondataavailable = (e) => chunks.push(e.data);
-      r.onstop = () => {
-        stream.current.getTracks().forEach((t) => t.stop());
-        URL.revokeObjectURL(audioUrl.current);
-        audioUrl.current = URL.createObjectURL(new Blob(chunks, { type: r.mimeType }));
-        setUrl(audioUrl.current);
-        setRecording(false);
-      };
-      r.start();
-      setRecording(true);
-    } catch {
-      setError(
-        'Recording isn’t available or permission was declined. You can still say the sentence aloud and continue.',
-      );
-    }
+const NAV = [
+  { name: 'home', path: '/', label: 'Home', icon: House, group: 'learn' },
+  { name: 'courses', path: '/courses', label: 'Courses', icon: GraduationCap, group: 'learn' },
+  { name: 'review', path: '/review', label: 'Review', icon: ArrowsClockwise, group: 'learn' },
+  {
+    name: 'practice',
+    path: '/practice',
+    label: 'Practice lab',
+    icon: PencilSimpleLine,
+    group: 'learn',
+  },
+  {
+    name: 'dictionary',
+    path: '/library/dictionary',
+    label: 'Dictionary',
+    icon: Translate,
+    group: 'explore',
+  },
+  {
+    name: 'verbs',
+    path: '/library/verbs',
+    label: 'Verb conjugator',
+    icon: Books,
+    group: 'explore',
+  },
+  {
+    name: 'reading',
+    path: '/library/stories',
+    label: 'Reading room',
+    icon: BookOpenText,
+    group: 'explore',
+  },
+  { name: 'progress', path: '/progress', label: 'Progress', icon: ChartLineUp, group: 'you' },
+];
+const TABBAR = ['home', 'courses', 'practice', 'dictionary', 'progress'];
+
+function activeNav(route) {
+  if (route.name === 'course') return 'courses';
+  if (route.name === 'library') {
+    const section = route.params[0];
+    if (section === 'dictionary') return 'dictionary';
+    if (section === 'verbs') return 'verbs';
+    if (['stories', 'conversations'].includes(section)) return 'reading';
+    return 'library';
   }
+  return route.name === '' ? 'home' : route.name;
+}
+
+function useTheme(theme) {
+  useEffect(() => {
+    const apply = () => {
+      const dark =
+        theme === 'dark' ||
+        (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    };
+    apply();
+    if (theme !== 'system') return undefined;
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    media.addEventListener('change', apply);
+    return () => media.removeEventListener('change', apply);
+  }, [theme]);
+}
+
+function Shell({ route, children, onSettings, progress, dueCount }) {
+  const [query, setQuery] = useState('');
+  const current = activeNav(route);
   return (
-    <div className="record-area">
-      <h2>Your voice belongs here.</h2>
-      <p>
-        Listen, then say: <strong lang="es">{sentence}</strong>
-      </p>
-      <p className="muted">
-        Your recording stays in this session. Compare it yourself; this isn’t an automatic
-        pronunciation score.
-      </p>
-      <button className="secondary" onClick={() => (recording ? recorder.current.stop() : start())}>
-        {recording ? <Stop /> : <Microphone />}
-        {recording ? 'Stop recording' : 'Record my voice'}
-      </button>
-      {url && (
-        <div className="recording">
-          <audio controls src={url} />
-          <button
-            className="text-button"
-            onClick={() => {
-              URL.revokeObjectURL(audioUrl.current);
-              setUrl('');
+    <div className="shell">
+      <a className="skip" href="#main">
+        Skip to content
+      </a>
+      <aside className="rail" aria-label="Primary">
+        <a className="brand" href={href('/')}>
+          <SunHorizon size={34} weight="duotone" aria-hidden="true" />
+          <span>
+            Español
+            <br />
+            Para Sa’yo
+          </span>
+        </a>
+        <nav aria-label="Main navigation">
+          {[
+            ['learn', 'Learn'],
+            ['explore', 'Explore'],
+            ['you', 'You'],
+          ].map(([group, title]) => (
+            <div className="nav-group" key={group}>
+              <p className="nav-title">{title}</p>
+              {NAV.filter((n) => n.group === group).map(({ name, path, label, icon: Icon }) => (
+                <a
+                  key={name}
+                  href={href(path)}
+                  className={'nav-link' + (current === name ? ' active' : '')}
+                  aria-current={current === name ? 'page' : undefined}
+                >
+                  <Icon
+                    size={22}
+                    weight={current === name ? 'fill' : 'regular'}
+                    aria-hidden="true"
+                  />
+                  {label}
+                  {name === 'review' && dueCount > 0 && (
+                    <span className="badge" aria-label={`${dueCount} due`}>
+                      {dueCount}
+                    </span>
+                  )}
+                </a>
+              ))}
+            </div>
+          ))}
+        </nav>
+        <p className="rail-note">Self-paced. Your progress stays on this device.</p>
+      </aside>
+      <div className="main-col">
+        <header className="topbar">
+          <form
+            className="search-box"
+            role="search"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (query.trim())
+                navigate('/library/dictionary?q=' + encodeURIComponent(query.trim()));
             }}
           >
-            Delete recording
-          </button>
-        </div>
-      )}
-      {error && <p role="status">{error}</p>}
+            <MagnifyingGlass size={20} aria-hidden="true" />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Look up a Spanish or English word"
+              aria-label="Look up a word in the dictionary"
+            />
+          </form>
+          <div className="top-actions">
+            <span className="chip xp" title="Experience points from lessons and checkpoints">
+              <Lightning weight="fill" size={18} aria-hidden="true" />
+              {progress.xp} XP
+            </span>
+            <button
+              type="button"
+              className="icon-button"
+              aria-label="Open settings"
+              onClick={onSettings}
+            >
+              <GearSix size={22} aria-hidden="true" />
+            </button>
+          </div>
+        </header>
+        {progress.saveError && (
+          <p className="banner" role="alert">
+            {progress.saveError}
+          </p>
+        )}
+        <main id="main" tabIndex={-1}>
+          {children}
+        </main>
+      </div>
+      <nav className="tabbar" aria-label="Quick navigation">
+        {NAV.filter((n) => TABBAR.includes(n.name)).map(({ name, path, label, icon: Icon }) => (
+          <a
+            key={name}
+            href={href(path)}
+            className={current === name ? 'active' : ''}
+            aria-current={current === name ? 'page' : undefined}
+          >
+            <Icon size={24} weight={current === name ? 'fill' : 'regular'} aria-hidden="true" />
+            <span>{label.replace(' conjugator', '')}</span>
+          </a>
+        ))}
+      </nav>
     </div>
   );
 }
 
+function NotFound() {
+  return (
+    <section className="page narrow">
+      <h1>We couldn’t find that page</h1>
+      <p>The link may be old. Head back to your courses.</p>
+      <a className="primary" href={href('/courses')}>
+        Browse courses
+      </a>
+    </section>
+  );
+}
+
 export function App() {
-  const [view, setView] = useState('Today'),
-    [lessonIndex, setLessonIndex] = useState(0),
-    [step, setStep] = useState(0),
-    [english, setEnglish] = useState(false),
-    [choice, setChoice] = useState(''),
-    [written, setWritten] = useState(''),
-    [feedback, setFeedback] = useState(null),
-    [phase, setPhase] = useState(0),
-    [hint, setHint] = useState(false),
-    [keyOpen, setKeyOpen] = useState(false),
-    [progress, setProgress] = useState(loadProgress),
-    [settings, setSettings] = useState(false),
-    [dark, setDark] = useState(false),
-    [audioMessage, setAudioMessage] = useState(''),
-    [storageError, setStorageError] = useState(''),
-    [reviewMode, setReviewMode] = useState(false);
+  const route = useRoute();
+  const progress = useProgress();
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  useTheme(progress.settings.theme);
+  useEffect(() => {
+    document.title = 'Español Para Sa’yo · Learn Spanish';
+  }, []);
   const [now, setNow] = useState(Date.now);
   useEffect(() => {
     const timer = setInterval(() => setNow(Date.now()), 60000);
     return () => clearInterval(timer);
   }, []);
-  const lesson = lessons[lessonIndex];
+  const dueCount = lessons.filter((l) => progress.reviews[l.id]?.due <= now).length;
+
+  // Focus modes: the lesson player and quizzes hide the app chrome.
+  const focusMode = ['lesson', 'checkpoint', 'placement'].includes(route.name);
   useEffect(() => {
-    try {
-      localStorage.setItem('espanol-progress-v1', JSON.stringify(progress));
-    } catch {
-      setStorageError(
-        'Progress could not be saved on this browser. Keep this tab open to continue.',
+    document.body.toggleAttribute('data-focus', focusMode);
+  }, [focusMode]);
+  if (route.name === 'lesson' && route.params[0])
+    return (
+      <LessonPlayer
+        key={route.params[0]}
+        id={route.params[0]}
+        review={route.query.review === '1'}
+      />
+    );
+  if (route.name === 'checkpoint' && route.params[0])
+    return <Quiz key={route.params[0]} mode="checkpoint" levelId={route.params[0]} />;
+  if (route.name === 'placement') return <Quiz mode="placement" />;
+
+  let page;
+  switch (route.name) {
+    case 'home':
+      page = <Home progress={progress} dueCount={dueCount} />;
+      break;
+    case 'courses':
+      page = <Courses progress={progress} />;
+      break;
+    case 'course':
+      page = <CourseDetail id={route.params[0]} progress={progress} />;
+      break;
+    case 'review':
+      page = <Review progress={progress} now={now} />;
+      break;
+    case 'practice':
+      page = <PracticePage />;
+      break;
+    case 'library':
+      page = (
+        <Library
+          section={route.params[0]}
+          query={route.query.q}
+          key={route.params[0] + (route.query.q ?? '')}
+        />
       );
-    }
-  }, [progress]);
-  useEffect(() => {
-    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
-  }, [dark]);
-  useEffect(() => {
-    document.title = 'Español Para Sa’yo · Learn Spanish';
-  }, []);
-  function openLesson(i, review = false) {
-    window.speechSynthesis?.cancel();
-    setAudioMessage('');
-    setLessonIndex(i);
-    setStep(review ? 1 : 0);
-    setPhase(0);
-    setChoice('');
-    setWritten('');
-    setFeedback(null);
-    setHint(false);
-    setKeyOpen(false);
-    setView('Today');
-    setReviewMode(review);
-    window.scrollTo({ top: 0 });
+      break;
+    case 'progress':
+      page = (
+        <ProgressPage progress={progress} now={now} onSettings={() => setSettingsOpen(true)} />
+      );
+      break;
+    default:
+      page = <NotFound />;
   }
-  function listen() {
-    if (!window.speechSynthesis) {
-      setAudioMessage('Audio isn’t supported here. Use the pronunciation guide below.');
-      return;
-    }
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(lesson.sentence);
-    u.lang = 'es-MX';
-    u.rate = 0.8;
-    const voice = speechSynthesis.getVoices().find((v) => v.lang.startsWith('es'));
-    if (voice) u.voice = voice;
-    u.onerror = () =>
-      setAudioMessage('Audio could not play. Use the pronunciation guide and try again.');
-    setAudioMessage('Browser-generated Spanish audio');
-    speechSynthesis.speak(u);
-  }
-  function checkAnswer() {
-    const input = phase === 0 ? choice : written;
-    const scored = scoreAnswer(input, phase === 0 ? [lesson.answer] : lesson.accepted, {
-      strictAccents: lesson.strictAccents,
-    });
-    setFeedback({ ...scored, input });
-    if (!scored.correct)
-      setProgress((p) => ({
-        ...p,
-        mistakes: [
-          ...p.mistakes.filter((m) => m.lesson !== lesson.id),
-          {
-            lesson: lesson.id,
-            input,
-            answer: phase === 0 ? lesson.answer : lesson.reply,
-            reason: lesson.reason,
-          },
-        ],
-        reviews: { ...p.reviews, [lesson.id]: nextReview(p.reviews[lesson.id], false) },
-      }));
-  }
-  function complete() {
-    setProgress((p) => ({
-      ...p,
-      completed: [...new Set([...p.completed, lesson.id])],
-      reviews: { ...p.reviews, [lesson.id]: nextReview(p.reviews[lesson.id], true) },
-    }));
-    setStep(3);
-  }
-  const due = lessons.filter((l) => progress.reviews[l.id]?.due <= Date.now());
-  const nav = [
-    ['Today', Sun],
-    ['Learn', BookOpen],
-    ['Review', ArrowsClockwise],
-    ['Library', Books],
-    ['Practice lab', Lightbulb],
-    ['Progress', GraduationCap],
-  ];
   return (
-    <div className="app">
-      <a className="skip" href="#main">
-        Skip to lesson
-      </a>
-      <aside className="sidebar">
-        <div className="brand">
-          <SunHorizon size={43} weight="light" />
-          <div>
-            Español
-            <br /> Para Sa’yo
-            <small>
-              REAL CONVERSATIONS
-              <br />A BRIGHTER YOU
-            </small>
-          </div>
-        </div>
-        <nav aria-label="Main navigation">
-          {nav.map(([name, Icon]) => (
-            <button
-              key={name}
-              className={view === name ? 'nav-item active' : 'nav-item'}
-              aria-current={view === name ? 'page' : undefined}
-              onClick={() => {
-                setView(name);
-              }}
-            >
-              <Icon size={25} weight="light" />
-              {name}
-              {name === 'Review' && due.length > 0 && <span className="count">{due.length}</span>}
-            </button>
-          ))}
-        </nav>
-        <div className="sidebar-bottom">
-          <p className="handwriting">
-            Un paso a la vez.
-            <br />
-            <span>One step at a time.</span>
-          </p>
-          <img src="/assets/village.png" alt="Sunlit coastal village with bougainvillea" />
-        </div>
-      </aside>
-      <div className="workspace">
-        <header className="topbar">
-          <span className="crumb">YOUR SPANISH, ONE STEP CLOSER</span>
-          <div className="profile">
-            <span>
-              Buenas tardes <span className="muted">· Welcome, learner</span>
-            </span>
-            <button className="avatar" aria-label="Open settings" onClick={() => setSettings(true)}>
-              ☀
-            </button>
-          </div>
-        </header>
-        {storageError && <p role="alert">{storageError}</p>}
-        <main id="main" tabIndex={-1}>
-          {view === 'Today' ? (
-            <div className="lesson-grid">
-              <article className="lesson">
-                <LessonNavigation index={lessonIndex} total={lessons.length} onOpen={openLesson} />
-                <div className="eyebrow">
-                  {lesson.track || 'Beginner'} · {lesson.level || 'A0–A1'} <span>·</span> Lesson{' '}
-                  {String(lessonIndex + 1).padStart(2, '0')} <span>·</span> 6 minutes{' '}
-                  {reviewMode && <span>· Review</span>}
-                </div>
-                <h1>{lesson.title}</h1>
-                <p className="subtitle">{lesson.subtitle}</p>
-                <div className="steps" aria-label="Lesson steps">
-                  {['Understand', 'Build', 'Speak'].map((label, i) => (
-                    <div className={'step ' + (step >= i ? 'current' : '')} key={label}>
-                      <span className="step-number">{step > i ? <Check size={18} /> : i + 1}</span>
-                      <span>{label}</span>
-                      {i < 2 && <span className="step-line" />}
-                    </div>
-                  ))}
-                </div>
-                {step === 0 && (
-                  <>
-                    <section className="listen-section">
-                      <h2>Listen and read</h2>
-                      <p className="muted tight">Hear the sentence, then take a closer look.</p>
-                      <div className="sentence-row">
-                        <button
-                          className="play"
-                          onClick={listen}
-                          aria-label="Listen to Spanish example"
-                        >
-                          <Play size={26} weight="fill" />
-                        </button>
-                        <div className="sentence-copy">
-                          <div className="spanish" lang="es">
-                            {lesson.sentence}
-                          </div>
-                          <p className="pronunciation">{lesson.sound}</p>
-                          <p className="example-translation">{lesson.meaning}</p>
-                        </div>
-                      </div>
-                      {audioMessage && (
-                        <p className="audio-status" role="status">
-                          {audioMessage}
-                        </p>
-                      )}
-                    </section>
-                    <section>
-                      <div className="teaching-note">
-                        <strong>In one line</strong>
-                        <p>{lesson.key}</p>
-                      </div>
-                      <h2>What it means</h2>
-                      <p className="explanation">{lesson.taglish}</p>
-                      <label className="toggle-label">
-                        <input
-                          type="checkbox"
-                          checked={english}
-                          onChange={(e) => setEnglish(e.target.checked)}
-                        />
-                        <span className="switch" />
-                        Show English explanation (optional)
-                      </label>
-                      {english && (
-                        <div className="translation">
-                          <strong>{lesson.meaning}</strong>
-                          <p>{lesson.english}</p>
-                        </div>
-                      )}
-                    </section>
-                    <section>
-                      <h2>The pattern</h2>
-                      <div className="pattern">
-                        {lesson.pattern.map((part, i) => (
-                          <span key={part}>
-                            {i > 0 && <b>+</b>}
-                            <em>{part}</em>
-                          </span>
-                        ))}
-                      </div>
-                    </section>
-                    <StudySupport
-                      key={lesson.id}
-                      spanish={lesson.sentence}
-                      english={lesson.meaning}
-                      tip={lesson.tipDetail || lesson.tip}
-                    />
-                    <section className="your-turn">
-                      <h2>Your turn</h2>
-                      <p className="muted">{lesson.goal} Use the pattern and make it yours.</p>
-                      <button className="primary" onClick={() => setStep(1)}>
-                        {lessonIndex === 0 ? 'Build my introduction' : 'Try the practice'}
-                        <ArrowRight size={21} />
-                      </button>
-                    </section>
-                  </>
-                )}
-                {step === 1 && (
-                  <section className="practice">
-                    <div className="section-kicker">
-                      {phase === 0 ? 'GUIDED PRACTICE' : 'ON YOUR OWN'} · {phase + 1} OF 2
-                    </div>
-                    <h2>{phase === 0 ? lesson.prompt : lesson.writing}</h2>
-                    <p className="muted">
-                      {phase === 0
-                        ? 'Choose an answer. We’ll explain the why.'
-                        : 'Try from memory. It’s okay to need a hint.'}
-                    </p>
-                    {phase === 0 ? (
-                      <div className="choices">
-                        {lesson.choices.map((c) => (
-                          <button
-                            key={c}
-                            aria-pressed={choice === c}
-                            className={'choice ' + (choice === c ? 'selected' : '')}
-                            onClick={() => {
-                              setChoice(c);
-                              setFeedback(null);
-                            }}
-                          >
-                            {c}
-                          </button>
-                        ))}
-                      </div>
-                    ) : (
-                      <>
-                        <label className="input-label" htmlFor="answer">
-                          Your Spanish answer
-                        </label>
-                        <textarea
-                          id="answer"
-                          value={written}
-                          onChange={(e) => {
-                            setWritten(e.target.value);
-                            setFeedback(null);
-                          }}
-                          placeholder="Escribe aquí…"
-                        />
-                        <div className="accents">
-                          {['á', 'é', 'í', 'ó', 'ú', 'ñ', '¿', '¡'].map((c) => (
-                            <button
-                              key={c}
-                              aria-label={'Insert ' + c}
-                              onClick={() => setWritten((w) => w + c)}
-                            >
-                              {c}
-                            </button>
-                          ))}
-                        </div>
-                      </>
-                    )}
-                    <button className="text-button" onClick={() => setHint(!hint)}>
-                      {hint ? 'Hide hint' : 'I need a hint'}
-                    </button>
-                    {hint && (
-                      <p className="hint">
-                        {phase === 0 ? lesson.taglish : lesson.pattern.join(' + ')}
-                      </p>
-                    )}
-                    {feedback && (
-                      <div
-                        className={'feedback ' + (feedback.correct ? 'success' : 'retry')}
-                        role="status"
-                      >
-                        <strong>
-                          {feedback.correct
-                            ? 'That works. You’ve got the idea.'
-                            : 'Let’s work through it.'}
-                        </strong>
-                        <p>Your answer: {feedback.input}</p>
-                        {!feedback.correct && (
-                          <p>
-                            Better: <strong>{phase === 0 ? lesson.answer : lesson.reply}</strong>
-                          </p>
-                        )}
-                        <p>{phase === 0 ? lesson.reason : lesson.taglish}</p>
-                        {feedback.correct && feedback.accent && (
-                          <p>
-                            Meaning is right. Keep the accents in the model answer: {lesson.reply}
-                          </p>
-                        )}
-                        {!feedback.correct && (
-                          <p>
-                            Good step: you tried to recall it. Read the pattern, then try again.
-                          </p>
-                        )}
-                      </div>
-                    )}
-                    {feedback?.correct ? (
-                      <button
-                        className="primary"
-                        onClick={() => {
-                          if (phase === 0) {
-                            setPhase(1);
-                            setFeedback(null);
-                            setHint(false);
-                          } else setStep(2);
-                        }}
-                      >
-                        {phase === 0 ? 'Try it without choices' : 'Let’s say it'}
-                        <ArrowRight />
-                      </button>
-                    ) : (
-                      <button
-                        className="primary"
-                        disabled={!(phase === 0 ? choice : written.trim())}
-                        onClick={checkAnswer}
-                      >
-                        Check my answer
-                        <ArrowRight />
-                      </button>
-                    )}
-                  </section>
-                )}
-                {step === 2 && (
-                  <section>
-                    <div className="section-kicker">SPEAK & USE</div>
-                    <h2>A real-life moment</h2>
-                    <p className="scene">{lesson.scene}</p>
-                    <p>{lesson.sceneHint}</p>
-                    <button className="text-button" onClick={listen}>
-                      <SpeakerHigh />
-                      Listen to the model
-                    </button>
-                    <Recorder key={lesson.id} sentence={lesson.sentence} />
-                    <p className="muted">
-                      Try once without reading. Recording is optional; you can practice aloud.
-                    </p>
-                    <button className="primary" onClick={complete}>
-                      I practiced · finish lesson
-                      <Check />
-                    </button>
-                  </section>
-                )}
-                {step === 3 && (
-                  <section className="completion">
-                    <div className="completion-icon">
-                      <Check size={32} />
-                    </div>
-                    <div className="section-kicker">LESSON COMPLETE</div>
-                    <h2>A small step. A real conversation.</h2>
-                    <p>{lesson.goal}</p>
-                    <ul>
-                      {lesson.recap.map((r) => (
-                        <li key={r}>{r}</li>
-                      ))}
-                    </ul>
-                    <p className="hint">
-                      Your next review is{' '}
-                      {new Date(progress.reviews[lesson.id]?.due ?? Date.now()).toLocaleDateString(
-                        undefined,
-                        { month: 'long', day: 'numeric' },
-                      )}
-                      . Speaking was self-assessed; keep practicing with people.
-                    </p>
-                    <button
-                      className="primary"
-                      onClick={() =>
-                        lessonIndex < lessons.length - 1
-                          ? openLesson(lessonIndex + 1)
-                          : setView('Learn')
-                      }
-                    >
-                      {lessonIndex < lessons.length - 1
-                        ? 'Continue to next lesson'
-                        : 'See my learning path'}
-                      <ArrowRight />
-                    </button>
-                    <button className="text-button" onClick={() => openLesson(lessonIndex)}>
-                      Revisit this lesson
-                    </button>
-                  </section>
-                )}
-              </article>
-              <aside className="tutor-notes" aria-label="Your tutor notes">
-                <p className="handwriting tutor-quote">
-                  Pequeños pasos,
-                  <br />
-                  grandes conversaciones.
-                </p>
-                <div className="note">
-                  <Lightbulb size={30} weight="duotone" />
-                  <div>
-                    <h2>Key idea</h2>
-                    <p>{lesson.key}</p>
-                  </div>
-                </div>
-                <div className="note">
-                  <GraduationCap size={31} weight="duotone" />
-                  <div>
-                    <h2>Pro tip</h2>
-                    <p>{lesson.tip}</p>
-                    <p>{lesson.tipDetail}</p>
-                  </div>
-                </div>
-                <div className="note key-note">
-                  <Key size={30} weight="duotone" />
-                  <div>
-                    <button
-                      className="key-toggle"
-                      aria-expanded={keyOpen}
-                      onClick={() => setKeyOpen(!keyOpen)}
-                    >
-                      <h2>Answer key</h2>
-                      <CaretDown className={keyOpen ? 'rotated' : ''} />
-                    </button>
-                    {keyOpen ? (
-                      <div>
-                        <p lang="es">
-                          <strong>{lesson.reply}</strong>
-                        </p>
-                        <p>{lesson.reason}</p>
-                        <p className="muted">Use this to understand, then try from memory.</p>
-                      </div>
-                    ) : (
-                      <p className="muted">
-                        Try the practice first,
-                        <br />
-                        then check the why.
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <p className="handwriting closing-quote">
-                  Same learning spirit.
-                  <br />A wider world.
-                </p>
-              </aside>
-            </div>
-          ) : (
-            <div className="collection">
-              <div className="eyebrow">ESPAÑOL PARA SA’YO</div>
-              <h1>
-                {view === 'Practice lab'
-                  ? 'Build it. Say it. Use it.'
-                  : view === 'Progress'
-                    ? 'See your progress.'
-                    : view === 'Learn'
-                      ? 'Your learning path.'
-                      : view === 'Review'
-                        ? 'Make it stay.'
-                        : 'A little clarity.'}
-              </h1>
-              <p className="subtitle">
-                {view === 'Progress'
-                  ? 'Your practice, completion, and reviews in one place.'
-                  : view === 'Learn'
-                    ? 'Small lessons. Useful Spanish. A path you can return to.'
-                    : view === 'Review'
-                      ? 'Bring yesterday’s learning into today’s conversations.'
-                      : 'Your explanations, patterns, and practical reminders.'}
-              </p>
-              {view === 'Practice lab' && <PracticeLab />}
-              {view === 'Progress' && (
-                <ProgressDashboard
-                  lessons={lessons}
-                  progress={progress}
-                  onOpen={openLesson}
-                  now={now}
-                />
-              )}
-              {view === 'Learn' && (
-                <CourseMap lessons={lessons} progress={progress} onOpen={openLesson} />
-              )}
-              {view === 'Review' && (
-                <>
-                  <section>
-                    <h2>
-                      {due.length
-                        ? `${due.length} lessons ready for recall`
-                        : 'You’re all caught up.'}
-                    </h2>
-                    <p>
-                      {due.length
-                        ? 'A few minutes now helps the words come back later.'
-                        : 'Complete a lesson to schedule a review. You can revisit any lesson whenever you like.'}
-                    </p>
-                    {due.map((l) => (
-                      <button
-                        className="lesson-link"
-                        key={l.id}
-                        onClick={() => openLesson(lessons.indexOf(l), true)}
-                      >
-                        <ArrowsClockwise />
-                        <strong>{l.title}</strong>
-                        <ArrowRight />
-                      </button>
-                    ))}
-                  </section>
-                  <section>
-                    <h2>Your mistake notebook</h2>
-                    {!progress.mistakes.length ? (
-                      <p className="muted">
-                        No corrections yet. When you miss an answer, its explanation will be waiting
-                        here.
-                      </p>
-                    ) : (
-                      progress.mistakes.map((m) => (
-                        <div className="mistake" key={m.lesson}>
-                          <p>
-                            <span className="muted">You tried</span> {m.input}
-                          </p>
-                          <p>
-                            <strong>{m.answer}</strong>
-                          </p>
-                          <p>{m.reason}</p>
-                          <button
-                            className="text-button"
-                            onClick={() =>
-                              openLesson(
-                                lessons.findIndex((l) => l.id === m.lesson),
-                                true,
-                              )
-                            }
-                          >
-                            Try a similar practice
-                            <ArrowRight />
-                          </button>
-                        </div>
-                      ))
-                    )}
-                  </section>
-                  <button className="primary" onClick={() => setView('Learn')}>
-                    Explore lessons
-                    <ArrowRight />
-                  </button>
-                </>
-              )}
-              {view === 'Library' && <StudyLibrary lessons={lessons} onOpenLesson={openLesson} />}
-            </div>
-          )}
-        </main>
-        <footer className="footer">
-          Made for understanding. Built for real life.<span>Progress saved on this browser</span>
-        </footer>
-      </div>
-      {settings && (
-        <div className="modal-backdrop" onClick={() => setSettings(false)}>
-          <section
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="settings-title"
-            className="settings"
-            onClick={(e) => e.stopPropagation()}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape') setSettings(false);
-              if (e.key === 'Tab') {
-                const nodes = [...e.currentTarget.querySelectorAll('button')];
-                const first = nodes[0],
-                  last = nodes.at(-1);
-                if (e.shiftKey && document.activeElement === first) {
-                  e.preventDefault();
-                  last.focus();
-                }
-                if (!e.shiftKey && document.activeElement === last) {
-                  e.preventDefault();
-                  first.focus();
-                }
-              }
-            }}
-          >
-            <button
-              autoFocus
-              className="close"
-              aria-label="Close settings"
-              onClick={() => setSettings(false)}
-            >
-              <X />
-            </button>
-            <GearSix size={30} />
-            <h2 id="settings-title">Your learning space</h2>
-            <p>Your Spanish learning space · at your pace</p>
-            <button className="secondary" onClick={() => setDark(!dark)}>
-              {dark ? <Sun /> : <Moon />}
-              {dark ? 'Use light mode' : 'Use dark mode'}
-            </button>
-            <p className="muted">
-              Lessons and reviews save locally. Accounts, cross-device sync, and offline downloads
-              are coming in a later build.
-            </p>
-          </section>
-        </div>
-      )}
-    </div>
+    <>
+      <Shell
+        route={route}
+        progress={progress}
+        dueCount={dueCount}
+        onSettings={() => setSettingsOpen(true)}
+      >
+        {page}
+      </Shell>
+      <SettingsDialog open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+    </>
   );
 }
