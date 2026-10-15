@@ -1763,3 +1763,58 @@ body[data-focus] .daily-trigger {
   gap: 6px;
   color: var(--accent);
 }
+
+/* ---------- Word bank and listening exercises ---------- */
+.build-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 72px;
+  padding: 12px;
+  border-bottom: 2px solid var(--line);
+  border-top: 2px solid var(--line);
+}
+.build-line.right {
+  border-color: var(--success);
+}
+.build-line.wrong {
+  border-color: var(--danger);
+}
+.build-hint {
+  color: var(--muted);
+}
+.word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 8px 0;
+}
+.word {
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  font-family: var(--serif);
+  font-size: 18px;
+  box-shadow: 0 2px 0 var(--line);
+}
+.word:hover:not(:disabled) {
+  border-color: var(--primary);
+}
+.word:disabled {
+  opacity: 0.35;
+  box-shadow: none;
+}
+.listen-big {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--muted);
+}

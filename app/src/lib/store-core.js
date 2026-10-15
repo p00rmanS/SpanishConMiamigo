@@ -126,7 +126,7 @@ export function withDay(state, now = new Date()) {
 export function completeLesson(state, id, { firstTry = 0, review = false, now = Date.now() } = {}) {
   const already = state.completed.includes(id);
   const earned =
-    (review || already ? XP.review : XP.lesson) + Math.min(firstTry, 2) * XP.firstTryBonus;
+    (review || already ? XP.review : XP.lesson) + Math.min(firstTry, 4) * XP.firstTryBonus;
   const prev = state.lessonStats[id] ?? { attempts: 0, firstTry: 0, last: 0 };
   return withDay(
     {

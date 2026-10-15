@@ -1,14 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Check, Lightbulb, Lightning, Warning, X, Trophy } from '@phosphor-icons/react';
 import { StudySupport } from '../StudySupport.jsx';
 import { Recorder, SpeakButton } from '../components/ui.jsx';
 import { scoreAnswer } from '../learning.js';
 import { store, useProgress } from '../lib/store.js';
 import { navigate, href } from '../lib/router.js';
-import { stopSpeaking } from '../lib/speech.js';
+import { speak, stopSpeaking } from '../lib/speech.js';
+import { makeExercises } from '../lib/exercises.js';
 import { lessonById, levelOf, neighbours, countDone, MINUTES_PER_LESSON } from '../course.js';
 
-const STEPS = ['Learn', 'Choose', 'Write', 'Speak'];
+const STEPS = ['Learn', 'Choose', 'Build', 'Write', 'Listen', 'Speak'];
+const DONE = STEPS.length;
 const ACCENTS = ['á', 'é', 'í', 'ó', 'ú', 'ñ', '¿', '¡'];
 
 function Explanation({ lesson, mode }) {
@@ -134,8 +136,15 @@ export function LessonPlayer({ id, review }) {
   const [written, setWritten] = useState('');
   const [result, setResult] = useState(null);
   const [hint, setHint] = useState(false);
-  const attempts = useRef({ choose: 0, write: 0 });
-  const credit = useRef({ choose: false, write: false });
+  const [built, setBuilt] = useState([]);
+  const [heard, setHeard] = useState('');
+  // Keyed by lesson id: the shuffle must stay stable across re-renders while you play.
+  const exercises = useMemo(
+    () => (lesson && where ? makeExercises(lesson, where.level.lessons) : {}),
+    [id],
+  );
+  const attempts = useRef({ choose: 0, build: 0, write: 0, listen: 0 });
+  const credit = useRef({ choose: false, build: false, write: false, listen: false });
   const xpBefore = useRef(progress.xp);
   const heading = useRef(null);
 
@@ -143,6 +152,11 @@ export function LessonPlayer({ id, review }) {
     heading.current?.focus();
     return stopSpeaking;
   }, [step]);
+
+  // Play the sentence once when the listening exercise opens; the learner just pressed Continue.
+  useEffect(() => {
+    if (step === 4 && exercises.listen) speak(exercises.listen.answer);
+  }, [step, exercises]);
 
   // Number keys pick an option on the choice step; Enter never submits from the textarea.
   useEffect(() => {
@@ -201,23 +215,50 @@ export function LessonPlayer({ id, review }) {
     }
   }
 
+  const skipped = (i) => (i === 2 && !exercises.build) || (i === 4 && !exercises.listen);
+
   function advance(to) {
+    let target = to;
+    while (target < DONE && skipped(target)) target += 1;
     setResult(null);
     setHint(false);
-    setStep(to);
+    setStep(target);
   }
 
+  const builtWords = exercises.build ? built.map((i) => exercises.build.bank[i].word) : [];
+
+  function checkBuild() {
+    const sentence = builtWords.join(' ');
+    const scored = scoreAnswer(sentence, lesson.accepted, { strictAccents: lesson.strictAccents });
+    if (scored.correct) {
+      if (attempts.current.build === 0) credit.current.build = true;
+      setResult({ correct: true });
+    } else {
+      missed('build', sentence, lesson.reply);
+      setResult({ correct: false });
+    }
+  }
+
+  function checkListen() {
+    if (heard === exercises.listen.answer) {
+      if (attempts.current.listen === 0) credit.current.listen = true;
+      setResult({ correct: true });
+    } else {
+      missed('listen', heard, exercises.listen.answer);
+      setResult({ correct: false });
+    }
+  }
+
+  const firstTries = Object.values(credit.current).filter(Boolean).length;
+
   function finish() {
-    store.completeLesson(id, {
-      firstTry: Number(credit.current.choose) + Number(credit.current.write),
-      review,
-    });
-    advance(4);
+    store.completeLesson(id, { firstTry: firstTries, review });
+    advance(DONE);
   }
 
   const earned = Math.max(progress.xp - xpBefore.current, 0);
   const levelFinished =
-    step === 4 && countDone(level.lessons, progress.completed) === level.lessons.length;
+    step === DONE && countDone(level.lessons, progress.completed) === level.lessons.length;
   const dueDate = new Date(progress.reviews[id]?.due ?? Date.now()).toLocaleDateString(undefined, {
     month: 'long',
     day: 'numeric',
@@ -234,12 +275,14 @@ export function LessonPlayer({ id, review }) {
         >
           <X size={24} aria-hidden="true" />
         </button>
-        <ol className="segments" aria-label={`Step ${Math.min(step + 1, 4)} of 4`}>
-          {STEPS.map((label, i) => (
-            <li key={label} className={i < step ? 'done' : i === step ? 'current' : ''}>
-              <span className="sr-only">{label}</span>
-            </li>
-          ))}
+        <ol className="segments" aria-label={`Step ${Math.min(step, DONE - 1) + 1} of ${DONE}`}>
+          {STEPS.map((label, i) =>
+            skipped(i) ? null : (
+              <li key={label} className={i < step ? 'done' : i === step ? 'current' : ''}>
+                <span className="sr-only">{label}</span>
+              </li>
+            ),
+          )}
         </ol>
         <span className="chip xp">
           <Lightning weight="fill" size={16} aria-hidden="true" /> {progress.xp}
@@ -249,7 +292,7 @@ export function LessonPlayer({ id, review }) {
       <main className="player-main" id="main">
         <div className="player-col">
           <p className="eyebrow">
-            {course.title} · {level.code} · {STEPS[Math.min(step, 3)]}
+            {course.title} · {level.code} · {STEPS[Math.min(step, DONE - 1)]}
             {review && ' · Review'}
           </p>
           {step === 0 && (
@@ -297,7 +340,64 @@ export function LessonPlayer({ id, review }) {
             </section>
           )}
 
-          {step === 2 && (
+          {step === 2 && exercises.build && (
+            <section className="exercise">
+              <h1 ref={heading} tabIndex={-1} className="exercise-title">
+                Build the sentence
+              </h1>
+              <p className="muted">{lesson.meaning}</p>
+              <div
+                className={'build-line' + (result ? (result.correct ? ' right' : ' wrong') : '')}
+                lang="es"
+                aria-label="Your sentence"
+              >
+                {built.length === 0 && <span className="build-hint">Tap the words below</span>}
+                {built.map((index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className="word"
+                    disabled={result?.correct}
+                    onClick={() => {
+                      setBuilt((b) => b.filter((i) => i !== index));
+                      setResult(null);
+                    }}
+                  >
+                    {exercises.build.bank[index].word}
+                  </button>
+                ))}
+              </div>
+              <div className="word-bank" lang="es" aria-label="Word bank">
+                {exercises.build.bank.map(({ id: index, word }) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className="word"
+                    disabled={built.includes(index) || result?.correct}
+                    onClick={() => {
+                      setBuilt((b) => [...b, index]);
+                      setResult(null);
+                    }}
+                  >
+                    {word}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="text-button"
+                disabled={result?.correct}
+                onClick={() => {
+                  setBuilt([]);
+                  setResult(null);
+                }}
+              >
+                Clear
+              </button>
+            </section>
+          )}
+
+          {step === 3 && (
             <section className="exercise">
               <h1 ref={heading} tabIndex={-1} className="exercise-title">
                 {lesson.writing}
@@ -341,7 +441,45 @@ export function LessonPlayer({ id, review }) {
             </section>
           )}
 
-          {step === 3 && (
+          {step === 4 && exercises.listen && (
+            <section className="exercise">
+              <h1 ref={heading} tabIndex={-1} className="exercise-title">
+                What did you hear?
+              </h1>
+              <div className="listen-big">
+                <SpeakButton text={exercises.listen.answer} label="Play the sentence" size="lg" />
+                <span>Tap to listen</span>
+              </div>
+              <div className="options" role="radiogroup" aria-label="Choose the sentence you heard">
+                {exercises.listen.options.map((o, i) => (
+                  <button
+                    key={o}
+                    type="button"
+                    role="radio"
+                    aria-checked={heard === o}
+                    disabled={result?.correct}
+                    className={
+                      'option' +
+                      (heard === o ? ' selected' : '') +
+                      (result && heard === o ? (result.correct ? ' right' : ' wrong') : '')
+                    }
+                    onClick={() => {
+                      setHeard(o);
+                      setResult(null);
+                    }}
+                  >
+                    <kbd aria-hidden="true">{i + 1}</kbd>
+                    <span lang="es">{o}</span>
+                  </button>
+                ))}
+              </div>
+              <p className="muted small">
+                If you cannot hear audio, read the options and pick the one that matches the lesson.
+              </p>
+            </section>
+          )}
+
+          {step === 5 && (
             <section className="exercise">
               <h1 ref={heading} tabIndex={-1} className="exercise-title">
                 Use it in real life
@@ -356,7 +494,7 @@ export function LessonPlayer({ id, review }) {
             </section>
           )}
 
-          {step === 4 && (
+          {step === DONE && (
             <section className="done">
               <span className="done-badge" aria-hidden="true">
                 <Check size={40} weight="bold" />
@@ -370,8 +508,8 @@ export function LessonPlayer({ id, review }) {
                   <Lightning weight="fill" size={22} aria-hidden="true" />
                   <strong>+{earned} XP</strong>
                   <small>
-                    {credit.current.choose && credit.current.write
-                      ? 'First-try bonus on both exercises'
+                    {firstTries > 0
+                      ? `First-try bonus on ${firstTries} of ${STEPS.length - 2 - Number(!exercises.build) - Number(!exercises.listen)} exercises`
                       : 'Earned for finishing'}
                   </small>
                 </div>
@@ -419,6 +557,22 @@ export function LessonPlayer({ id, review }) {
           )}
           {step === 2 && result && (
             <Feedback result={result}>
+              <strong>{result.correct ? 'Perfect!' : 'Not quite yet.'}</strong>
+              {!result.correct && <p>Reorder the words and try again.</p>}
+            </Feedback>
+          )}
+          {step === 4 && result && (
+            <Feedback result={result}>
+              <strong>{result.correct ? 'You heard it!' : 'Not quite.'}</strong>
+              {!result.correct && (
+                <p>
+                  It was: <span lang="es">{exercises.listen.answer}</span>
+                </p>
+              )}
+            </Feedback>
+          )}
+          {step === 3 && result && (
+            <Feedback result={result}>
               <strong>{result.correct ? 'That works!' : 'Not quite yet.'}</strong>
               {result.correct && result.accent && (
                 <p>
@@ -454,6 +608,31 @@ export function LessonPlayer({ id, review }) {
                   Continue <ArrowRight aria-hidden="true" />
                 </button>
               ) : (
+                <button
+                  type="button"
+                  className="primary"
+                  disabled={builtWords.length === 0}
+                  onClick={checkBuild}
+                >
+                  {result ? 'Check again' : 'Check'}
+                </button>
+              ))}
+            {step === 4 &&
+              (result?.correct ? (
+                <button type="button" className="primary" onClick={() => advance(5)}>
+                  Continue <ArrowRight aria-hidden="true" />
+                </button>
+              ) : (
+                <button type="button" className="primary" disabled={!heard} onClick={checkListen}>
+                  {result ? 'Check again' : 'Check'}
+                </button>
+              ))}
+            {step === 3 &&
+              (result?.correct ? (
+                <button type="button" className="primary" onClick={() => advance(4)}>
+                  Continue <ArrowRight aria-hidden="true" />
+                </button>
+              ) : (
                 <>
                   {result && (
                     <button
@@ -461,7 +640,7 @@ export function LessonPlayer({ id, review }) {
                       className="text-button"
                       onClick={() => {
                         setWritten(lesson.reply);
-                        advance(3);
+                        advance(4);
                       }}
                     >
                       Show answer and continue
@@ -477,12 +656,12 @@ export function LessonPlayer({ id, review }) {
                   </button>
                 </>
               ))}
-            {step === 3 && (
+            {step === 5 && (
               <button type="button" className="primary" onClick={finish}>
                 I practiced · finish lesson <Check aria-hidden="true" />
               </button>
             )}
-            {step === 4 && (
+            {step === DONE && (
               <>
                 <a className="text-button" href={href(exitPath)}>
                   Back to course

@@ -197,3 +197,40 @@ test('daily streak counts consecutive days and stays alive until the day ends', 
   );
   assert.equal(streakInfo(['2026-05-31', '2026-06-01'], new Date(2026, 5, 1)).current, 2);
 });
+
+test('word-bank and listening exercises are valid for every lesson that offers them', async () => {
+  const { buildExercise, listenExercise } = await import('../src/lib/exercises.js');
+  const { scoreAnswer } = await import('../src/learning.js');
+  const {
+    courses: all,
+    courseLessons: items,
+    seededRandom: rng,
+  } = await import('../src/course.js');
+  let build = 0;
+  let listen = 0;
+  for (const course of all) {
+    for (const level of course.levels) {
+      for (const lesson of level.lessons) {
+        const b = buildExercise(lesson, rng(3));
+        if (b) {
+          build += 1;
+          assert.equal(b.bank.length >= b.answer.length, true);
+          const solved = b.answer.join(' ');
+          assert.ok(
+            scoreAnswer(solved, lesson.accepted, { strictAccents: lesson.strictAccents }).correct,
+            `${lesson.id}: the word-bank answer must be accepted`,
+          );
+        }
+        const l = listenExercise(lesson, level.lessons, rng(5));
+        if (l) {
+          listen += 1;
+          assert.equal(l.options.length, 3);
+          assert.ok(l.options.includes(l.answer));
+        }
+      }
+    }
+  }
+  assert.ok(items(all[0]).length > 0);
+  assert.ok(build > 150, 'most lessons should offer a word-bank exercise: ' + build);
+  assert.ok(listen > 250, 'every lesson should offer a listening exercise: ' + listen);
+});
