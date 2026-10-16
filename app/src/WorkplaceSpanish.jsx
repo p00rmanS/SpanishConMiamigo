@@ -425,6 +425,11 @@ export function WorkplaceSpanish({ lessons, onOpenLesson }) {
             <article className="phrase-entry" key={f.id}>
               <h3 lang="es">{f.term}</h3>
               <p className="english-meaning">{f.meaning}</p>
+              {f.taglish && (
+                <p className="taglish-note">
+                  <strong>Taglish:</strong> {f.taglish}
+                </p>
+              )}
               <p>
                 <strong>Purpose:</strong> {f.kind}
               </p>
@@ -461,10 +466,15 @@ export function WorkplaceSpanish({ lessons, onOpenLesson }) {
       ) : (
         <>
           <p>{vocabulary.length} terms</p>
-          {vocabulary.map(([es, en, tip]) => (
+          {vocabulary.map(([es, en, tip, tl]) => (
             <article className="phrase-entry" key={es}>
               <h3 lang="es">{es}</h3>
               <p className="english-meaning">{en}</p>
+              {tl && (
+                <p className="taglish-note">
+                  <strong>Taglish:</strong> {tl}
+                </p>
+              )}
               <p>
                 <strong>Pro tip:</strong> {tip}
               </p>

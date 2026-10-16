@@ -4,6 +4,7 @@ import { serviceLabs } from './service-labs.js';
 import { accountTraining } from './account-training.js';
 import { fillerLessons } from './filler-training.js';
 import { workplaceSupport } from './workplace-support.js';
+import { vocabTaglish } from './taglish-supplements.js';
 import { careerExpansion } from './career-expansion.js';
 import { dailyExpansion } from './daily-expansion.js';
 import { pronounce } from './lib/pronounce.js';
@@ -1200,3 +1201,5 @@ export const workplaceSources = [
     'https://www.incibe.es/sites/default/files/contenidos/politicas/documentos/2024/Contrase%C3%B1as_Pol%C3%ADtica%20de%20seguridad_2024.pdf',
   ],
 ];
+
+workplaceVocabulary.forEach((row) => row.push(vocabTaglish[row[0]]));

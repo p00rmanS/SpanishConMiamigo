@@ -46,3 +46,13 @@ test('dictionary entries are complete and searchable in English, Spanish and Tag
   assert.ok(findWords('contraseña').some((w) => w.type === 'Noun'));
   assert.ok(findWords('however').some((w) => w.word === 'sin embargo'));
 });
+
+test('reference content has authored Taglish for every phrase, verb, term and filler', async () => {
+  const { phrases, verbs } = await import('../src/reference-data.js');
+  const { workplaceVocabulary } = await import('../src/workplace-data.js');
+  const { fillerGuide } = await import('../src/filler-training.js');
+  for (const p of phrases) assert.ok(p.taglish?.length > 15, `phrase ${p.spanish}`);
+  for (const v of verbs) assert.ok(v.taglish?.length > 15, `verb ${v.infinitive}`);
+  for (const r of workplaceVocabulary) assert.ok(r[3], `term ${r[0]}`);
+  for (const f of fillerGuide) assert.ok(f.taglish?.length > 15, `filler ${f.id}`);
+});

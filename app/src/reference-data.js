@@ -1,3 +1,4 @@
+import { phraseTaglish, verbTaglish } from './taglish-supplements.js';
 import { expandedGrammar } from './course-expansion.js';
 const verbRows = [
   [
@@ -768,3 +769,10 @@ export const phrases = Object.entries(phraseGroups).flatMap(([category, rows]) =
 );
 
 export const grammar = [...baseGrammar, ...expandedGrammar];
+
+phrases.forEach((p, i) => {
+  p.taglish = phraseTaglish[i];
+});
+verbs.forEach((v) => {
+  v.taglish = verbTaglish[v.infinitive];
+});

@@ -74,7 +74,7 @@ test('every workplace phrase, dialogue turn, and term has bilingual support', ()
   }
   assert.equal(workplaceVocabulary.length, 32);
   for (const row of workplaceVocabulary) {
-    assert.equal(row.length, 3);
+    assert.equal(row.length, 4);
     assert.ok(row.every(Boolean));
   }
 });

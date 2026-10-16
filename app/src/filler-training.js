@@ -1,3 +1,4 @@
+import { fillerTaglish } from './taglish-supplements.js';
 // A hesitation sound buys thinking time; a discourse marker connects ideas.
 // Examples and placement patterns are authored models, not universal usage rules.
 const marker = (
@@ -378,3 +379,7 @@ export const fillerLessons = fillerGuide.map((f) => ({
   transfer:
     'Give a different answer to the friend. Keep the same marker only if it still fits your meaning. Then repeat your answer without it. Explain what changed.',
 }));
+
+fillerGuide.forEach((f) => {
+  f.taglish = fillerTaglish[f.id];
+});

@@ -171,6 +171,7 @@ const baseEntries = [
     example: v.example,
     translation: v.translation,
     note: v.note,
+    taglish: v.taglish,
     forms: [...v.forms, ...Object.values(tenseTables[v.infinitive] || {}).flat()],
   })),
   ...words.map(([word, article, meaning, example, translation, note]) => ({

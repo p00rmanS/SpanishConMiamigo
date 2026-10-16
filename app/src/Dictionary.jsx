@@ -94,6 +94,11 @@ export function Dictionary({ initialQuery = '' }) {
             </h3>
             <strong>{w.meaning}</strong>
             {w.tagalog && <p className="muted">Tagalog: {w.tagalog}</p>}
+            {w.taglish && (
+              <p className="taglish-note">
+                <strong>Taglish:</strong> {w.taglish}
+              </p>
+            )}
             <button className="text-button" onClick={() => listen(w.word)}>
               Listen to {w.word}
             </button>

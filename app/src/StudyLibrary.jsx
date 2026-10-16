@@ -84,6 +84,11 @@ function VerbDetail({ verb, tense }) {
       <div className="teaching-note">
         <LightbulbLabel />
         <p>{tense === 'present' ? verb.note : info.explanation}</p>
+        {tense === 'present' && verb.taglish && (
+          <p className="taglish-note">
+            <strong>Taglish:</strong> {verb.taglish}
+          </p>
+        )}
       </div>
       <p>
         <strong>Pro tip:</strong> {info.tip}
@@ -241,7 +246,7 @@ export function StudyLibrary({
   const phraseResults = phrases.filter(
     (p) =>
       (category === 'All' || p.category === category) &&
-      [p.spanish, p.english, p.note].join(' ').toLowerCase().includes(q),
+      [p.spanish, p.english, p.note, p.taglish ?? ''].join(' ').toLowerCase().includes(q),
   );
   return (
     <div className="study-library">
@@ -425,6 +430,11 @@ export function StudyLibrary({
                 <span className="section-kicker">{p.category}</span>
                 <Example spanish={p.spanish} english={p.english} tip={p.note} />
                 <p className="phrase-note">{p.note}</p>
+                {p.taglish && (
+                  <p className="taglish-note">
+                    <strong>Taglish:</strong> {p.taglish}
+                  </p>
+                )}
               </article>
             ))}
           </div>
