@@ -598,4 +598,346 @@ export const careerExpansion = [
     'Una sugerencia: confirma la fecha.',
     'Confirma is the tú command of confirmar; feedback among peers often uses tú.',
   ),
+
+  // ---------- Level 3, second batch ----------
+  makeModule(
+    'negotiation-terms',
+    'Billing',
+    'Negotiate renewal terms',
+    'Advanced',
+    'Acknowledge a price concern, offer a conditional option and confirm the terms in writing.',
+    [
+      [
+        'Entiendo que el aumento le preocupa; veamos qué opciones tenemos.',
+        'I understand the increase worries you; let us see what options we have.',
+        'Acknowledge the concern first, then move to options.',
+      ],
+      [
+        'Podríamos mantener el precio actual si renueva por doce meses.',
+        'We could keep the current price if you renew for twelve months.',
+        'Podríamos + infinitive offers a conditional option; si + present states the condition.',
+      ],
+      [
+        'Le enviaré las condiciones por escrito para que las revise con calma.',
+        'I will send you the terms in writing so that you can review them calmly.',
+        'Para que + subjunctive gives the purpose: las revise.',
+      ],
+    ],
+    [
+      ['Customer', 'No estoy de acuerdo con el aumento.', 'I do not agree with the increase.'],
+      [
+        'Agent',
+        'Entiendo. Podríamos mantener el precio actual si renueva por doce meses.',
+        'I understand. We could keep the current price if you renew for twelve months.',
+      ],
+      ['Customer', '¿Y si no quiero un contrato largo?', 'And if I do not want a long contract?'],
+      [
+        'Agent',
+        'Entonces aplicaría la tarifa nueva. Le enviaré las condiciones por escrito.',
+        'Then the new rate would apply. I will send you the terms in writing.',
+      ],
+    ],
+    'Say: We could keep the current price. Use podríamos mantener.',
+    'Podríamos mantener el precio actual.',
+    'Podríamos + infinitive is a polite conditional offer. Never promise what you cannot approve.',
+  ),
+  makeModule(
+    'followup-email',
+    'Customer care',
+    'Write a follow-up email after a call',
+    'Advanced',
+    'Summarize what was agreed, list next steps and invite a reply.',
+    [
+      [
+        'Gracias por su llamada de hoy; le escribo para resumir lo acordado.',
+        'Thank you for today’s call; I am writing to summarize what we agreed.',
+        'State the purpose first. Lo acordado means what was agreed.',
+      ],
+      [
+        'Los próximos pasos son: primero, reinicie el equipo; después, pruebe de nuevo.',
+        'The next steps are: first, restart the device; then try again.',
+        'Usted commands (reinicie, pruebe) keep instructions short and clear.',
+      ],
+      [
+        'Si el problema continúa, responda a este correo y retomaremos su caso.',
+        'If the problem continues, reply to this email and we will resume your case.',
+        'Si + present, then a command or the future.',
+      ],
+    ],
+    [
+      [
+        'Agent',
+        'Voy a enviarle un resumen por correo.',
+        'I am going to send you a summary by email.',
+      ],
+      ['Customer', 'Perfecto, ¿qué incluirá?', 'Perfect, what will it include?'],
+      [
+        'Agent',
+        'Los pasos que acordamos y su número de caso.',
+        'The steps we agreed on and your case number.',
+      ],
+      ['Customer', 'Muchas gracias.', 'Thank you very much.'],
+    ],
+    'Write: Thank you for today’s call. Use gracias por su llamada.',
+    'Gracias por su llamada de hoy.',
+    'Gracias por + noun is the standard opening for a follow-up message.',
+  ),
+  makeModule(
+    'privacy-request',
+    'Resolution',
+    'Handle a request about personal data',
+    'Advanced',
+    'Verify identity, explain the process and confirm in writing without over-promising.',
+    [
+      [
+        'Entiendo que desea que eliminemos sus datos personales.',
+        'I understand you want us to delete your personal data.',
+        'Desear que + subjunctive: eliminemos.',
+      ],
+      [
+        'Para proteger su información, primero debemos verificar su identidad.',
+        'To protect your information, we must first verify your identity.',
+        'Para + infinitive states the purpose; debemos + infinitive states the requirement.',
+      ],
+      [
+        'Procesaremos su solicitud y le confirmaremos por escrito.',
+        'We will process your request and confirm it to you in writing.',
+        'Use the future for next steps. Give a date only if your policy states one.',
+      ],
+    ],
+    [
+      [
+        'Customer',
+        'Quiero que borren mis datos de su sistema.',
+        'I want you to delete my data from your system.',
+      ],
+      [
+        'Agent',
+        'Entiendo. Para proteger su información, primero debemos verificar su identidad.',
+        'I understand. To protect your information, we must first verify your identity.',
+      ],
+      ['Customer', 'De acuerdo, ¿qué necesita?', 'All right, what do you need?'],
+      [
+        'Agent',
+        'Le enviaré un enlace oficial. Después procesaremos su solicitud.',
+        'I will send you an official link. Then we will process your request.',
+      ],
+    ],
+    'Say: We must first verify your identity.',
+    'Primero debemos verificar su identidad.',
+    'Primero marks the order; debemos + infinitive states the requirement.',
+  ),
+  makeModule(
+    'service-credit',
+    'Billing',
+    'Offer a credit after an outage',
+    'Advanced',
+    'Apologize, explain the credit and say exactly when the customer will see it.',
+    [
+      [
+        'Lamentamos la interrupción; vamos a aplicar un crédito en su próxima factura.',
+        'We are sorry for the interruption; we are going to apply a credit to your next bill.',
+        'Name the problem, then the action and where it will appear.',
+      ],
+      [
+        'El crédito corresponde a los días sin servicio.',
+        'The credit corresponds to the days without service.',
+        'Corresponder a means to correspond to; it explains how the amount was calculated.',
+      ],
+      [
+        'Lo verá reflejado en el siguiente ciclo de facturación.',
+        'You will see it reflected in the next billing cycle.',
+        'Verá is the future of ver; reflejado agrees with lo (el crédito).',
+      ],
+    ],
+    [
+      ['Customer', 'Estuve tres días sin internet.', 'I was without internet for three days.'],
+      [
+        'Agent',
+        'Lamentamos la interrupción. Vamos a aplicar un crédito en su próxima factura.',
+        'We are sorry for the interruption. We are going to apply a credit to your next bill.',
+      ],
+      ['Customer', '¿De cuánto es?', 'How much is it?'],
+      [
+        'Agent',
+        'Corresponde a los tres días sin servicio. Lo verá en el siguiente ciclo.',
+        'It corresponds to the three days without service. You will see it in the next cycle.',
+      ],
+    ],
+    'Say: We are going to apply a credit to your next bill.',
+    'Vamos a aplicar un crédito en su próxima factura.',
+    'Vamos a + infinitive states the action; en su próxima factura says where it appears.',
+  ),
+  makeModule(
+    'review-threat',
+    'Empathy',
+    'Respond to a threat of a bad review',
+    'Advanced',
+    'Stay calm, name the feeling and refocus on a solution without arguing.',
+    [
+      [
+        'Comprendo su molestia y quiero resolver esto hoy.',
+        'I understand your annoyance and I want to resolve this today.',
+        'Name the feeling and the goal. Do not argue about the review.',
+      ],
+      [
+        'Me gustaría revisar con usted qué ocurrió para encontrar una solución justa.',
+        'I would like to review with you what happened to find a fair solution.',
+        'Me gustaría is a polite conditional that invites cooperation.',
+      ],
+      [
+        'Su opinión nos ayuda a mejorar, y estoy aquí para ayudarle ahora.',
+        'Your opinion helps us improve, and I am here to help you now.',
+        'Refocus on what you can do right now.',
+      ],
+    ],
+    [
+      ['Customer', 'Voy a poner una reseña terrible.', 'I am going to post a terrible review.'],
+      [
+        'Agent',
+        'Comprendo su molestia y quiero resolver esto hoy.',
+        'I understand your annoyance and I want to resolve this today.',
+      ],
+      ['Customer', 'Ya llamé tres veces.', 'I have already called three times.'],
+      [
+        'Agent',
+        'Me gustaría revisar con usted qué ocurrió para encontrar una solución justa.',
+        'I would like to review with you what happened to find a fair solution.',
+      ],
+    ],
+    'Say: I want to resolve this today.',
+    'Quiero resolver esto hoy.',
+    'Quiero + infinitive is direct; esto points to the issue without blaming anyone.',
+  ),
+  makeModule(
+    'three-way-call',
+    'Customer care',
+    'Add a supervisor to the call',
+    'Advanced',
+    'Ask consent, brief the third person and make sure the customer does not repeat the story.',
+    [
+      [
+        'Voy a unir a mi supervisora a la llamada; ¿le parece bien?',
+        'I am going to add my supervisor to the call; is that all right with you?',
+        'Ask consent before adding someone to a call.',
+      ],
+      [
+        'Le resumo brevemente el caso para que usted no tenga que repetirlo.',
+        'I will briefly summarize the case so that you do not have to repeat it.',
+        'Para que + subjunctive: no tenga que repetirlo.',
+      ],
+      [
+        'Gracias por esperar; ya estamos los tres en línea.',
+        'Thank you for waiting; all three of us are on the line now.',
+        'Ya estamos los tres means all three of us are here.',
+      ],
+    ],
+    [
+      [
+        'Agent',
+        'Voy a unir a mi supervisora a la llamada. ¿Le parece bien?',
+        'I am going to add my supervisor to the call. Is that all right with you?',
+      ],
+      ['Customer', 'Sí, adelante.', 'Yes, go ahead.'],
+      [
+        'Agent',
+        'Gracias por esperar; ya estamos los tres en línea.',
+        'Thank you for waiting; all three of us are on the line now.',
+      ],
+      [
+        'Agent',
+        'Le resumo el caso para que usted no tenga que repetirlo.',
+        'I will summarize the case so that you do not have to repeat it.',
+      ],
+    ],
+    'Ask: Is that all right with you? Use le parece bien.',
+    '¿Le parece bien?',
+    'Le parece bien is the polite way to ask for agreement.',
+  ),
+  makeModule(
+    'maintenance-window',
+    'Technical support',
+    'Announce a maintenance window',
+    'Advanced',
+    'Give the date, the impact and what customers should do before it starts.',
+    [
+      [
+        'El servicio estará en mantenimiento el sábado de dos a cuatro de la madrugada.',
+        'The service will be under maintenance on Saturday from two to four in the morning.',
+        'Estará is the future of estar. De la madrugada means in the early morning hours.',
+      ],
+      [
+        'Durante ese tiempo, no podrá iniciar sesión ni descargar archivos.',
+        'During that time, you will not be able to sign in or download files.',
+        'No podrá + infinitive; ni means nor.',
+      ],
+      [
+        'Le recomiendo guardar su trabajo antes de que empiece el mantenimiento.',
+        'I recommend saving your work before the maintenance begins.',
+        'Antes de que + subjunctive: empiece.',
+      ],
+    ],
+    [
+      ['Customer', '¿Por qué no puedo entrar al sistema?', 'Why can I not get into the system?'],
+      [
+        'Agent',
+        'El servicio estará en mantenimiento el sábado de dos a cuatro de la madrugada.',
+        'The service will be under maintenance on Saturday from two to four in the morning.',
+      ],
+      ['Customer', '¿Perderé mi trabajo?', 'Will I lose my work?'],
+      [
+        'Agent',
+        'No, pero le recomiendo guardar su trabajo antes de que empiece.',
+        'No, but I recommend saving your work before it begins.',
+      ],
+    ],
+    'Say: I recommend saving your work. Use le recomiendo.',
+    'Le recomiendo guardar su trabajo.',
+    'Recomendar + infinitive works when the advice is general; add que + subjunctive for a specific person.',
+  ),
+  makeModule(
+    'survey-close',
+    'Customer care',
+    'Close the call and invite a survey',
+    'Advanced',
+    'Check for anything else, mention the survey and end warmly.',
+    [
+      [
+        '¿Hay algo más en lo que pueda ayudarle?',
+        'Is there anything else I can help you with?',
+        'Algo más en lo que + subjunctive: pueda.',
+      ],
+      [
+        'Recibirá una breve encuesta; su opinión es muy importante.',
+        'You will receive a short survey; your opinion is very important.',
+        'Recibirá is the future. Keep the invitation brief and optional.',
+      ],
+      [
+        'Gracias por su tiempo y que tenga un excelente día.',
+        'Thank you for your time and have an excellent day.',
+        'Que tenga + noun wishes someone well (subjunctive).',
+      ],
+    ],
+    [
+      [
+        'Agent',
+        '¿Hay algo más en lo que pueda ayudarle?',
+        'Is there anything else I can help you with?',
+      ],
+      ['Customer', 'No, eso es todo. Gracias.', 'No, that is all. Thank you.'],
+      [
+        'Agent',
+        'Recibirá una breve encuesta; su opinión es muy importante.',
+        'You will receive a short survey; your opinion is very important.',
+      ],
+      [
+        'Agent',
+        'Gracias por su tiempo y que tenga un excelente día.',
+        'Thank you for your time and have an excellent day.',
+      ],
+    ],
+    'Say: Have an excellent day. Use que tenga.',
+    'Que tenga un excelente día.',
+    'Que + subjunctive wishes someone well; it is a polite way to end the call.',
+  ),
 ];

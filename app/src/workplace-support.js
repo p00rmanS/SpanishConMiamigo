@@ -721,4 +721,52 @@ export const workplaceSupport = [
     'Tardar en + infinitive means to take time to do something.',
     'Ask for a receipt and the tracking number before you leave the counter.',
   ],
+  [
+    'negotiation-terms',
+    `Podríamos mantener = maaari nating panatilihin (conditional, magalang). Si renueva = kung magre-renew kayo (si + present). Para que las revise = para masuri ninyo ang mga ito (para que + subjunctive).`,
+    'Podríamos + infinitive offers a conditional option; si + present sets the condition.',
+    'Put the terms in writing so the customer can decide without pressure.',
+  ],
+  [
+    'followup-email',
+    `Le escribo para resumir = sumusulat po ako upang ibuod. Lo acordado = ang napagkasunduan. Reinicie, pruebe = utos para sa usted (i-restart ninyo, subukan ninyo).`,
+    'Open with thanks and purpose, then list the next steps.',
+    'Use short numbered steps; customers skim emails.',
+  ],
+  [
+    'privacy-request',
+    `Desea que eliminemos = nais ninyong burahin namin (desear que + subjunctive). Para proteger = upang protektahan. Debemos verificar = kailangan naming beripikahin.`,
+    'Verify identity before you touch personal data.',
+    'Never promise a deletion date unless your policy states one.',
+  ],
+  [
+    'service-credit',
+    `Vamos a aplicar un crédito = maglalapat tayo ng credit. Corresponde a = katumbas ng. Lo verá reflejado = makikita ninyo itong nakalagay (future ng ver).`,
+    'Apology + action + where and when the credit appears.',
+    'Say how the credit was calculated so the customer can check it.',
+  ],
+  [
+    'review-threat',
+    `Comprendo su molestia = naiintindihan ko ang inis ninyo. Quiero resolver esto hoy = gusto kong ayusin ito ngayon. Me gustaría revisar = gusto ko sanang suriin (conditional, magalang).`,
+    'Name the feeling, state the goal, then act. Do not argue about the review.',
+    'Stay on what you can fix today.',
+  ],
+  [
+    'three-way-call',
+    `¿Le parece bien? = Okay po ba sa inyo? Para que no tenga que repetirlo = para hindi na ninyo kailangang ulitin (para que + subjunctive). Ya estamos los tres = nandito na tayong tatlo.`,
+    'Ask consent, then brief the new person so the customer does not repeat the story.',
+    'Introduce everyone by name and role.',
+  ],
+  [
+    'maintenance-window',
+    `Estará en mantenimiento = magkakaroon ng maintenance (future ng estar). No podrá iniciar sesión ni descargar = hindi ninyo magagawang mag-log in o mag-download. Antes de que empiece = bago magsimula (antes de que + subjunctive).`,
+    'Give the date, the impact and one action to take before it starts.',
+    'Always state the time zone for a maintenance window.',
+  ],
+  [
+    'survey-close',
+    `¿Hay algo más…? = May iba pa ba…? Recibirá una encuesta = makakatanggap kayo ng survey (future). Que tenga un excelente día = sana maganda ang araw ninyo (que + subjunctive).`,
+    'Check for anything else, mention the survey, and wish the customer well.',
+    'Keep the survey mention to one sentence and say it is optional.',
+  ],
 ];

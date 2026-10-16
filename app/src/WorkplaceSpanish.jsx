@@ -51,7 +51,7 @@ function DecisionPractice({ decision: d }) {
   );
 }
 
-function WorkplaceLesson({ module: m, onPractice }) {
+function WorkplaceLesson({ module: m, lesson, onPractice }) {
   const [answer, setAnswer] = useState(''),
     [result, setResult] = useState(null),
     [model, setModel] = useState(false),
@@ -107,6 +107,15 @@ function WorkplaceLesson({ module: m, onPractice }) {
         Available voices depend on your browser. A voice is not a model of every speaker in that
         region.
       </p>
+      {lesson && (
+        <section className="teaching-note">
+          <h3>Sa Taglish</h3>
+          <p className="taglish-note">{lesson.taglish}</p>
+          <p>
+            <strong>Key idea:</strong> {lesson.key}
+          </p>
+        </section>
+      )}
       <h3>What to say—and when</h3>
       {m.steps && (
         <section className="teaching-note">
@@ -326,6 +335,7 @@ export function WorkplaceSpanish({ lessons, onOpenLesson }) {
         <WorkplaceLesson
           key={module.id}
           module={module}
+          lesson={lessons.find((l) => l.id === module.id)}
           onPractice={() => onOpenLesson(lessons.findIndex((l) => l.id === module.id))}
         />
       </div>
