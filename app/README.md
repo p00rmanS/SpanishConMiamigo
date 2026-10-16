@@ -24,7 +24,7 @@ npm run build
 
 | Area | What you get |
 | --- | --- |
-| **Courses** | *Spanish Foundations* (A1 to C1, 146 lessons in 5 levels and 23 units), *Bilingual Career Spanish* (customer care, technical support, billing, 3 levels, 68 lessons), *Spanish for Daily Life* (44 lessons) |
+| **Courses** (trail map or list view) | *Spanish Foundations* (A1 to C1, 146 lessons in 5 levels and 23 units), *Bilingual Career Spanish* (customer care, technical support, billing, 3 levels, 68 lessons), *Spanish for Daily Life* (44 lessons) |
 | **Lesson player** | Learn → choose → build the sentence from a word bank → write → listen → speak, with audio, a generated pronunciation guide, pattern chips, conjugation and memory support, a pro tip, a common-mistake note, immediate feedback and XP |
 | **Checkpoints** | A 10-question quiz per level, best score saved, plus a placement check that suggests a starting level |
 | **Review** | Spaced repetition (boxes 0–5), a mistake notebook and a due-count badge |

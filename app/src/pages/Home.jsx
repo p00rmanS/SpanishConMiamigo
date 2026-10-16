@@ -11,7 +11,7 @@ import {
 import { href } from '../lib/router.js';
 import { lastSevenDays, streakInfo } from '../lib/store-core.js';
 import { ProgressBar } from '../components/ui.jsx';
-import { CourseCard, courseIcon } from './Courses.jsx';
+import { CourseCard } from './Courses.jsx';
 import {
   courses,
   courseOf,
@@ -21,11 +21,18 @@ import {
   MINUTES_PER_LESSON,
 } from '../course.js';
 
+function greeting(date = new Date()) {
+  const h = date.getHours();
+  if (h < 12) return ['Buenos días', 'Magandang umaga'];
+  if (h < 19) return ['Buenas tardes', 'Magandang hapon'];
+  return ['Buenas noches', 'Magandang gabi'];
+}
+
 function streakMessage(streak) {
   if (streak.current === 0) return 'Complete one lesson today to start a streak.';
   if (!streak.practicedToday)
-    return `Your ${streak.current}-day streak is alive. Practice today to extend it. Longest: ${streak.longest}.`;
-  return `You practiced today. Longest streak: ${streak.longest} day${streak.longest === 1 ? '' : 's'}.`;
+    return `Your ${streak.current}-day streak is alive. Practice today to keep it.`;
+  return `You practiced today. Best streak: ${streak.longest} day${streak.longest === 1 ? '' : 's'}.`;
 }
 
 function activeCourse(progress) {
@@ -43,63 +50,73 @@ export function Home({ progress, dueCount }) {
   const where = next && levelOf(next.id);
   const week = lastSevenDays(progress.days);
   const streak = streakInfo(progress.days);
-  const Icon = courseIcon(course.icon);
+  const [es, tl] = greeting();
   return (
-    <div className="page">
-      <section className="hero-row">
+    <div className="page home">
+      <section className="hero-greet">
         <div>
-          <p className="eyebrow">{started ? 'Welcome back' : 'Welcome'}</p>
-          <h1>{started ? 'Pick up where you left off.' : 'Learn Spanish you can use.'}</h1>
+          <p className="eyebrow">{started ? 'Welcome back' : 'Simulan na natin'}</p>
+          <h1>
+            {es},<br />
+            <span className="kicker">{tl}.</span>
+          </h1>
           <p className="lead">
-            Structured courses, real conversations and honest practice, at your own pace. Built for
-            everyday life and for bilingual careers.
+            {started
+              ? 'Pick up your path, or run today’s mixed session to keep your streak.'
+              : 'Real Spanish for real life and real careers, explained in English and Taglish.'}
           </p>
         </div>
-        <div className="week card" aria-label="Practice this week">
-          <p className="card-title streak-title">
-            <Fire weight="fill" size={22} aria-hidden="true" />
-            {streak.current}-day streak
-          </p>
-          <ol className="week-dots">
-            {week.map((d) => (
-              <li key={d.key} className={d.active ? 'on' : ''}>
-                <span className="dot" aria-hidden="true" />
-                <span className="sr-only">{d.key}: </span>
-                <small>{d.label}</small>
-                <span className="sr-only">{d.active ? 'practiced' : 'no practice'}</span>
-              </li>
-            ))}
-          </ol>
-          <p className="muted small">{streakMessage(streak)}</p>
+        <div className="stamp-wrap">
+          <div className={'stamp' + (streak.practicedToday ? ' lit' : '')}>
+            <Fire weight="fill" size={30} aria-hidden="true" />
+            <strong>{streak.current}</strong>
+            <span>day streak</span>
+          </div>
+          <div className="week" aria-label="Practice this week">
+            <ol className="week-tiles">
+              {week.map((d) => (
+                <li key={d.key} className={d.active ? 'on' : ''}>
+                  <span className="sr-only">
+                    {d.key}: {d.active ? 'practiced' : 'no practice'}
+                  </span>
+                  <span className="tile-day" aria-hidden="true">
+                    {d.active ? '✓' : ''}
+                  </span>
+                  <small aria-hidden="true">{d.label}</small>
+                </li>
+              ))}
+            </ol>
+            <p className="muted small">{streakMessage(streak)}</p>
+          </div>
         </div>
       </section>
 
       {next ? (
-        <section className="continue card" aria-labelledby="continue-title">
-          <div className="continue-icon" aria-hidden="true">
-            <Icon size={34} weight="duotone" />
-          </div>
-          <div className="continue-main">
+        <section
+          className={'continue-hero tiled tone-' + course.id}
+          aria-labelledby="continue-title"
+        >
+          <div className="continue-body">
             <p className="eyebrow" id="continue-title">
-              {started ? 'Continue learning' : 'Start here'} · {course.title}
+              {started ? 'Continue' : 'Start here'} · {course.title}
             </p>
             <h2>{next.title}</h2>
             <p className="spanish-line" lang="es">
               {next.sentence}
             </p>
-            <p className="muted small">
-              {where && `${where.level.code} ${where.level.title} · `}
-              {MINUTES_PER_LESSON} min lesson
+            <p className="meta">
+              {where && `${where.level.code} · ${where.level.title} · `}
+              {MINUTES_PER_LESSON} min
             </p>
             <div className="continue-progress">
               <ProgressBar value={stats.percent} label={`${course.title} progress`} />
               <small>
-                {stats.done} of {stats.total} lessons
+                {stats.done} / {stats.total}
               </small>
             </div>
           </div>
-          <a className="primary" href={href('/lesson/' + next.id)}>
-            {started ? 'Continue' : 'Start lesson'} <ArrowRight aria-hidden="true" />
+          <a className="cta" href={href('/lesson/' + next.id)}>
+            {started ? 'Continue' : 'Start lesson'} <ArrowRight weight="bold" aria-hidden="true" />
           </a>
         </section>
       ) : (
@@ -116,35 +133,32 @@ export function Home({ progress, dueCount }) {
             <div>
               <h3>Daily session</h3>
               <p>
-                Ten quick mixed questions from what you have learned: choose, listen and build
-                sentences. Keeps your streak going.
+                Ten quick questions from what you have learned: choose, listen and build sentences.
               </p>
             </div>
             <ArrowRight aria-hidden="true" />
           </a>
         )}
-        {!started && !progress.placement && (
+        {!started && (
           <a className="card tile" href={href('/placement')}>
-            <Compass size={30} weight="duotone" aria-hidden="true" />
+            <Compass size={30} weight="bold" aria-hidden="true" />
             <div>
-              <h3>Find your level</h3>
-              <p>A short placement check suggests where to start in Spanish Foundations.</p>
-            </div>
-            <ArrowRight aria-hidden="true" />
-          </a>
-        )}
-        {progress.placement && !started && (
-          <a className="card tile" href={href('/placement')}>
-            <Compass size={30} weight="duotone" aria-hidden="true" />
-            <div>
-              <h3>Suggested start: {progress.placement.level}</h3>
-              <p>Based on your placement check. Retake it any time.</p>
+              <h3>
+                {progress.placement
+                  ? `Suggested start: ${progress.placement.level}`
+                  : 'Find your level'}
+              </h3>
+              <p>
+                {progress.placement
+                  ? 'Based on your placement check. Retake it any time.'
+                  : 'A short placement check suggests where to start in Spanish Foundations.'}
+              </p>
             </div>
             <ArrowRight aria-hidden="true" />
           </a>
         )}
         <a className={'card tile' + (dueCount ? ' attention' : '')} href={href('/review')}>
-          <ArrowsClockwise size={30} weight="duotone" aria-hidden="true" />
+          <ArrowsClockwise size={30} weight="bold" aria-hidden="true" />
           <div>
             <h3>{dueCount ? `${dueCount} ready for review` : 'Review'}</h3>
             <p>
@@ -161,7 +175,7 @@ export function Home({ progress, dueCount }) {
         <div className="section-head">
           <h2 id="courses-title">Your courses</h2>
           <a className="text-link" href={href('/courses')}>
-            All courses <ArrowRight aria-hidden="true" />
+            All courses
           </a>
         </div>
         <div className="course-grid">
@@ -172,14 +186,14 @@ export function Home({ progress, dueCount }) {
       </section>
 
       <section aria-labelledby="tools-title">
-        <h2 id="tools-title">Reference tools</h2>
+        <h2 id="tools-title">Reference shelf</h2>
         <div className="tool-grid">
           {[
             [
               '/library/dictionary',
               Translate,
               'Dictionary',
-              'Spanish ↔ English with examples and audio.',
+              'Spanish ↔ English ↔ Tagalog, with examples and audio.',
             ],
             ['/library/verbs', Books, 'Verb conjugator', 'Every tense for 50 essential verbs.'],
             [
@@ -190,7 +204,7 @@ export function Home({ progress, dueCount }) {
             ],
           ].map(([path, ToolIcon, title, text]) => (
             <a key={path} className="card tool" href={href(path)}>
-              <ToolIcon size={28} weight="duotone" aria-hidden="true" />
+              <ToolIcon size={28} weight="bold" aria-hidden="true" />
               <h3>{title}</h3>
               <p>{text}</p>
             </a>

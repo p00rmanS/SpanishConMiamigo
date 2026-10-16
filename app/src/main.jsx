@@ -4,6 +4,8 @@ import { App } from './App.jsx';
 import { DailyDiscovery } from './DailyDiscovery.jsx';
 import './styles.css';
 import './ui.css';
+import './theme.css';
+import './theme-pages.css';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>

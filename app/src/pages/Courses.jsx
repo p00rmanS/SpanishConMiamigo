@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   ArrowRight,
   CaretDown,
@@ -12,6 +13,7 @@ import {
 } from '@phosphor-icons/react';
 import { href } from '../lib/router.js';
 import { ProgressBar, Ring } from '../components/ui.jsx';
+import { JourneyPath } from '../components/JourneyPath.jsx';
 import {
   courses,
   courseLessons,
@@ -103,6 +105,7 @@ function LessonRow({ lesson, index, done, due }) {
 }
 
 export function CourseDetail({ id, progress }) {
+  const [view, setView] = useState('path');
   const course = courses.find((c) => c.id === id);
   if (!course)
     return (
@@ -167,62 +170,83 @@ export function CourseDetail({ id, progress }) {
 
       <div className="detail-grid">
         <section aria-labelledby="curriculum">
-          <h2 id="curriculum">Curriculum</h2>
-          {course.levels.map((level, li) => {
-            const levelDone = countDone(level.lessons, progress.completed);
-            const cp = progress.checkpoints[level.id];
-            counter = course.levels.slice(0, li).reduce((n, lv) => n + lv.lessons.length, 0);
-            return (
-              <details className="level" key={level.id} open={li === Math.max(firstOpen, 0)}>
-                <summary>
-                  <span className="level-code">{level.code}</span>
-                  <span className="level-title">
-                    <strong>{level.title}</strong>
-                    <small>
-                      {levelDone}/{level.lessons.length} lessons
-                      {cp && ` · checkpoint ${cp.best}/${cp.total}`}
-                    </small>
-                  </span>
-                  <ProgressBar
-                    value={(levelDone / level.lessons.length) * 100}
-                    label={`${level.title} progress`}
-                  />
-                  <CaretDown className="chev" aria-hidden="true" />
-                </summary>
-                <p className="muted level-blurb">{level.blurb}</p>
-                {level.units.map((unit) => (
-                  <div className="unit" key={unit.id}>
-                    <h3>{unit.title}</h3>
-                    <ol className="lesson-list">
-                      {unit.lessons.map((lesson) => {
-                        counter += 1;
-                        return (
-                          <LessonRow
-                            key={lesson.id}
-                            lesson={lesson}
-                            index={counter}
-                            done={done.has(lesson.id)}
-                            due={progress.reviews[lesson.id]?.due <= now}
-                          />
-                        );
-                      })}
-                    </ol>
-                  </div>
-                ))}
-                <a className="checkpoint" href={href('/checkpoint/' + level.id)}>
-                  <Trophy size={24} weight="duotone" aria-hidden="true" />
-                  <span>
-                    <strong>{level.code} checkpoint</strong>
-                    <small>
-                      A quick quiz drawn from this level.
-                      {cp ? ` Best score: ${cp.best}/${cp.total}.` : ''}
-                    </small>
-                  </span>
-                  <ArrowRight aria-hidden="true" />
-                </a>
-              </details>
-            );
-          })}
+          <div className="section-head">
+            <h2 id="curriculum">Your path</h2>
+            <div className="view-toggle" role="group" aria-label="Curriculum view">
+              {[
+                ['path', 'Trail'],
+                ['list', 'List'],
+              ].map(([key, label]) => (
+                <button
+                  key={key}
+                  type="button"
+                  aria-pressed={view === key}
+                  onClick={() => setView(key)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+          {view === 'path' ? (
+            <JourneyPath course={course} progress={progress} now={now} />
+          ) : (
+            course.levels.map((level, li) => {
+              const levelDone = countDone(level.lessons, progress.completed);
+              const cp = progress.checkpoints[level.id];
+              counter = course.levels.slice(0, li).reduce((n, lv) => n + lv.lessons.length, 0);
+              return (
+                <details className="level" key={level.id} open={li === Math.max(firstOpen, 0)}>
+                  <summary>
+                    <span className="level-code">{level.code}</span>
+                    <span className="level-title">
+                      <strong>{level.title}</strong>
+                      <small>
+                        {levelDone}/{level.lessons.length} lessons
+                        {cp && ` · checkpoint ${cp.best}/${cp.total}`}
+                      </small>
+                    </span>
+                    <ProgressBar
+                      value={(levelDone / level.lessons.length) * 100}
+                      label={`${level.title} progress`}
+                    />
+                    <CaretDown className="chev" aria-hidden="true" />
+                  </summary>
+                  <p className="muted level-blurb">{level.blurb}</p>
+                  {level.units.map((unit) => (
+                    <div className="unit" key={unit.id}>
+                      <h3>{unit.title}</h3>
+                      <ol className="lesson-list">
+                        {unit.lessons.map((lesson) => {
+                          counter += 1;
+                          return (
+                            <LessonRow
+                              key={lesson.id}
+                              lesson={lesson}
+                              index={counter}
+                              done={done.has(lesson.id)}
+                              due={progress.reviews[lesson.id]?.due <= now}
+                            />
+                          );
+                        })}
+                      </ol>
+                    </div>
+                  ))}
+                  <a className="checkpoint" href={href('/checkpoint/' + level.id)}>
+                    <Trophy size={24} weight="duotone" aria-hidden="true" />
+                    <span>
+                      <strong>{level.code} checkpoint</strong>
+                      <small>
+                        A quick quiz drawn from this level.
+                        {cp ? ` Best score: ${cp.best}/${cp.total}.` : ''}
+                      </small>
+                    </span>
+                    <ArrowRight aria-hidden="true" />
+                  </a>
+                </details>
+              );
+            })
+          )}
         </section>
         <aside>
           <section className="card">

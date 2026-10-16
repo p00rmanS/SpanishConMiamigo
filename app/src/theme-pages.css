@@ -1,0 +1,483 @@
+/* Tile & Paper: page-level styling for Home, course cards, the course page and the lesson trail. */
+
+/* ---------- Home ---------- */
+.hero-greet {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: end;
+}
+.hero-greet h1 {
+  margin: 10px 0 14px;
+}
+.kicker {
+  color: var(--primary);
+}
+.stamp-wrap {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+}
+.stamp {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  width: 148px;
+  height: 148px;
+  border: 3px solid var(--edge);
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow:
+    4px 4px 0 var(--edge),
+    inset 0 0 0 6px var(--surface),
+    inset 0 0 0 8px var(--edge);
+  color: var(--muted);
+  text-align: center;
+  transform: rotate(-6deg);
+}
+.stamp strong {
+  font-family: var(--serif);
+  font-size: 46px;
+  line-height: 1;
+  color: var(--ink);
+}
+.stamp span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.stamp.lit {
+  background: var(--accent);
+  color: #fff;
+  box-shadow:
+    4px 4px 0 var(--edge),
+    inset 0 0 0 6px var(--accent),
+    inset 0 0 0 8px #fff;
+}
+.stamp.lit strong {
+  color: #fff;
+}
+.week {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+.week-tiles {
+  display: flex;
+  gap: 6px;
+}
+.week-tiles li {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+}
+.tile-day {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--edge);
+  border-radius: 6px;
+  background: var(--surface);
+  font-weight: 800;
+  font-size: 15px;
+}
+.week-tiles .on .tile-day {
+  background: var(--success);
+  color: #fff;
+}
+.week .muted {
+  max-width: 220px;
+  text-align: center;
+}
+.continue-hero {
+  --tile-color: rgb(255 255 255 / 0.13);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 30px 32px;
+  border: 3px solid var(--edge);
+  border-radius: 16px;
+  background: var(--tone, var(--primary));
+  color: #fff;
+  box-shadow: 7px 7px 0 var(--edge);
+}
+:root[data-theme='dark'] .continue-hero {
+  color: #fff;
+}
+.continue-hero .eyebrow {
+  color: var(--mango);
+}
+.continue-hero h2 {
+  font-size: clamp(28px, 3.6vw, 40px);
+  font-weight: 800;
+  color: #fff;
+  margin: 6px 0 8px;
+}
+.continue-hero .spanish-line {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: #fff;
+}
+.continue-hero .meta {
+  color: rgb(255 255 255 / 0.85);
+  margin-top: 6px;
+}
+.continue-hero .continue-progress {
+  margin-top: 16px;
+  max-width: 380px;
+}
+.continue-hero .continue-progress small {
+  color: #fff;
+  font-weight: 700;
+}
+.continue-hero .bar {
+  background: rgb(0 0 0 / 0.25);
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 16px 26px;
+  border: 3px solid var(--edge);
+  border-radius: 12px;
+  background: var(--mango);
+  color: #221b14;
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 5px 0 var(--edge);
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
+}
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 var(--edge);
+}
+.cta:active {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 var(--edge);
+}
+.tile.attention-primary {
+  background: var(--primary-soft);
+}
+.tile.attention {
+  background: var(--accent-soft);
+  border-color: var(--edge);
+}
+
+/* ---------- Course cards ---------- */
+.course-card {
+  overflow: hidden;
+  padding-top: 0;
+  border-top: 2px solid var(--edge);
+}
+.course-card-top {
+  margin: 0 -22px 6px;
+  padding: 14px 22px;
+  border-bottom: 2px solid var(--edge);
+  background: var(--tone-soft);
+}
+.course-icon {
+  border: 2px solid var(--edge);
+  border-radius: 10px;
+  background: var(--tone);
+  color: #fff;
+  box-shadow: 3px 3px 0 var(--edge);
+}
+.tone-foundations {
+  --tone: var(--primary);
+  --tone-soft: var(--primary-soft);
+}
+.tone-career {
+  --tone: var(--teal);
+  --tone-soft: color-mix(in srgb, var(--teal) 16%, var(--surface));
+}
+.tone-daily {
+  --tone: var(--accent);
+  --tone-soft: var(--accent-soft);
+}
+:root[data-theme='dark'] .course-icon {
+  color: #11162e;
+}
+
+/* ---------- Course page ---------- */
+.course-hero {
+  padding: 28px;
+  border: 3px solid var(--edge);
+  border-radius: 16px;
+  background: var(--tone-soft);
+  box-shadow: 7px 7px 0 var(--edge);
+}
+.course-hero-main .lead {
+  color: var(--ink);
+}
+.facts li {
+  font-weight: 700;
+}
+.view-toggle {
+  display: inline-flex;
+  overflow: hidden;
+  border: 2px solid var(--edge);
+  border-radius: 8px;
+  box-shadow: 0 3px 0 var(--edge);
+}
+.view-toggle button {
+  padding: 6px 16px;
+  border: 0;
+  background: var(--surface);
+  font-weight: 700;
+}
+.view-toggle button + button {
+  border-left: 2px solid var(--edge);
+}
+.view-toggle button[aria-pressed='true'] {
+  background: var(--mango);
+  color: #221b14;
+}
+
+/* ---------- Journey trail ---------- */
+.journey {
+  display: grid;
+  gap: 44px;
+}
+.j-level-head {
+  --tile-color: rgb(255 255 255 / 0.15);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 22px;
+  border: 3px solid var(--edge);
+  border-radius: 14px;
+  background: var(--tone);
+  color: #fff;
+  box-shadow: 5px 5px 0 var(--edge);
+}
+:root[data-theme='dark'] .j-level-head {
+  color: #11162e;
+}
+.j-level-head h3 {
+  color: inherit;
+  font-size: 24px;
+}
+.j-level-head p {
+  font-size: 15px;
+  opacity: 0.92;
+}
+.j-code {
+  display: grid;
+  place-items: center;
+  min-width: 64px;
+  height: 64px;
+  border: 3px solid var(--edge);
+  border-radius: 12px;
+  background: var(--mango);
+  color: #221b14;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 800;
+}
+.j-unit {
+  margin-top: 26px;
+}
+.j-unit-banner {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 0 0 10px;
+  border-bottom: 2px solid var(--edge);
+}
+.j-unit-banner h4 {
+  flex: 1;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+}
+.j-unit-no {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.j-path {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  padding: 16px 0 4px;
+}
+.j-path::before {
+  content: '';
+  position: absolute;
+  left: 27px;
+  top: 28px;
+  bottom: 28px;
+  border-left: 3px dashed var(--edge);
+  opacity: 0.35;
+}
+.j-node a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 10px 8px 0;
+  border-radius: 12px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.j-node a:hover .j-label strong {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.j-dot {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border: 3px solid var(--edge);
+  border-radius: 50%;
+  background: var(--surface);
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow: 0 4px 0 var(--edge);
+}
+.j-node.done .j-dot {
+  background: var(--success);
+  color: #fff;
+}
+.j-node.current .j-dot {
+  width: 64px;
+  height: 64px;
+  margin: -4px;
+  background: var(--mango);
+  color: #221b14;
+  animation: j-pulse 2s ease-in-out infinite;
+}
+@keyframes j-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 4px 0 var(--edge),
+      0 0 0 0 color-mix(in srgb, var(--mango) 70%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 4px 0 var(--edge),
+      0 0 0 10px color-mix(in srgb, var(--mango) 0%, transparent);
+  }
+}
+.j-label {
+  display: grid;
+  min-width: 0;
+}
+.j-label strong {
+  font-size: 17px;
+}
+.j-label small {
+  overflow: hidden;
+  color: var(--muted);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.j-flag {
+  margin-left: auto;
+  padding: 3px 10px;
+  border: 2px solid var(--edge);
+  border-radius: 6px;
+  background: var(--mango);
+  color: #221b14;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.j-flag.warm {
+  background: var(--accent);
+  color: #fff;
+}
+.j-checkpoint {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px 20px;
+  border: 3px solid var(--edge);
+  border-radius: 14px;
+  background: var(--gold-soft);
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 5px 5px 0 var(--edge);
+}
+.j-checkpoint span {
+  display: grid;
+  flex: 1;
+}
+.j-checkpoint small {
+  color: var(--muted);
+}
+.j-checkpoint:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--edge);
+}
+
+@media (max-width: 860px) {
+  .hero-greet {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .stamp-wrap {
+    grid-template-columns: auto 1fr;
+    justify-items: start;
+    align-items: center;
+  }
+  .stamp {
+    width: 108px;
+    height: 108px;
+  }
+  .stamp strong {
+    font-size: 34px;
+  }
+  .continue-hero {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 22px;
+  }
+  .cta {
+    justify-content: center;
+  }
+  .j-flag {
+    display: none;
+  }
+}
+
+.hero-greet > *,
+.continue-hero > * {
+  min-width: 0;
+}
+.hero-greet h1 {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 480px) {
+  .hero-greet h1 {
+    font-size: 34px;
+  }
+  .week-tiles {
+    gap: 4px;
+  }
+  .tile-day {
+    width: 26px;
+    height: 26px;
+  }
+}

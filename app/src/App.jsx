@@ -11,12 +11,12 @@ import {
   Lightning,
   Fire,
   MagnifyingGlass,
-  SunHorizon,
   Books,
 } from '@phosphor-icons/react';
 import { useRoute, navigate, href } from './lib/router.js';
 import { useProgress } from './lib/store.js';
 import { streakInfo } from './lib/store-core.js';
+import { Logo } from './components/Logo.jsx';
 import { SettingsDialog } from './components/SettingsDialog.jsx';
 import { Home } from './pages/Home.jsx';
 import { Courses, CourseDetail } from './pages/Courses.jsx';
@@ -105,11 +105,12 @@ function Shell({ route, children, onSettings, progress, dueCount }) {
       </a>
       <aside className="rail" aria-label="Primary">
         <a className="brand" href={href('/')}>
-          <SunHorizon size={34} weight="duotone" aria-hidden="true" />
+          <Logo size={44} />
           <span>
             Español
             <br />
             Para Sa’yo
+            <small>Spanish · Taglish</small>
           </span>
         </a>
         <nav aria-label="Main navigation">
