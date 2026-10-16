@@ -1,5 +1,6 @@
 import {
   Fire,
+  Lightning,
   ArrowRight,
   Compass,
   ArrowsClockwise,
@@ -109,6 +110,19 @@ export function Home({ progress, dueCount }) {
       )}
 
       <div className="two-up">
+        {started && (
+          <a className="card tile attention-primary" href={href('/session')}>
+            <Lightning size={30} weight="fill" aria-hidden="true" />
+            <div>
+              <h3>Daily session</h3>
+              <p>
+                Ten quick mixed questions from what you have learned: choose, listen and build
+                sentences. Keeps your streak going.
+              </p>
+            </div>
+            <ArrowRight aria-hidden="true" />
+          </a>
+        )}
         {!started && !progress.placement && (
           <a className="card tile" href={href('/placement')}>
             <Compass size={30} weight="duotone" aria-hidden="true" />

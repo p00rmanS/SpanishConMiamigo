@@ -1818,3 +1818,11 @@ body[data-focus] .daily-trigger {
   border: 1px solid var(--line);
   color: var(--muted);
 }
+
+.tile.attention-primary {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+.tile.attention-primary > svg:first-child {
+  color: var(--primary);
+}

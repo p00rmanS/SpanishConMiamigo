@@ -241,3 +241,31 @@ export function streakInfo(days, now = new Date()) {
   }
   return { current, longest, practicedToday };
 }
+
+// Daily session: each result is { id, correct, input?, answer?, reason? } for one question.
+export const SESSION_XP = { correct: 3, perfectBonus: 10 };
+
+export function applySession(state, results, now = Date.now()) {
+  const reviews = { ...state.reviews };
+  let mistakes = [...state.mistakes];
+  for (const r of results) {
+    reviews[r.id] = nextReview(reviews[r.id], r.correct, now);
+    if (!r.correct && r.reason) {
+      mistakes = [
+        ...mistakes.filter((m) => m.lesson !== r.id),
+        { lesson: r.id, input: r.input ?? '', answer: r.answer ?? '', reason: r.reason },
+      ];
+    }
+  }
+  const right = results.filter((r) => r.correct).length;
+  const perfect = results.length > 0 && right === results.length;
+  return withDay(
+    {
+      ...state,
+      reviews,
+      mistakes,
+      xp: state.xp + right * SESSION_XP.correct + (perfect ? SESSION_XP.perfectBonus : 0),
+    },
+    new Date(now),
+  );
+}

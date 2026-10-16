@@ -22,6 +22,7 @@ import { Home } from './pages/Home.jsx';
 import { Courses, CourseDetail } from './pages/Courses.jsx';
 import { LessonPlayer } from './pages/LessonPlayer.jsx';
 import { Quiz } from './pages/Quiz.jsx';
+import { Session } from './pages/Session.jsx';
 import { Review } from './pages/Review.jsx';
 import { Library } from './pages/Library.jsx';
 import { ProgressPage } from './pages/ProgressPage.jsx';
@@ -31,6 +32,7 @@ import { lessons } from './content.js';
 const NAV = [
   { name: 'home', path: '/', label: 'Home', icon: House, group: 'learn' },
   { name: 'courses', path: '/courses', label: 'Courses', icon: GraduationCap, group: 'learn' },
+  { name: 'session', path: '/session', label: 'Daily session', icon: Lightning, group: 'learn' },
   { name: 'review', path: '/review', label: 'Review', icon: ArrowsClockwise, group: 'learn' },
   {
     name: 'practice',
@@ -244,7 +246,7 @@ export function App() {
   const dueCount = lessons.filter((l) => progress.reviews[l.id]?.due <= now).length;
 
   // Focus modes: the lesson player and quizzes hide the app chrome.
-  const focusMode = ['lesson', 'checkpoint', 'placement'].includes(route.name);
+  const focusMode = ['lesson', 'checkpoint', 'placement', 'session'].includes(route.name);
   useEffect(() => {
     document.body.toggleAttribute('data-focus', focusMode);
   }, [focusMode]);
@@ -259,6 +261,7 @@ export function App() {
   if (route.name === 'checkpoint' && route.params[0])
     return <Quiz key={route.params[0]} mode="checkpoint" levelId={route.params[0]} />;
   if (route.name === 'placement') return <Quiz mode="placement" />;
+  if (route.name === 'session') return <Session key={route.query.n ?? '0'} />;
 
   let page;
   switch (route.name) {

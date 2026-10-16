@@ -234,3 +234,37 @@ test('word-bank and listening exercises are valid for every lesson that offers t
   assert.ok(build > 150, 'most lessons should offer a word-bank exercise: ' + build);
   assert.ok(listen > 250, 'every lesson should offer a listening exercise: ' + listen);
 });
+
+test('daily session builds a full mixed round and applies results', async () => {
+  const { buildSession, sessionCandidates } = await import('../src/lib/session.js');
+  const { applySession } = await import('../src/lib/store-core.js');
+  const { lessonById, levelOf: lv } = await import('../src/course.js');
+  const ids = ['hello', 'courtesy', 'origin', 'feeling', 'help', 'wants'];
+  const reviews = Object.fromEntries(ids.map((id, i) => [id, { box: 1, due: 1000 + i }]));
+  const candidates = sessionCandidates(ids, reviews, lessonById, 5000);
+  assert.equal(candidates[0].id, 'hello');
+  const items = buildSession(candidates, (l) => lv(l.id).level.lessons, seededRandom(9));
+  assert.equal(items.length, 10);
+  assert.ok(items.some((i) => i.type === 'choice'));
+  assert.ok(items.some((i) => i.type === 'listen'));
+  assert.ok(items.some((i) => i.type === 'build'));
+  assert.deepEqual(
+    buildSession([], () => []),
+    [],
+  );
+
+  const base = { ...emptyState(), reviews };
+  const after = applySession(
+    base,
+    [
+      { id: 'hello', correct: true },
+      { id: 'courtesy', correct: false, input: 'x', answer: 'y', reason: 'because' },
+    ],
+    5000,
+  );
+  assert.equal(after.xp, 3);
+  assert.equal(after.reviews.courtesy.box, 0);
+  assert.equal(after.mistakes.length, 1);
+  assert.equal(after.days.length, 1);
+  assert.equal(applySession(base, [{ id: 'hello', correct: true }], 5000).xp, 13);
+});

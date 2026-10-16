@@ -673,4 +673,52 @@ export const workplaceSupport = [
     'Start with a specific strength, then one suggestion.',
     'Ask for self-assessment before you give your own view.',
   ],
+  [
+    'daily-doctor-visit',
+    `Me duele la garganta = masakit ang lalamunan ko (ang masakit ang subject). Desde ayer = mula kahapon. Tengo mucha tos = marami akong ubo (tos ay pambabae).`,
+    'Doler: the body part is the subject. Desde marks when it started.',
+    'Say how long it has hurt and any fever or allergy before the doctor asks.',
+  ],
+  [
+    'daily-pharmacy',
+    `Necesito algo para la tos = kailangan ko ng gamot para sa ubo. ¿Cuántas veces al día? = ilang beses sa isang araw? Debo tomarlo = dapat ko itong inumin (deber + infinitive + lo).`,
+    'Algo para + problem asks for a remedy without naming a product.',
+    'Ask how often and for how long to take it, and whether it is safe with other medicine.',
+  ],
+  [
+    'daily-bank-account',
+    `Quisiera abrir una cuenta = gusto kong magbukas ng account. Cuenta de ahorros = savings account. ¿Hay alguna comisión? = may bayad ba kada buwan?`,
+    'Quisiera + infinitive is the polite way to request a service.',
+    'Ask about fees, minimum balance and documents before you sign anything.',
+  ],
+  [
+    'daily-rent-apartment',
+    `Estoy buscando = naghahanap ako (estar + gerund). Un apartamento de dos habitaciones = apartment na may dalawang kuwarto. Al mes = kada buwan.`,
+    'Estar + gerund says what you are doing right now.',
+    'Ask whether utilities, deposit and a minimum stay are included.',
+  ],
+  [
+    'daily-job-interview',
+    `Tengo tres años de experiencia = mayroon akong tatlong taong karanasan. Atención al cliente = customer service. Podría empezar = maaari akong magsimula (conditional, magalang).`,
+    'Tener + number + años de experiencia states experience.',
+    'Follow each claim with one concrete example.',
+  ],
+  [
+    'daily-phone-plan',
+    `Quiero cambiar mi plan = gusto kong palitan ang plan ko. ¿Cuántos datos incluye? = gaano karaming data ang kasama? Cuando quiera = kailan ko man gusto (cuando + subjunctive).`,
+    'Quiero + infinitive states what you want to do.',
+    'Ask about the minimum contract period before agreeing to a new plan.',
+  ],
+  [
+    'daily-emergency',
+    `Necesito ayuda = kailangan ko ng tulong. Es una emergencia = emergency ito. Se cayó = nahulog siya (preterite ng caerse). No puede moverse = hindi siya makagalaw.`,
+    'Say the problem first, then where you are.',
+    'Learn the emergency number of the country you are in. It is not the same everywhere.',
+  ],
+  [
+    'daily-post-office',
+    `Quisiera enviar = gusto kong ipadala. ¿Cuánto tarda en llegar? = gaano katagal bago dumating? Número de seguimiento = tracking number.`,
+    'Tardar en + infinitive means to take time to do something.',
+    'Ask for a receipt and the tracking number before you leave the counter.',
+  ],
 ];
