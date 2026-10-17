@@ -94,6 +94,20 @@ export function Dictionary({ initialQuery = '' }) {
             </h3>
             <strong>{w.meaning}</strong>
             {w.tagalog && <p className="muted">Tagalog: {w.tagalog}</p>}
+            {w.type === 'Verb' && (
+              <p>
+                <a className="text-link" href={'#/verbs/' + encodeURIComponent(w.word)}>
+                  See every conjugation of {w.word}
+                </a>
+              </p>
+            )}
+            {w.type === 'Adjective' && (
+              <p>
+                <a className="text-link" href={'#/adjectives?q=' + encodeURIComponent(w.word)}>
+                  See all forms of {w.word}
+                </a>
+              </p>
+            )}
             {w.taglish && (
               <p className="taglish-note">
                 <strong>Taglish:</strong> {w.taglish}

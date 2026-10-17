@@ -28,8 +28,10 @@ npm run build
 | **Lesson player** | Learn → choose → build the sentence from a word bank → write → listen → speak, with audio, a generated pronunciation guide, pattern chips, conjugation and memory support, a pro tip, a common-mistake note, immediate feedback and XP |
 | **Checkpoints** | A 10-question quiz per level, best score saved, plus a placement check that suggests a starting level |
 | **Review** | Spaced repetition (boxes 0–5), a mistake notebook and a due-count badge |
-| **Dictionary** | About 355 entries with Spanish ↔ English ↔ Tagalog search, part of speech, gender, examples and audio; conjugated forms are searchable |
-| **Verb conjugator** | 50 essential verbs, with extra tenses for 12 core verbs |
+| **Dictionary** | About 1,150 entries (verbs, nouns, 343 adjectives, connectors and more) with Spanish ↔ English ↔ Tagalog search, examples and audio; conjugated forms are searchable |
+| **Verb conjugator** | 486 verbs conjugated by a rules engine in every tense (indicative, subjunctive, imperative, perfect tenses), irregular forms highlighted, voseo, Taglish guides, search by any conjugated form |
+| **Conjugation drill** | Random (verb, tense, person) questions with XP; filter by regular, irregular, stem-changing, spelling-change or reflexive verbs |
+| **Adjectives and connectors** | 343 adjectives with four forms, shortened forms and superlatives; 68 connectors with the mood each takes |
 | **Reading room** | Stories and conversations with line-by-line translation and comprehension checks |
 | **Practice lab** | Conjugation drills and scripted customer-call simulations |
 | **Progress** | Lessons, XP, days practiced, level checkpoints, review stages |
@@ -58,6 +60,10 @@ src/
     speech.js              text-to-speech helper
     pronounce.js           Spanish respelling and syllable stress generator
   course.js                courses → levels → units → lessons, quizzes, placement
+  toolkit-lessons.js       generates the Grammar Toolkit lessons from the word lists and engine
+  verbs-data.js, adjectives-data.js, conjunctions-data.js   the word lists
+  lib/conjugate.js         the conjugation engine (irregulars, stem and spelling changes)
+  lib/adjectives.js        adjective agreement and superlatives
   curriculum.js            unit structure for Spanish Foundations
   content.js               merges every lesson source into one list
   foundations-*.js         A1–C1 lesson rows

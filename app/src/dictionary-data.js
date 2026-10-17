@@ -1,6 +1,11 @@
 import { verbs } from './reference-data.js';
 import { tenseTables } from './verb-tenses.js';
 import { vocabulary } from './vocabulary-data.js';
+import { verbList } from './verbs-data.js';
+import { adjectiveList } from './adjectives-data.js';
+import { conjunctionList } from './conjunctions-data.js';
+import { allForms } from './lib/conjugate.js';
+import { adjectiveForms } from './lib/adjectives.js';
 const words = [
   [
     'casa',
@@ -163,6 +168,7 @@ const words = [
     'Viaje is a noun; viajar is to travel.',
   ],
 ];
+const verbByInfinitive = new Map(verbList.map((v) => [v.infinitive, v]));
 const baseEntries = [
   ...verbs.map((v) => ({
     word: v.infinitive,
@@ -172,7 +178,12 @@ const baseEntries = [
     translation: v.translation,
     note: v.note,
     taglish: v.taglish,
-    forms: [...v.forms, ...Object.values(tenseTables[v.infinitive] || {}).flat()],
+    tagalog: verbByInfinitive.get(v.infinitive)?.tagalog,
+    forms: [
+      ...v.forms,
+      ...Object.values(tenseTables[v.infinitive] || {}).flat(),
+      ...allForms(v.infinitive, verbByInfinitive.get(v.infinitive)?.flags ?? []),
+    ],
   })),
   ...words.map(([word, article, meaning, example, translation, note]) => ({
     word,
@@ -186,7 +197,54 @@ const baseEntries = [
   })),
 ];
 const known = new Set(baseEntries.map((w) => w.word));
-export const dictionary = [...baseEntries, ...vocabulary.filter((w) => !known.has(w.word))];
+const verbEntries = verbList.map((v) => ({
+  word: v.infinitive,
+  type: 'Verb',
+  meaning: v.english,
+  tagalog: v.tagalog,
+  example: v.example,
+  translation: v.translation,
+  note: '',
+  forms: allForms(v.infinitive, v.flags),
+}));
+const adjectiveEntries = adjectiveList.map((a) => {
+  const f = adjectiveForms(a.word, a.flags);
+  const gloss = a.english.split(';')[0].trim();
+  const estar = a.flags.includes('e');
+  return {
+    word: a.word,
+    type: 'Adjective',
+    meaning: a.english,
+    tagalog: a.tagalog,
+    example: `${estar ? 'Está' : 'Es'} ${f.ms}.`,
+    translation: `It is ${gloss}.`,
+    note: `Forms: ${f.ms} · ${f.fs} · ${f.mp} · ${f.fp}${f.short ? ` · before a noun: ${f.short}` : ''}${f.superlative ? ` · very: ${f.superlative}` : ''}`,
+    forms: [f.fs, f.mp, f.fp, f.short, f.superlative].filter(Boolean),
+  };
+});
+const conjunctionEntries = conjunctionList.map((c) => ({
+  word: c.word,
+  type: 'Conjunction',
+  meaning: c.english,
+  tagalog: c.tagalog,
+  example: c.example,
+  translation: c.translation,
+  note: c.note,
+  taglish: c.taglish,
+  forms: [],
+}));
+const extras = [...vocabulary, ...verbEntries, ...adjectiveEntries, ...conjunctionEntries];
+const seenWords = new Set(known);
+export const dictionary = [
+  ...baseEntries,
+  ...extras.filter((w) => {
+    const key = `${w.word}|${w.type}`;
+    if (known.has(w.word) && w.type === 'Verb') return false;
+    if (seenWords.has(key)) return false;
+    seenWords.add(key);
+    return !known.has(w.word) || w.type !== 'Noun';
+  }),
+];
 export const dictionaryKey = (s) =>
   s
     .toLowerCase()
