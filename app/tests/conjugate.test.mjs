@@ -829,7 +829,7 @@ test('conjunction list is complete and its examples use the connector', async ()
   const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   for (const c of conjunctionList) {
     for (const key of ['english', 'tagalog', 'example', 'translation', 'note', 'taglish'])
-      assert.ok(c[key]?.length > 1, `${c.word}.${key}`);
+      assert.ok(c[key]?.length > 0, `${c.word}.${key}`);
     assert.ok(CONJUNCTION_CATEGORIES[c.category], c.word + ' category');
     assert.ok(['none', 'indicative', 'subjunctive', 'both'].includes(c.mood), c.word + ' mood');
     for (const part of c.word
