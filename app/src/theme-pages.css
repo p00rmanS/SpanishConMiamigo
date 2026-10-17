@@ -481,3 +481,153 @@
     height: 26px;
   }
 }
+
+/* Library tabs: each tab is as wide as its label; the strip scrolls instead of squeezing. */
+.library-tabs button {
+  flex: 0 0 auto;
+}
+.stamp {
+  gap: 2px;
+}
+.stamp strong {
+  line-height: 1.15;
+}
+
+/* ---------- Responsive foundations: phones, tablets, notches, mobile browser bars ---------- */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+a,
+summary,
+label {
+  touch-action: manipulation;
+}
+/* 16px inputs stop iOS Safari from zooming the page when a field is focused. */
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+.shell,
+.player {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.topbar {
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-left: max(32px, env(safe-area-inset-left));
+  padding-right: max(32px, env(safe-area-inset-right));
+}
+.player-top {
+  padding-top: max(12px, env(safe-area-inset-top));
+}
+.player-foot {
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+}
+.week-tiles {
+  width: 100%;
+}
+.week-tiles li {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.tile-day {
+  width: 100%;
+  max-width: 34px;
+}
+.level-stats li {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+.stack > .card,
+.stat-grid > * {
+  min-width: 0;
+}
+
+/* Tablets in portrait and small laptops: a narrower rail. */
+@media (min-width: 861px) and (max-width: 1100px) {
+  :root {
+    --rail: 220px;
+  }
+  .page {
+    padding: 24px 22px 80px;
+  }
+  .topbar {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .brand {
+    font-size: 18px;
+  }
+  .course-hero,
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .detail-grid aside {
+    position: static;
+  }
+}
+/* Phones. */
+@media (max-width: 860px) {
+  .topbar {
+    padding-left: max(14px, env(safe-area-inset-left));
+    padding-right: max(14px, env(safe-area-inset-right));
+  }
+  .tabbar {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  .tabbar a {
+    min-height: 48px;
+  }
+  h1 {
+    font-size: clamp(30px, 8.5vw, 40px);
+  }
+  .continue-hero h2 {
+    font-size: 28px;
+  }
+  .j-code {
+    min-width: 52px;
+    height: 52px;
+    font-size: 18px;
+  }
+  .j-level-head {
+    padding: 16px;
+    gap: 14px;
+  }
+}
+@media (max-width: 380px) {
+  .stamp-wrap {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .card {
+    padding: 16px;
+  }
+  .player-col {
+    gap: 18px;
+  }
+  .phrase-card {
+    padding: 26px 18px 20px;
+  }
+  .option {
+    padding: 10px 12px;
+  }
+}
+/* Short landscape phones: keep the lesson footer compact. */
+@media (max-height: 480px) and (orientation: landscape) {
+  .player-main {
+    padding-bottom: 110px;
+  }
+  .player-foot {
+    padding-top: 8px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .tabbar a span {
+    display: none;
+  }
+}
