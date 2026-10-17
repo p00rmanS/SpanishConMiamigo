@@ -2,6 +2,10 @@
 // Levels describe the difficulty of the authored practice; they are not CEFR certification.
 import { lessons } from './content.js';
 import { FOUNDATION_UNITS } from './curriculum.js';
+import { TOOLKIT_LEVELS } from './toolkit-lessons.js';
+import { shuffle } from './lib/random.js';
+
+export { seededRandom, shuffle } from './lib/random.js';
 
 export const MINUTES_PER_LESSON = 6;
 export const CEFR_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1'];
@@ -90,6 +94,21 @@ function curriculumUnits(levelId, code, items) {
   return units.filter((u) => u.lessons.length);
 }
 
+function toolkitLevel(key, code, title, blurb, all) {
+  const items = all.filter((l) => l.group.level === key);
+  const id = `toolkit-${key}`;
+  const units = [];
+  for (const lesson of items) {
+    let unit = units.find((u) => u.title === lesson.group.unit);
+    if (!unit) {
+      unit = { id: `${id}-${units.length + 1}`, title: lesson.group.unit, lessons: [] };
+      units.push(unit);
+    }
+    unit.lessons.push(lesson);
+  }
+  return { id, code, title, blurb, lessons: units.flatMap((u) => u.lessons), units };
+}
+
 function makeLevel(courseId, key, code, title, blurb, items) {
   const id = `${courseId}-${key}`.toLowerCase();
   const units =
@@ -99,7 +118,8 @@ function makeLevel(courseId, key, code, title, blurb, items) {
 }
 
 export function buildCourses(all) {
-  const foundationLessons = all.filter((l) => !isWork(l));
+  const foundationLessons = all.filter((l) => !isWork(l) && !l.group);
+  const toolkitLessons = all.filter((l) => l.group?.course === 'toolkit');
   const careerLessons = all.filter((l) => isWork(l) && !CAREER_EXCLUDED.has(l.category));
   const dailyLessons = all.filter((l) => isWork(l) && CAREER_EXCLUDED.has(l.category));
 
@@ -181,7 +201,26 @@ export function buildCourses(all) {
     ).filter((level) => level.lessons.length),
   };
 
-  return [foundations, career, daily];
+  const toolkit = {
+    id: 'toolkit',
+    title: 'Grammar Toolkit',
+    tagline: 'Verbs · Adjectives · Connectors',
+    description:
+      'The building blocks of Spanish, taught systematically: every verb pattern with full conjugation tables, adjective agreement for hundreds of words, and connectors with the mood they take. Each pack links to the verb, adjective and connector pages and to the conjugation drill.',
+    outcomes: [
+      'Conjugate regular, irregular and stem-changing verbs in every tense',
+      'Spot spelling changes (busqué, conozco, construyo) before you make mistakes',
+      'Match adjectives to nouns in gender and number',
+      'Choose the right connector and the right mood',
+    ],
+    audience: 'For learners who want complete grammar coverage alongside the main courses.',
+    icon: 'toolbox',
+    levels: TOOLKIT_LEVELS.map(([key, code, title, blurb]) =>
+      toolkitLevel(key, code, title, blurb, toolkitLessons),
+    ).filter((level) => level.lessons.length),
+  };
+
+  return [foundations, career, daily, toolkit];
 }
 
 export const courses = buildCourses(lessons);
@@ -242,27 +281,6 @@ export function neighbours(course, lessonId) {
     index,
     total: items.length,
   };
-}
-
-// Small deterministic PRNG so quizzes are reproducible in tests.
-export function seededRandom(seed) {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-export function shuffle(items, random = Math.random) {
-  const out = [...items];
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(random() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
-  }
-  return out;
 }
 
 export function quizItem(lesson, random = Math.random) {

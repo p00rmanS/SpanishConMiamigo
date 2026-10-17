@@ -105,6 +105,22 @@ function LearnStep({ lesson, mode }) {
         </div>
       </section>
 
+      {lesson.refs?.length > 0 && (
+        <section className="lp-block">
+          <h2>Open the full tables</h2>
+          <div className="ref-chips">
+            {lesson.refs.map((r) => (
+              <a key={r.label} className="ref-chip" href={href(r.path)}>
+                {r.label}
+              </a>
+            ))}
+          </div>
+          <p className="muted small">
+            Then practice in the <a href={href('/drill')}>conjugation drill</a>.
+          </p>
+        </section>
+      )}
+
       <StudySupport
         key={lesson.id}
         spanish={lesson.sentence}

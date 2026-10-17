@@ -993,3 +993,26 @@ select {
   max-width: 100%;
   overflow-wrap: anywhere;
 }
+
+.ref-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ref-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 4px 14px;
+  border: 2px solid var(--edge);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 3px 0 var(--edge);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-weight: 600;
+  text-decoration: none;
+}
+.ref-chip:hover {
+  background: var(--primary-soft);
+}

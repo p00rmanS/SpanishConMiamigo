@@ -1,6 +1,6 @@
 // Extra exercise types generated from existing lesson data: a word bank for building the
 // sentence, and a listening check. Pure functions so they can be unit tested.
-import { shuffle } from '../course.js';
+import { shuffle } from './random.js';
 
 const MAX_WORDS = 14;
 

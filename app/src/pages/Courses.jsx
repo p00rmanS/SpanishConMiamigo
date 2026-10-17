@@ -10,6 +10,7 @@ import {
   Sun,
   Target,
   Trophy,
+  Wrench,
 } from '@phosphor-icons/react';
 import { href } from '../lib/router.js';
 import { ProgressBar, Ring } from '../components/ui.jsx';
@@ -23,7 +24,7 @@ import {
   MINUTES_PER_LESSON,
 } from '../course.js';
 
-const ICONS = { graduation: GraduationCap, headset: Headset, sun: Sun };
+const ICONS = { graduation: GraduationCap, headset: Headset, sun: Sun, toolbox: Wrench };
 export const courseIcon = (name) => ICONS[name] ?? GraduationCap;
 
 const hours = (minutes) =>

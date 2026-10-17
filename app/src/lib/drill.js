@@ -1,7 +1,7 @@
 // Conjugation drills: random (verb, tense, person) questions with the engine's answer.
 import { conjugate, describeVerb, allForms, PERSONS } from './conjugate.js';
 import { verbList } from '../verbs-data.js';
-import { shuffle } from '../course.js';
+import { shuffle } from './random.js';
 
 export const DRILL_TENSES = [
   ['indicative.present', 'Present'],

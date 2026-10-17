@@ -57,7 +57,7 @@ hasta que|until|hanggang|time|both|Espera hasta que vuelva.|Wait until I come ba
 desde que|since|mula nang|time|indicative|Vivo aquí desde que nací.|I have lived here since I was born.|Always the indicative.|Desde que = mula nang. Laging indicative.
 apenas|as soon as; barely|pagkaraan lamang|time|both|Apenas llegó, sonó el teléfono.|As soon as he arrived, the phone rang.|Also means barely.|Apenas = pagkaraan lamang; o halos hindi.
 cada vez que|every time|tuwing|time|both|Cada vez que llamo, está ocupado.|Every time I call, he is busy.|Subjunctive for a future repeated event.|Cada vez que = tuwing. Indicative kung nangyari/nangyayari; subjunctive kung hinaharap.
-como si|as if|parang|comparison|subjunctive|Habla como si lo supiera todo.|He talks as if he knew everything.|Always the imperfect or pluperfect subjunctive.|Como si = parang. Laging imperfect o pluperfect subjunctive.
+como si|as if|parang|comparison|subjunctive|Corre como si llegara tarde.|He runs as if he were late.|Always the imperfect or pluperfect subjunctive.|Como si = parang. Laging imperfect o pluperfect subjunctive.
 que|that; than|na; kaysa|comparison|both|Dice que viene.|He says he is coming.|The most common subordinator; the mood depends on the main verb.|Que = na o kaysa. Ang mood ay nakadepende sa pangunahing pandiwa.
 tan… como|as… as|kasing-…|comparison|none|Es tan alto como su padre.|He is as tall as his father.|Tan before adjectives and adverbs.|Tan… como = kasing-… ng. Tan bago ang adjective.
 así como|just as; as well as|tulad ng|comparison|none|Habla inglés así como español.|He speaks English as well as Spanish.|Adds a similar item.|Así como = tulad ng. Nagdaragdag ng katulad na bagay.

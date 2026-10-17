@@ -75,8 +75,8 @@ function AdjectiveCard({ adjective }) {
   );
 }
 
-export function Adjectives() {
-  const [query, setQuery] = useState('');
+export function Adjectives({ initialQuery = '' }) {
+  const [query, setQuery] = useState(initialQuery);
   const [category, setCategory] = useState('all');
   const [shown, setShown] = useState(PAGE);
   const results = useMemo(() => {

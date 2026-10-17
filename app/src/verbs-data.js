@@ -28,8 +28,8 @@ andar|to walk; to go around|lumakad||Ando por el parque.|I walk through the park
 conducir|to drive|magmaneho||Conduzco con cuidado.|I drive carefully.
 traducir|to translate|magsalin||Traduzco textos.|I translate texts.
 construir|to build|magtayo||Construimos una casa.|We build a house.
-hablar|to speak; to talk|magsalita||Hablo español.|I speak Spanish.
-comer|to eat|kumain||Como arroz.|I eat rice.
+hablar|to speak; to talk|magsalita||Hablo español en el trabajo.|I speak Spanish at work.
+comer|to eat|kumain||Como arroz con pollo.|I eat rice with chicken.
 vivir|to live|manirahan||Vivo en Manila.|I live in Manila.
 beber|to drink|uminom||Bebo agua.|I drink water.
 trabajar|to work|magtrabaho||Trabajo en un banco.|I work at a bank.

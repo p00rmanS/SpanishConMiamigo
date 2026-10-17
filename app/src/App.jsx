@@ -346,7 +346,7 @@ export function App() {
       page = <Drill verb={route.query.verb} key={route.query.verb ?? 'all'} />;
       break;
     case 'adjectives':
-      page = <Adjectives />;
+      page = <Adjectives initialQuery={route.query.q ?? ''} key={route.query.q ?? ''} />;
       break;
     case 'connectors':
       page = <Connectors />;
