@@ -7,7 +7,6 @@ import { syllabify } from './pronounce.js';
 
 export const PERSONS = ['yo', 'tú', 'él / ella / usted', 'nosotros', 'vosotros', 'ellos / ustedes'];
 const REFLEXIVE = ['me', 'te', 'se', 'nos', 'os', 'se'];
-const STRONG = 'aeoáéó';
 const VOWELS = 'aeiouáéíóú';
 const STEM_PERSONS = [0, 1, 2, 5];
 

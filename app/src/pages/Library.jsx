@@ -27,6 +27,11 @@ const TITLES = {
 };
 
 export function Library({ section, query }) {
+  if (section === 'verbs') {
+    // The verb conjugator now has its own page.
+    window.location.replace('#/verbs');
+    return null;
+  }
   const label = SLUGS[section] ?? 'Dictionary';
   const [title, subtitle] = TITLES[label] ?? [
     'Library',

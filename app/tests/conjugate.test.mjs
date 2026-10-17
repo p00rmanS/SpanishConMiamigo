@@ -839,3 +839,40 @@ test('conjunction list is complete and its examples use the connector', async ()
       assert.ok(norm(c.example).includes(norm(part)), `${c.word}: example lacks "${part}"`);
   }
 });
+
+test('drills build valid questions and verb search finds conjugated forms', async () => {
+  const { buildDrill, searchVerbs, verbsForSet, DRILL_TENSES } =
+    await import('../src/lib/drill.js');
+  const { applyDrill } = await import('../src/lib/store-core.js');
+  const { emptyState } = await import('../src/lib/store-core.js');
+  const { seededRandom } = await import('../src/course.js');
+  const items = buildDrill({
+    verbs: verbsForSet('irregular'),
+    tenses: DRILL_TENSES.map(([k]) => k),
+    count: 25,
+    random: seededRandom(11),
+  });
+  assert.equal(items.length, 25);
+  for (const i of items) {
+    assert.ok(i.answer && i.row.includes(i.answer));
+    assert.ok(i.pronoun);
+  }
+  const vosOff = buildDrill({
+    verbs: verbsForSet('all'),
+    tenses: ['indicative.present'],
+    count: 40,
+    includeVosotros: false,
+    random: seededRandom(2),
+  });
+  assert.ok(vosOff.every((i) => i.slot !== 4));
+  assert.ok(searchVerbs('fui').some((v) => v.infinitive === 'ir'));
+  assert.ok(searchVerbs('fui').some((v) => v.infinitive === 'ser'));
+  assert.equal(searchVerbs('hablar')[0].infinitive, 'hablar');
+  assert.ok(searchVerbs('to eat').some((v) => v.infinitive === 'comer'));
+  assert.ok(searchVerbs('kumain').some((v) => v.infinitive === 'comer'));
+  assert.ok(verbsForSet('irregular').length > 40);
+  assert.ok(verbsForSet('stem').length > 80);
+  const s = applyDrill(emptyState(), 5, 5, new Date(2026, 5, 1).getTime());
+  assert.equal(s.xp, 15);
+  assert.equal(s.days.length, 1);
+});

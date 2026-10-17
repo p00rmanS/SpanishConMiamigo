@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import {
   House,
   GraduationCap,
@@ -21,13 +21,27 @@ import { SettingsDialog } from './components/SettingsDialog.jsx';
 import { Home } from './pages/Home.jsx';
 import { Courses, CourseDetail } from './pages/Courses.jsx';
 import { LessonPlayer } from './pages/LessonPlayer.jsx';
-import { Quiz } from './pages/Quiz.jsx';
-import { Session } from './pages/Session.jsx';
-import { Review } from './pages/Review.jsx';
-import { Library } from './pages/Library.jsx';
-import { ProgressPage } from './pages/ProgressPage.jsx';
-import { PracticePage } from './pages/PracticePage.jsx';
 import { lessons } from './content.js';
+
+// Heavy pages load on demand so the first screen stays small on phones.
+const Verbs = lazy(() => import('./pages/Verbs.jsx').then((m) => ({ default: m.Verbs })));
+const Drill = lazy(() => import('./pages/Drill.jsx').then((m) => ({ default: m.Drill })));
+const Adjectives = lazy(() =>
+  import('./pages/Adjectives.jsx').then((m) => ({ default: m.Adjectives })),
+);
+const Connectors = lazy(() =>
+  import('./pages/Connectors.jsx').then((m) => ({ default: m.Connectors })),
+);
+const Library = lazy(() => import('./pages/Library.jsx').then((m) => ({ default: m.Library })));
+const ProgressPage = lazy(() =>
+  import('./pages/ProgressPage.jsx').then((m) => ({ default: m.ProgressPage })),
+);
+const PracticePage = lazy(() =>
+  import('./pages/PracticePage.jsx').then((m) => ({ default: m.PracticePage })),
+);
+const Quiz = lazy(() => import('./pages/Quiz.jsx').then((m) => ({ default: m.Quiz })));
+const Session = lazy(() => import('./pages/Session.jsx').then((m) => ({ default: m.Session })));
+const Review = lazy(() => import('./pages/Review.jsx').then((m) => ({ default: m.Review })));
 
 const NAV = [
   { name: 'home', path: '/', label: 'Home', icon: House, group: 'learn' },
@@ -42,6 +56,13 @@ const NAV = [
     group: 'learn',
   },
   {
+    name: 'drill',
+    path: '/drill',
+    label: 'Conjugation drill',
+    icon: PencilSimpleLine,
+    group: 'learn',
+  },
+  {
     name: 'dictionary',
     path: '/library/dictionary',
     label: 'Dictionary',
@@ -50,8 +71,22 @@ const NAV = [
   },
   {
     name: 'verbs',
-    path: '/library/verbs',
+    path: '/verbs',
     label: 'Verb conjugator',
+    icon: Books,
+    group: 'explore',
+  },
+  {
+    name: 'adjectives',
+    path: '/adjectives',
+    label: 'Adjectives',
+    icon: Translate,
+    group: 'explore',
+  },
+  {
+    name: 'connectors',
+    path: '/connectors',
+    label: 'Connectors',
     icon: Books,
     group: 'explore',
   },
@@ -68,6 +103,7 @@ const TABBAR = ['home', 'courses', 'practice', 'dictionary', 'progress'];
 
 function activeNav(route) {
   if (route.name === 'course') return 'courses';
+  if (route.name === 'verbs') return 'verbs';
   if (route.name === 'library') {
     const section = route.params[0];
     if (section === 'dictionary') return 'dictionary';
@@ -219,6 +255,14 @@ function Shell({ route, children, onSettings, progress, dueCount }) {
   );
 }
 
+function Loading() {
+  return (
+    <div className="page narrow" role="status" aria-live="polite">
+      <p className="muted">Loading…</p>
+    </div>
+  );
+}
+
 function NotFound() {
   return (
     <section className="page narrow">
@@ -260,9 +304,23 @@ export function App() {
       />
     );
   if (route.name === 'checkpoint' && route.params[0])
-    return <Quiz key={route.params[0]} mode="checkpoint" levelId={route.params[0]} />;
-  if (route.name === 'placement') return <Quiz mode="placement" />;
-  if (route.name === 'session') return <Session key={route.query.n ?? '0'} />;
+    return (
+      <Suspense fallback={<Loading />}>
+        <Quiz key={route.params[0]} mode="checkpoint" levelId={route.params[0]} />
+      </Suspense>
+    );
+  if (route.name === 'placement')
+    return (
+      <Suspense fallback={<Loading />}>
+        <Quiz mode="placement" />
+      </Suspense>
+    );
+  if (route.name === 'session')
+    return (
+      <Suspense fallback={<Loading />}>
+        <Session key={route.query.n ?? '0'} />
+      </Suspense>
+    );
 
   let page;
   switch (route.name) {
@@ -280,6 +338,18 @@ export function App() {
       break;
     case 'practice':
       page = <PracticePage />;
+      break;
+    case 'verbs':
+      page = <Verbs verb={route.params[0]} query={route.query.q} />;
+      break;
+    case 'drill':
+      page = <Drill verb={route.query.verb} key={route.query.verb ?? 'all'} />;
+      break;
+    case 'adjectives':
+      page = <Adjectives />;
+      break;
+    case 'connectors':
+      page = <Connectors />;
       break;
     case 'library':
       page = (
@@ -306,7 +376,7 @@ export function App() {
         dueCount={dueCount}
         onSettings={() => setSettingsOpen(true)}
       >
-        {page}
+        <Suspense fallback={<Loading />}>{page}</Suspense>
       </Shell>
       <SettingsDialog open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </>

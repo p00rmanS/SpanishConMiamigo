@@ -195,7 +195,15 @@ export function Home({ progress, dueCount }) {
               'Dictionary',
               'Spanish ↔ English ↔ Tagalog, with examples and audio.',
             ],
-            ['/library/verbs', Books, 'Verb conjugator', 'Every tense for 50 essential verbs.'],
+            [
+              '/verbs',
+              Books,
+              'Verb conjugator',
+              '486 verbs, every tense, irregular forms highlighted.',
+            ],
+            ['/adjectives', Translate, 'Adjectives', 'All four forms of 300+ adjectives.'],
+            ['/connectors', BookOpenText, 'Connectors', 'Conjunctions with the mood they take.'],
+            ['/drill', Lightning, 'Conjugation drill', 'Type the form and get instant feedback.'],
             [
               '/library/stories',
               BookOpenText,

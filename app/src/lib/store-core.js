@@ -269,3 +269,14 @@ export function applySession(state, results, now = Date.now()) {
     new Date(now),
   );
 }
+
+// Conjugation drill: 2 XP per correct answer, 5 bonus for a perfect round of five or more.
+export const DRILL_XP = { correct: 2, perfectBonus: 5 };
+
+export function applyDrill(state, correct, total, now = Date.now()) {
+  const perfect = total >= 5 && correct === total;
+  return withDay(
+    { ...state, xp: state.xp + correct * DRILL_XP.correct + (perfect ? DRILL_XP.perfectBonus : 0) },
+    new Date(now),
+  );
+}
