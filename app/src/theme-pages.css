@@ -1016,3 +1016,23 @@ select {
 .ref-chip:hover {
   background: var(--primary-soft);
 }
+
+/* Level badges can hold longer labels such as "Connectors". */
+.j-code,
+.level-code {
+  width: auto;
+  padding: 0 12px;
+  white-space: nowrap;
+}
+.j-level-head {
+  flex-wrap: wrap;
+}
+.j-level-head > div {
+  min-width: min(100%, 200px);
+  flex: 1;
+}
+@media (max-width: 480px) {
+  .j-code {
+    font-size: 16px;
+  }
+}
