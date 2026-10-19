@@ -876,3 +876,33 @@ test('drills build valid questions and verb search finds conjugated forms', asyn
   assert.equal(s.xp, 15);
   assert.equal(s.days.length, 1);
 });
+
+test('every tense sentence contains the exact engine form it teaches', async () => {
+  const { TENSE_SENTENCES } = await import('../src/tense-sentences.js');
+  const { verbList } = await import('../src/verbs-data.js');
+  const flagsOf = (inf) => verbList.find((v) => v.infinitive === inf)?.flags ?? [];
+  const norm = (s) =>
+    s
+      .toLowerCase()
+      .replace(/[¿?¡!.,;:]/g, ' ')
+      .replace(/\s+/g, ' ');
+  let count = 0;
+  for (const [tenseKey, groups] of Object.entries(TENSE_SENTENCES)) {
+    for (const [group, entries] of Object.entries(groups)) {
+      assert.equal(entries.length, 3, `${tenseKey}.${group}`);
+      for (const [sentence, translation, inf, person] of entries) {
+        const r = conjugate(inf, flagsOf(inf));
+        const [g, t] = tenseKey.split('.');
+        const form = (g === 'imperative' ? r.imperative.affirmative : r[g][t])[person];
+        assert.ok(
+          norm(sentence).includes(' ' + norm(form) + ' ') ||
+            norm(sentence).startsWith(norm(form) + ' '),
+          `${tenseKey}: "${sentence}" lacks "${form}"`,
+        );
+        assert.ok(translation.length > 5);
+        count += 1;
+      }
+    }
+  }
+  assert.equal(count, 90);
+});

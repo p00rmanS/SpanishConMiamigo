@@ -7,6 +7,7 @@ import { foundationsB } from './foundations-b.js';
 import { foundationsC } from './foundations-c.js';
 import { foundationsD } from './foundations-d.js';
 import { toolkitLessons } from './toolkit-lessons.js';
+import { extraToolkitLessons } from './toolkit-extra.js';
 const authored = [
   {
     id: 'hello',
@@ -196,6 +197,7 @@ const authored = [
   ...foundationsC,
   ...foundationsD,
   ...toolkitLessons,
+  ...extraToolkitLessons,
   ...workplaceLessons,
 ];
 

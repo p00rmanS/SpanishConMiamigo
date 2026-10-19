@@ -637,6 +637,18 @@ export const toolkitLessons = [
 
 export const TOOLKIT_LEVELS = [
   [
+    'tenses',
+    'Tenses',
+    'Tenses',
+    'Every tense in use, with regular, irregular and changing verbs, backed by the conjugation tables.',
+  ],
+  [
+    'vocabulary',
+    'Words',
+    'Vocabulary',
+    'Everyday nouns grouped by theme, learned with their articles.',
+  ],
+  [
     'verbs',
     'Verbs',
     'Verbs',
