@@ -7,7 +7,7 @@ import { streakInfo, SESSION_XP } from '../lib/store-core.js';
 import { buildSession, sessionCandidates } from '../lib/session.js';
 import { navigate, href } from '../lib/router.js';
 import { speak, stopSpeaking } from '../lib/speech.js';
-import { lessonById, levelOf } from '../course.js';
+import { courses, lessonById, levelOf } from '../course.js';
 
 function siblingsOf(lesson) {
   return levelOf(lesson.id)?.level.lessons ?? [];
@@ -17,7 +17,17 @@ export function Session() {
   const progress = useProgress();
   const items = useMemo(
     () =>
-      buildSession(sessionCandidates(progress.completed, progress.reviews, lessonById), siblingsOf),
+      buildSession(
+        sessionCandidates(
+          // New learners get a warm-up from the first lessons so the session is never empty.
+          progress.completed.length
+            ? progress.completed
+            : (courses[0]?.levels[0]?.lessons ?? []).slice(0, 6).map((l) => l.id),
+          progress.reviews,
+          lessonById,
+        ),
+        siblingsOf,
+      ),
     // The session is fixed when the screen opens; later progress changes must not reshuffle it.
     [],
   );

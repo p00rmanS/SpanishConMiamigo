@@ -83,7 +83,7 @@ export function Dictionary({ initialQuery = '' }) {
       )}
       <div className="phrase-list">
         {results.map((w) => (
-          <article className="phrase-entry" key={w.word}>
+          <article className="phrase-entry" key={w.word + w.type}>
             <span className="section-kicker">
               {w.type}
               {genderLabel(w)}
