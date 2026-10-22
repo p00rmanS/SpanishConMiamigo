@@ -7,6 +7,7 @@ import { workplaceSupport } from './workplace-support.js';
 import { vocabTaglish } from './taglish-supplements.js';
 import { careerExpansion } from './career-expansion.js';
 import { dailyExpansion } from './daily-expansion.js';
+import { dailyExpansion2, dailySupport2 } from './daily-expansion-2.js';
 import { pronounce } from './lib/pronounce.js';
 // Original training scenarios. Amounts and policies are fictional, not employer commitments.
 // Each phrase has Spanish, English, and a usage tip; each dialogue turn is bilingual.
@@ -1029,9 +1030,12 @@ export const workplaceModules = [
   ...everydayExpansion,
   ...careerExpansion,
   ...dailyExpansion,
+  ...dailyExpansion2,
 ];
 
-const supportById = new Map(workplaceSupport.map(([id, ...rest]) => [id, rest]));
+const supportById = new Map(
+  [...workplaceSupport, ...dailySupport2].map(([id, ...rest]) => [id, rest]),
+);
 const chunk = (sentence) =>
   sentence
     .split(/(?<=[.,;:?!…])\s+/)

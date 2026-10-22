@@ -121,9 +121,21 @@ const THEMES = [
   ['Ideas and everyday life', 'vida', 'miedo'],
 ];
 
+// Model sentences that other lessons already use; a pack picks its next example instead.
+const USED_MODELS = new Set([
+  'Me duele la cabeza.',
+  'Estoy muy cansado.',
+  'Me levanto temprano.',
+  'Quiero ir, pero no puedo.',
+  'Llovía; por eso no salimos.',
+  'Yo también tengo hambre.',
+  'No voy porque estoy enfermo.',
+]);
+
 function vocabLesson(theme, pack, number) {
   // Skip examples that a hand-written lesson already uses as its model sentence.
-  const first = pack.find((w) => w.example !== 'Me duele la cabeza.') ?? pack[0];
+  const isNouns = pack.every((w) => w.article);
+  const first = pack.find((w) => !USED_MODELS.has(w.example)) ?? pack[0];
   const quiz = pack[number % pack.length];
   const meaning = (w) => w.meaning.split(';')[0].trim();
   const wrong = unique(
@@ -148,14 +160,23 @@ function vocabLesson(theme, pack, number) {
     sentence: first.example,
     meaning: first.translation,
     sound: 'Listen to the model, then try at your own pace.',
-    taglish: `Aralin ang noun kasama ng article (el o la). ${tagalog}.`,
-    english: `Learn each noun with its article (el or la). In this pack: ${list}.`,
+    taglish: isNouns
+      ? `Aralin ang noun kasama ng article (el o la). ${tagalog}.`
+      : `Aralin ang bawat salita sa loob ng maikling pangungusap. ${tagalog}.`,
+    english: isNouns
+      ? `Learn each noun with its article (el or la). In this pack: ${list}.`
+      : `Learn each word inside a short sentence. In this pack: ${list}.`,
     pattern: [label(first), 'in a sentence'],
-    key: 'Learn each noun with its article: el or la.',
+    key: isNouns
+      ? 'Learn each noun with its article: el or la.'
+      : 'Learn each word inside a short sentence.',
     tip: 'Say the word inside a short sentence, not alone.',
-    tipDetail:
-      'The article tells you the gender, and gender decides the adjective ending: la casa blanca, el libro blanco.',
-    mistake: 'Do not guess the gender from English: say el problema and la mano.',
+    tipDetail: isNouns
+      ? 'The article tells you the gender, and gender decides the adjective ending: la casa blanca, el libro blanco.'
+      : 'A word inside a sentence shows how it behaves: where it goes and what it connects. Repeat the model aloud twice.',
+    mistake: isNouns
+      ? 'Do not guess the gender from English: say el problema and la mano.'
+      : 'Do not translate word for word: check the model sentence for the natural word order.',
     prompt: `What does “${label(quiz)}” mean?`,
     choices: [meaning(quiz), ...wrong],
     answer: meaning(quiz),
@@ -178,25 +199,39 @@ function vocabLesson(theme, pack, number) {
   };
 }
 
+function packsOf(theme, slice, out) {
+  for (let i = 0, n = 1; i < slice.length; i += 10, n++) {
+    const pack = slice.slice(i, i + 10);
+    if (pack.length >= 3) out.push(vocabLesson(theme, pack, n));
+    else if (out.length) {
+      // A tiny remainder joins the previous pack instead of becoming a lesson of its own.
+      out.pop();
+      out.push(vocabLesson(theme, slice.slice(i - 10, i + pack.length), n - 1));
+    }
+  }
+}
+
 function buildVocabularyLessons() {
   const nouns = vocabulary.filter((w) => w.type === 'Noun');
   const out = [];
   for (const [theme, start, end] of THEMES) {
     const a = nouns.findIndex((w) => w.word === start);
     const b = nouns.findIndex((w) => w.word === end);
-    if (a < 0 || b < a) continue;
-    const slice = nouns.slice(a, b + 1);
-    for (let i = 0, n = 1; i < slice.length; i += 10, n++) {
-      const pack = slice.slice(i, i + 10);
-      if (pack.length >= 3) out.push(vocabLesson(theme, pack, n));
-      else if (out.length) {
-        // A tiny remainder joins the previous pack instead of becoming a lesson of its own.
-        const prev = out.pop();
-        const merged = slice.slice(i - 10, i + pack.length);
-        out.push(vocabLesson(theme, merged, n - 1));
-        void prev;
-      }
-    }
+    if (a >= 0 && b >= a) packsOf(theme, nouns.slice(a, b + 1), out);
+  }
+  for (const [theme, type] of [
+    ['Everyday adjectives', 'Adjective'],
+    ['Adverbs', 'Adverb'],
+    ['Prepositions and linking words', 'Preposition'],
+    ['Useful phrases', 'Phrase'],
+  ]) {
+    packsOf(
+      theme,
+      vocabulary.filter(
+        (w) => w.type === type || (type === 'Preposition' && w.type === 'Conjunction'),
+      ),
+      out,
+    );
   }
   return out;
 }
