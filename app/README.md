@@ -24,7 +24,7 @@ npm run build
 
 | Area | What you get |
 | --- | --- |
-| **Courses** (trail map or list view) | *Spanish Foundations* (A1 to C1, 146 lessons in 5 levels and 23 units), *Grammar Toolkit* (200 lessons: verbs, adjectives, connectors, a lesson per tense and regular/irregular/changing group, and themed noun packs), *Bilingual Career Spanish* (customer care, technical support, billing, 3 levels, 76 lessons), *Spanish for Daily Life* (56 lessons) |
+| **Courses** (trail map or list view) | *Spanish Foundations* (A1 to C1, 170 lessons in 5 levels, including 24 "deep dive" lessons with full conjugation tables), *Grammar Toolkit* (200 lessons: verbs, adjectives, connectors, a lesson per tense and regular/irregular/changing group, and themed noun packs), *Bilingual Career Spanish* (customer care, technical support, billing, 3 levels, 76 lessons), *Spanish for Daily Life* (56 lessons) |
 | **Lesson player** | Learn → choose → build the sentence from a word bank → write → listen → speak, with audio, a generated pronunciation guide, pattern chips, conjugation and memory support, a pro tip, a common-mistake note, immediate feedback and XP |
 | **Checkpoints** | A 10-question quiz per level, best score saved, plus a placement check that suggests a starting level |
 | **Review** | Spaced repetition (boxes 0–5), a mistake notebook and a due-count badge |

@@ -50,6 +50,16 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     ['Connecting ideas', ['connect', 'because', 'mucho-muy', 'personal-a', 'story-sequence']],
+    [
+      'Deep dive: ser, estar and sentences',
+      [
+        'dd-ser-doctor',
+        'dd-estar-place',
+        'dd-present-endings',
+        'dd-sentence-order',
+        'dd-question-words',
+      ],
+    ],
   ],
   A2: [
     [
@@ -83,6 +93,17 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     ['Storytelling', ['imperfect', 'imperfect-irregular', 'story-possession']],
+    ['Deep dive: conjugation method', ['dd-verb-checklist']],
+    [
+      'Deep dive: the preterite and imperfect',
+      [
+        'dd-preterite-endings',
+        'dd-preterite-irregular-groups',
+        'dd-imperfect-endings',
+        'dd-past-triggers',
+        'dd-estar-gerund',
+      ],
+    ],
     [
       'Comparing and planning',
       [
@@ -145,6 +166,23 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     ['Professional Spanish', ['formal-email']],
+    [
+      'Deep dive: building longer sentences',
+      ['dd-sentence-recipe', 'dd-ser-estar-adjectives', 'dd-ser-events'],
+    ],
+    ['Deep dive: lo que and lo de', ['dd-lo-que-what', 'dd-lo-que-pasa', 'dd-lo-de']],
+    [
+      'Deep dive: fillers and discourse markers',
+      [
+        'dd-o-sea',
+        'dd-es-que',
+        'dd-mira-oye',
+        'dd-tag-questions',
+        'dd-la-verdad',
+        'dd-como-que',
+        'dd-filler-stacking',
+      ],
+    ],
   ],
   B2: [
     [
