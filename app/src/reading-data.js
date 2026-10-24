@@ -5,6 +5,9 @@ import { readingAdventures } from './reading-adventures.js';
 // Original graded reading material. Level labels describe a guided practice focus.
 import { storyExpansion } from './story-expansion.js';
 import { childrenStories } from './children-stories.js';
+import { beginnerStories } from './stories-beginner.js';
+import { intermediateStories } from './stories-intermediate.js';
+import { advancedStories } from './stories-advanced.js';
 export const readings = [
   ...continuedStories,
   ...octoberStories,
@@ -12,6 +15,9 @@ export const readings = [
   ...readingAdventures,
   ...childrenStories,
   ...storyExpansion,
+  ...beginnerStories,
+  ...intermediateStories,
+  ...advancedStories,
   {
     id: 'story-cafe',
     kind: 'Stories',

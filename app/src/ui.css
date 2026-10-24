@@ -1835,3 +1835,45 @@ body[data-focus] .daily-trigger {
 .tile.attention-primary > svg:first-child {
   color: var(--primary);
 }
+
+.deep-section {
+  margin-top: 18px;
+}
+.deep-section h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+.deep-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+.deep-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.deep-table th,
+.deep-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.deep-table th {
+  background: var(--surface);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.deep-table tr:last-child td {
+  border-bottom: 0;
+}
+.deep-points {
+  list-style: disc;
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+}

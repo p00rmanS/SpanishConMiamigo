@@ -32,6 +32,52 @@ function Explanation({ lesson, mode }) {
   );
 }
 
+function DeepDive({ sections }) {
+  return (
+    <section className="lp-block deep-dive" aria-label="Go deeper">
+      <h2>Go deeper</h2>
+      {sections.map((s) => (
+        <div className="deep-section" key={s.heading}>
+          <h3>{s.heading}</h3>
+          {s.table && (
+            <div className="deep-table-wrap">
+              <table className="deep-table">
+                <thead>
+                  <tr>
+                    {s.table.head.map((h) => (
+                      <th key={h} scope="col">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {s.table.rows.map((row) => (
+                    <tr key={row.join('|')}>
+                      {row.map((cell, i) => (
+                        <td key={i} lang={i > 0 || s.table.head.length === 2 ? 'es' : undefined}>
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {s.points && (
+            <ul className="deep-points">
+              {s.points.map((p) => (
+                <li key={p}>{p}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </section>
+  );
+}
+
 function LearnStep({ lesson, mode }) {
   return (
     <>
@@ -89,6 +135,8 @@ function LearnStep({ lesson, mode }) {
           </ul>
         </section>
       )}
+
+      {lesson.deep?.length > 0 && <DeepDive sections={lesson.deep} />}
 
       <section className="lp-block two-col">
         <div className="tip-card">

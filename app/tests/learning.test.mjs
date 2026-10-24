@@ -4,7 +4,7 @@ import { scoreAnswer, nextReview } from '../src/learning.js';
 import { lessons } from '../src/content.js';
 import { verbs, grammar, phrases } from '../src/reference-data.js';
 test('expanded library is complete and bilingual', () => {
-  assert.equal(lessons.length, 486);
+  assert.equal(lessons.length, 525);
   assert.equal(verbs.length, 50);
   assert.equal(phrases.length, 50);
   assert.equal(grammar.length, 62);
@@ -46,18 +46,18 @@ test('all authored exercises have answer keys and valid answers', () => {
 import { readings } from '../src/reading-data.js';
 import { tenseInfo, getForms } from '../src/verb-tenses.js';
 test('readings offer bilingual practice at every level', () => {
-  assert.equal(readings.length, 44);
-  assert.equal(new Set(readings.map((r) => r.id)).size, 44);
+  assert.equal(readings.length, 68);
+  assert.equal(new Set(readings.map((r) => r.id)).size, 68);
   for (const kind of ['Stories', 'Conversations'])
     for (const track of ['Beginner', 'Intermediate', 'Advanced'])
       assert.equal(
         readings.filter((r) => r.kind === kind && r.track === track).length,
         kind === 'Stories'
           ? track === 'Advanced'
-            ? 6
+            ? 14
             : track === 'Beginner'
-              ? 14
-              : 16
+              ? 22
+              : 24
           : track === 'Beginner'
             ? 2
             : 3,
