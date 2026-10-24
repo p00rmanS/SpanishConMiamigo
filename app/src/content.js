@@ -9,6 +9,7 @@ import { foundationsD } from './foundations-d.js';
 import { toolkitLessons } from './toolkit-lessons.js';
 import { extraToolkitLessons } from './toolkit-extra.js';
 import { deepDiveLessons } from './deep-dive-lessons.js';
+import { deepDiveLessons2 } from './deep-dive-lessons-2.js';
 const authored = [
   {
     id: 'hello',
@@ -198,6 +199,7 @@ const authored = [
   ...foundationsC,
   ...foundationsD,
   ...deepDiveLessons,
+  ...deepDiveLessons2,
   ...toolkitLessons,
   ...extraToolkitLessons,
   ...workplaceLessons,

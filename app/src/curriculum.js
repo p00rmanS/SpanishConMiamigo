@@ -58,6 +58,7 @@ export const FOUNDATION_UNITS = {
         'dd-present-endings',
         'dd-sentence-order',
         'dd-question-words',
+        'dd-hay-estar',
       ],
     ],
   ],
@@ -93,12 +94,22 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     ['Storytelling', ['imperfect', 'imperfect-irregular', 'story-possession']],
-    ['Deep dive: conjugation method', ['dd-verb-checklist']],
+    [
+      'Deep dive: conjugation method',
+      [
+        'dd-verb-checklist',
+        'dd-irregular-yo',
+        'dd-stem-changing',
+        'dd-reflexive-deep',
+        'dd-gustar-family',
+      ],
+    ],
     [
       'Deep dive: the preterite and imperfect',
       [
         'dd-preterite-endings',
         'dd-preterite-irregular-groups',
+        'dd-ser-ir-dar-ver',
         'dd-imperfect-endings',
         'dd-past-triggers',
         'dd-estar-gerund',
@@ -168,7 +179,17 @@ export const FOUNDATION_UNITS = {
     ['Professional Spanish', ['formal-email']],
     [
       'Deep dive: building longer sentences',
-      ['dd-sentence-recipe', 'dd-ser-estar-adjectives', 'dd-ser-events'],
+      [
+        'dd-sentence-recipe',
+        'dd-object-pronouns',
+        'dd-por-para-deep',
+        'dd-ser-estar-adjectives',
+        'dd-ser-events',
+      ],
+    ],
+    [
+      'Deep dive: more tenses and moods',
+      ['dd-present-perfect', 'dd-future-conditional', 'dd-commands', 'dd-subjunctive-trigger'],
     ],
     ['Deep dive: lo que and lo de', ['dd-lo-que-what', 'dd-lo-que-pasa', 'dd-lo-de']],
     [
@@ -180,6 +201,9 @@ export const FOUNDATION_UNITS = {
         'dd-tag-questions',
         'dd-la-verdad',
         'dd-como-que',
+        'dd-ni-idea',
+        'dd-entonces-asi-que',
+        'dd-bueno-pues-deep',
         'dd-filler-stacking',
       ],
     ],

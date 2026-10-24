@@ -3,7 +3,7 @@ import { buildLesson } from './course-expansion.js';
 // "Deep dive" lessons: the same lesson shape as everywhere else, plus a `deep` list that the
 // lesson player shows under "Go deeper". Each section is { heading, table?: { head, rows }, points? }.
 // Row layout: see buildLesson. Tables are authored models of common usage, not exhaustive rules.
-const dive = (row, deep) => ({ ...buildLesson(row), deep });
+export const dive = (row, deep) => ({ ...buildLesson(row), deep });
 
 export const deepDiveLessons = [
   // ---------- A1: ser, estar and sentence building ----------
@@ -302,7 +302,7 @@ export const deepDiveLessons = [
       'Deep dive: conjugation method',
       'Anoche pedimos pizza y yo la pagué.',
       'Last night we ordered pizza and I paid for it.',
-      'Sa bawat verb, magtanong ng lima: anong infinitive, sino ang gumawa, anong panahon, may stem change ba, at may spelling change ba? Sa pagpagué, nagbago ang g → gu para manatili ang tunog ng g.',
+      'Sa bawat verb, magtanong ng lima: anong infinitive, sino ang gumawa, anong panahon, may stem change ba, at may spelling change ba? Sa pagué, nagbago ang g → gu para manatili ang tunog ng g.',
       'Conjugate any verb by asking five questions: which infinitive, which person, which tense, does the stem change or is the verb irregular, and does spelling need to change to keep the sound? Pagué needs gu before e to keep the hard g.',
       'infinitive → person → tense → stem → spelling',
       'A fixed order of questions turns guessing into a method.',
@@ -559,7 +559,7 @@ export const deepDiveLessons = [
       'Tell what you were doing when the phone rang.',
       [
         'Siempre llegaba tarde, pero ayer llegué temprano.',
-        'He/She always arrived late, but yesterday I arrived early.',
+        'I always used to arrive late, but yesterday I arrived early.',
       ],
       ['Era de noche cuando oí un ruido.', 'It was night when I heard a noise.'],
       ['Mientras cocinaba, sonó el teléfono y salí corriendo.'],
