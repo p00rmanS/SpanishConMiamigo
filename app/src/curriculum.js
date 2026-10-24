@@ -59,6 +59,8 @@ export const FOUNDATION_UNITS = {
         'dd-sentence-order',
         'dd-question-words',
         'dd-hay-estar',
+        'dd-tener-expressions',
+        'dd-adjective-position',
       ],
     ],
   ],
@@ -103,6 +105,10 @@ export const FOUNDATION_UNITS = {
         'dd-reflexive-deep',
         'dd-gustar-family',
       ],
+    ],
+    [
+      'Deep dive: sentence patterns',
+      ['dd-double-negatives', 'dd-periphrases', 'dd-comparisons-deep'],
     ],
     [
       'Deep dive: the preterite and imperfect',
@@ -182,6 +188,9 @@ export const FOUNDATION_UNITS = {
       [
         'dd-sentence-recipe',
         'dd-object-pronouns',
+        'dd-relative-pronouns',
+        'dd-verb-prepositions',
+        'dd-passive-se',
         'dd-por-para-deep',
         'dd-ser-estar-adjectives',
         'dd-ser-events',
@@ -189,7 +198,13 @@ export const FOUNDATION_UNITS = {
     ],
     [
       'Deep dive: more tenses and moods',
-      ['dd-present-perfect', 'dd-future-conditional', 'dd-commands', 'dd-subjunctive-trigger'],
+      [
+        'dd-present-perfect',
+        'dd-past-perfect',
+        'dd-future-conditional',
+        'dd-commands',
+        'dd-subjunctive-trigger',
+      ],
     ],
     ['Deep dive: lo que and lo de', ['dd-lo-que-what', 'dd-lo-que-pasa', 'dd-lo-de']],
     [
@@ -202,6 +217,11 @@ export const FOUNDATION_UNITS = {
         'dd-la-verdad',
         'dd-como-que',
         'dd-ni-idea',
+        'dd-storytelling-markers',
+        'dd-understanding-checks',
+        'dd-agree-disagree',
+        'dd-ahorita-ahora',
+        'dd-mas-bien-hedges',
         'dd-entonces-asi-que',
         'dd-bueno-pues-deep',
         'dd-filler-stacking',
@@ -209,6 +229,10 @@ export const FOUNDATION_UNITS = {
     ],
   ],
   B2: [
+    [
+      'Deep dive: conditions and the past subjunctive',
+      ['dd-si-clauses', 'dd-imperfect-subjunctive'],
+    ],
     [
       'Mood and doubt',
       [
