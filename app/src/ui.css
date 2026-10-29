@@ -1877,3 +1877,25 @@ body[data-focus] .daily-trigger {
   display: grid;
   gap: 6px;
 }
+
+.deep-speak {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.deep-table.vocab td:first-child {
+  font-size: 1.3rem;
+  text-align: center;
+  width: 3rem;
+}
+.deep-speak button {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  padding: 0;
+}
+.deep-speak button svg {
+  width: 16px;
+  height: 16px;
+}

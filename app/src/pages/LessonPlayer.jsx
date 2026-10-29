@@ -41,7 +41,7 @@ function DeepDive({ sections }) {
           <h3>{s.heading}</h3>
           {s.table && (
             <div className="deep-table-wrap">
-              <table className="deep-table">
+              <table className={s.table.speakCol != null ? 'deep-table vocab' : 'deep-table'}>
                 <thead>
                   <tr>
                     {s.table.head.map((h) => (
@@ -55,8 +55,18 @@ function DeepDive({ sections }) {
                   {s.table.rows.map((row) => (
                     <tr key={row.join('|')}>
                       {row.map((cell, i) => (
-                        <td key={i} lang={i > 0 || s.table.head.length === 2 ? 'es' : undefined}>
-                          {cell}
+                        <td
+                          key={i}
+                          lang={s.table.langs ? s.table.langs[i] : i > 0 ? 'es' : undefined}
+                        >
+                          {s.table.speakCol === i ? (
+                            <span className="deep-speak">
+                              <SpeakButton text={cell} size="sm" />
+                              {cell}
+                            </span>
+                          ) : (
+                            cell
+                          )}
                         </td>
                       ))}
                     </tr>
