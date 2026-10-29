@@ -6,6 +6,31 @@ export const FOUNDATION_UNITS = {
       'First conversations',
       ['hello', 'courtesy', 'origin', 'feeling', 'help', 'wants', 'tu-usted'],
     ],
+    [
+      'Little learners: my body',
+      ['kd-head-face', 'kd-body-parts', 'kd-simon-dice', 'kd-me-duele', 'kd-senses'],
+    ],
+    [
+      'Little learners: my world',
+      [
+        'kd-colors',
+        'kd-shapes',
+        'kd-animals-farm',
+        'kd-animals-wild',
+        'kd-fruits',
+        'kd-food-drinks',
+        'kd-clothes',
+        'kd-classroom',
+        'kd-family-kids',
+        'kd-feelings',
+        'kd-numbers-deep',
+        'kd-manners',
+      ],
+    ],
+    [
+      'Word power: opposites and play verbs',
+      ['wd-opposites-adjectives', 'wd-action-verbs', 'wd-core-verbs-present'],
+    ],
     ['Numbers, dates and shopping', ['numbers', 'days-months', 'clock-time', 'prices', 'spelling']],
     [
       'Sentence building',
@@ -107,6 +132,18 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     [
+      'Word power: pairs and conjugation tables',
+      [
+        'wd-opposite-verbs',
+        'wd-pedir-preguntar',
+        'wd-llevar-traer',
+        'wd-ver-mirar-oir',
+        'wd-accent-pairs',
+        'wd-core-verbs-preterite',
+        'wd-you-forms',
+      ],
+    ],
+    [
       'Deep dive: sentence patterns',
       ['dd-double-negatives', 'dd-periphrases', 'dd-comparisons-deep'],
     ],
@@ -196,6 +233,7 @@ export const FOUNDATION_UNITS = {
         'dd-ser-events',
       ],
     ],
+    ['Word power: synonyms and regional words', ['wd-synonyms', 'wd-regional-words']],
     [
       'Deep dive: more tenses and moods',
       [
