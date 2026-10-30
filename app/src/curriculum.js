@@ -38,6 +38,22 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     [
+      'Little learners: people and places',
+      [
+        'kd-body-inside',
+        'kd-doctor-visit',
+        'kd-restaurant',
+        'kd-birthday',
+        'kd-school-subjects',
+        'kd-first-second-third',
+        'kd-chores',
+        'kd-accessories',
+        'kd-tech-words',
+        'kd-signs',
+        'kd-polite-requests',
+      ],
+    ],
+    [
       'Little learners: my world',
       [
         'kd-colors',
@@ -159,6 +175,16 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     [
+      'Word power: contrasts and tenses',
+      [
+        'wd-saber-conocer',
+        'wd-pret-vs-imperfect',
+        'wd-tan-tanto',
+        'wd-must-have-to',
+        'wd-antonym-nouns',
+      ],
+    ],
+    [
       'Word power: pairs and conjugation tables',
       [
         'wd-opposite-verbs',
@@ -262,6 +288,10 @@ export const FOUNDATION_UNITS = {
         'dd-ser-estar-adjectives',
         'dd-ser-events',
       ],
+    ],
+    [
+      'Word power: moods and tables',
+      ['wd-synonym-verbs', 'wd-subjunctive-table', 'wd-irregular-commands'],
     ],
     [
       'Word power: synonyms and regional words',

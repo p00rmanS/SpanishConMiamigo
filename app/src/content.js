@@ -14,6 +14,7 @@ import { deepDiveLessons3 } from './deep-dive-lessons-3.js';
 import { littleLearnerLessons } from './little-learner-lessons.js';
 import { wordLessons } from './word-lessons.js';
 import { homeWorldLessons } from './home-world-lessons.js';
+import { moreWorldLessons } from './more-world-lessons.js';
 const authored = [
   {
     id: 'hello',
@@ -208,6 +209,7 @@ const authored = [
   ...littleLearnerLessons,
   ...wordLessons,
   ...homeWorldLessons,
+  ...moreWorldLessons,
   ...toolkitLessons,
   ...extraToolkitLessons,
   ...workplaceLessons,

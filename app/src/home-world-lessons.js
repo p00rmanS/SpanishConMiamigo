@@ -4,7 +4,7 @@ import { vocab } from './little-learner-lessons.js';
 // Picture vocabulary for the home and the town, plus word-power tables (irregular preterites,
 // imperfect, future, false friends, gender exceptions, diminutives, body idioms).
 // L builds a lesson from fewer arguments: the model sentence doubles as the reply and the only alt.
-const L = (
+export const L = (
   [id, level, title, unit, sentence, meaning, taglish, english],
   [formula, key, tip, tipDetail],
   [prompt, choices, answer, reason, scene],
