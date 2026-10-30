@@ -11,6 +11,33 @@ export const FOUNDATION_UNITS = {
       ['kd-head-face', 'kd-body-parts', 'kd-simon-dice', 'kd-me-duele', 'kd-senses'],
     ],
     [
+      'Little learners: my home',
+      [
+        'kd-house-rooms',
+        'kd-furniture',
+        'kd-kitchen-table',
+        'kd-bathroom-morning',
+        'kd-sea-sky-animals',
+        'kd-vegetables-market',
+        'kd-toys-play',
+        'kd-describe-people',
+      ],
+    ],
+    [
+      'Little learners: my town and day',
+      [
+        'kd-town-places',
+        'kd-transport',
+        'kd-weather-nature',
+        'kd-jobs',
+        'kd-day-seasons',
+        'kd-daily-routine',
+        'kd-hobbies-sports',
+        'kd-where-words',
+        'kd-question-words',
+      ],
+    ],
+    [
       'Little learners: my world',
       [
         'kd-colors',
@@ -141,6 +168,9 @@ export const FOUNDATION_UNITS = {
         'wd-accent-pairs',
         'wd-core-verbs-preterite',
         'wd-you-forms',
+        'wd-preterite-irregular-stems',
+        'wd-imperfect-table',
+        'wd-gender-exceptions',
       ],
     ],
     [
@@ -233,7 +263,17 @@ export const FOUNDATION_UNITS = {
         'dd-ser-events',
       ],
     ],
-    ['Word power: synonyms and regional words', ['wd-synonyms', 'wd-regional-words']],
+    [
+      'Word power: synonyms and regional words',
+      [
+        'wd-synonyms',
+        'wd-regional-words',
+        'wd-false-friends',
+        'wd-future-irregular',
+        'wd-diminutives',
+        'wd-body-idioms',
+      ],
+    ],
     [
       'Deep dive: more tenses and moods',
       [
