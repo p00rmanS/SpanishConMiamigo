@@ -175,6 +175,10 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     [
+      'Native expressions: everyday',
+      ['ex-mexico-everyday', 'ex-reactions', 'ex-yes-no-ways', 'ex-courtesy-latam'],
+    ],
+    [
       'Word power: contrasts and tenses',
       [
         'wd-saber-conocer',
@@ -287,6 +291,21 @@ export const FOUNDATION_UNITS = {
         'dd-por-para-deep',
         'dd-ser-estar-adjectives',
         'dd-ser-events',
+      ],
+    ],
+    [
+      'Native expressions: slang and sayings',
+      [
+        'ex-mexico-slang',
+        'ex-spain-everyday',
+        'ex-argentina-che',
+        'ex-colombia-caribbean',
+        'ex-chile-peru-venezuela',
+        'ex-cool-by-country',
+        'ex-work-money-slang',
+        'ex-food-animal-idioms',
+        'ex-refranes',
+        'ex-text-chat',
       ],
     ],
     [
