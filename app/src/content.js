@@ -15,6 +15,7 @@ import { littleLearnerLessons } from './little-learner-lessons.js';
 import { wordLessons } from './word-lessons.js';
 import { homeWorldLessons } from './home-world-lessons.js';
 import { moreWorldLessons } from './more-world-lessons.js';
+import { nativeExpressionLessons } from './native-expression-lessons.js';
 const authored = [
   {
     id: 'hello',
@@ -210,6 +211,7 @@ const authored = [
   ...wordLessons,
   ...homeWorldLessons,
   ...moreWorldLessons,
+  ...nativeExpressionLessons,
   ...toolkitLessons,
   ...extraToolkitLessons,
   ...workplaceLessons,
