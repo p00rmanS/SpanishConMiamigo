@@ -3,6 +3,26 @@
 export const FOUNDATION_UNITS = {
   A1: [
     [
+      'School basics: kindergarten',
+      [
+        'sb-alphabet',
+        'sb-counting-tens',
+        'sb-clock-kids',
+        'sb-calendar-kids',
+        'sb-introduce-yourself',
+        'sb-teacher-commands',
+        'sb-school-supplies',
+        'sb-this-that',
+        'sb-animal-sounds',
+        'sb-bugs-birds',
+        'sb-garden-plants',
+        'sb-meals-groups',
+        'sb-snacks-sweets',
+        'sb-nursery-songs',
+        'sb-ask-teacher',
+      ],
+    ],
+    [
       'First conversations',
       ['hello', 'courtesy', 'origin', 'feeling', 'help', 'wants', 'tu-usted'],
     ],
@@ -191,6 +211,18 @@ export const FOUNDATION_UNITS = {
       ['ex-mexico-everyday', 'ex-reactions', 'ex-yes-no-ways', 'ex-courtesy-latam'],
     ],
     [
+      'School basics: elementary',
+      [
+        'sb-directions-streets',
+        'sb-math-basics',
+        'sb-continents-countries',
+        'sb-family-tree',
+        'sb-space-planets',
+        'sb-money-coins',
+        'sb-music-sports',
+      ],
+    ],
+    [
       'Word power: contrasts and tenses',
       [
         'wd-saber-conocer',
@@ -305,6 +337,7 @@ export const FOUNDATION_UNITS = {
         'dd-ser-events',
       ],
     ],
+    ['School basics: high school', ['sb-grammar-terms', 'sb-science-words']],
     ['Real life: home and relationships', ['rl-dating-friends', 'rl-home-repairs']],
     [
       'Word power: connectors and tricks',
