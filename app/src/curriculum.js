@@ -175,6 +175,18 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     [
+      'Real life: travel, phone and shopping',
+      [
+        'rl-airport-hotel',
+        'rl-emergency',
+        'rl-phone-calls',
+        'rl-shopping-sizes',
+        'wd-ya-todavia',
+        'wd-big-numbers-years',
+        'wd-pronunciation-rules',
+      ],
+    ],
+    [
       'Native expressions: everyday',
       ['ex-mexico-everyday', 'ex-reactions', 'ex-yes-no-ways', 'ex-courtesy-latam'],
     ],
@@ -291,6 +303,17 @@ export const FOUNDATION_UNITS = {
         'dd-por-para-deep',
         'dd-ser-estar-adjectives',
         'dd-ser-events',
+      ],
+    ],
+    ['Real life: home and relationships', ['rl-dating-friends', 'rl-home-repairs']],
+    [
+      'Word power: connectors and tricks',
+      [
+        'wd-se-accidental',
+        'wd-lo-adjective',
+        'wd-time-connectors',
+        'wd-aunque-sin-embargo',
+        'wd-reported-speech',
       ],
     ],
     [

@@ -16,6 +16,7 @@ import { wordLessons } from './word-lessons.js';
 import { homeWorldLessons } from './home-world-lessons.js';
 import { moreWorldLessons } from './more-world-lessons.js';
 import { nativeExpressionLessons } from './native-expression-lessons.js';
+import { travelGrammarLessons } from './travel-grammar-lessons.js';
 const authored = [
   {
     id: 'hello',
@@ -212,6 +213,7 @@ const authored = [
   ...homeWorldLessons,
   ...moreWorldLessons,
   ...nativeExpressionLessons,
+  ...travelGrammarLessons,
   ...toolkitLessons,
   ...extraToolkitLessons,
   ...workplaceLessons,
