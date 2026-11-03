@@ -19,6 +19,7 @@ import { nativeExpressionLessons } from './native-expression-lessons.js';
 import { travelGrammarLessons } from './travel-grammar-lessons.js';
 import { schoolBasics1 } from './school-basics-1.js';
 import { schoolBasics2 } from './school-basics-2.js';
+import { schoolBasics3 } from './school-basics-3.js';
 const authored = [
   {
     id: 'hello',
@@ -218,6 +219,7 @@ const authored = [
   ...travelGrammarLessons,
   ...schoolBasics1,
   ...schoolBasics2,
+  ...schoolBasics3,
   ...toolkitLessons,
   ...extraToolkitLessons,
   ...workplaceLessons,
