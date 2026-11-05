@@ -11,6 +11,9 @@ import {
   placementResult,
   seededRandom,
   cefrOf,
+  stagesOf,
+  levelStatus,
+  currentLevel,
 } from '../src/course.js';
 import {
   emptyState,
@@ -42,6 +45,7 @@ test('CEFR levels are parsed from authored level labels', () => {
   assert.equal(cefrOf({ level: 'A2 starter' }), 'A2');
   assert.equal(cefrOf({ level: 'B2–C1 focus' }), 'B2');
   assert.equal(cefrOf({}), 'A1');
+  assert.equal(cefrOf({ level: 'C3 native' }), 'C3');
 });
 
 test('continue target respects completion and placement', () => {
@@ -72,7 +76,8 @@ test('quizzes use valid choices and placement picks a level', () => {
   const allRight = placement.map((q) => q.answer);
   assert.equal(placementResult(placement, allRight), courses[0].levels.at(-1).code);
   const allWrong = placement.map(() => 'nope');
-  assert.equal(placementResult(placement, allWrong), courses[0].levels[0].code);
+  assert.equal(placementResult(placement, allWrong), 'A1');
+  assert.ok(!placement.some((q) => q.level === 'K'));
 });
 
 test('completing lessons awards XP once, schedules review and records a practice day', () => {
@@ -174,8 +179,43 @@ test('every foundations lesson is placed in a curriculum unit', () => {
   }
   assert.deepEqual(
     courses[0].levels.map((l) => l.code),
-    ['A1', 'A2', 'B1', 'B2', 'C1'],
+    ['K', 'A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3'],
   );
+});
+
+test('levels belong to four stages and list what to learn', () => {
+  const stages = stagesOf(courses[0]);
+  assert.deepEqual(
+    stages.map((st) => st.name),
+    ['Kids', 'Beginner', 'Intermediate', 'Advanced'],
+  );
+  assert.deepEqual(
+    stages.map((st) => st.levels.map((l) => l.code)),
+    [['K'], ['A1', 'A2', 'A3'], ['B1', 'B2', 'B3'], ['C1', 'C2', 'C3']],
+  );
+  for (const level of courses[0].levels) assert.ok(level.skills.length >= 4, level.code);
+});
+
+test('level status needs every lesson and a passing checkpoint', () => {
+  const level = courses[0].levels.find((l) => l.code === 'A1');
+  const ids = level.lessons.map((l) => l.id);
+  const start = levelStatus(level, [], null);
+  assert.equal(start.complete, false);
+  assert.equal(start.lessonsLeft, ids.length);
+  assert.equal(start.needs.length, 2);
+  const lessonsOnly = levelStatus(level, ids, null);
+  assert.equal(lessonsOnly.complete, false);
+  assert.equal(lessonsOnly.needs.length, 1);
+  assert.equal(levelStatus(level, ids, { best: 6, total: 10 }).complete, false);
+  assert.equal(levelStatus(level, ids, { best: 7, total: 10 }).complete, true);
+});
+
+test('current level skips Kinder and follows completion', () => {
+  const foundations = courses[0];
+  assert.equal(currentLevel(foundations, []).code, 'A1');
+  const a1 = foundations.levels.find((l) => l.code === 'A1');
+  const doneA1 = a1.lessons.map((l) => l.id);
+  assert.equal(currentLevel(foundations, doneA1).code, 'A2');
 });
 
 test('each course level has enough lessons to be a real level', () => {

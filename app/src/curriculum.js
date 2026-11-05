@@ -1,7 +1,7 @@
 // Unit structure for Spanish Foundations. Every foundations lesson must appear exactly once;
 // a test enforces this so new lessons are never left out of the course.
 export const FOUNDATION_UNITS = {
-  A1: [
+  K: [
     [
       'School basics: kindergarten',
       [
@@ -48,10 +48,6 @@ export const FOUNDATION_UNITS = {
     ],
     ['Listen and repeat: first dialogues', ['ls-dialogue-greetings']],
     ['Review: little learners', ['rv-kindergarten', 'rv-food']],
-    [
-      'First conversations',
-      ['hello', 'courtesy', 'origin', 'feeling', 'help', 'wants', 'tu-usted'],
-    ],
     [
       'Little learners: my body',
       ['kd-head-face', 'kd-body-parts', 'kd-simon-dice', 'kd-me-duele', 'kd-senses'],
@@ -119,6 +115,12 @@ export const FOUNDATION_UNITS = {
     [
       'Word power: opposites and play verbs',
       ['wd-opposites-adjectives', 'wd-action-verbs', 'wd-core-verbs-present'],
+    ],
+  ],
+  A1: [
+    [
+      'First conversations',
+      ['hello', 'courtesy', 'origin', 'feeling', 'help', 'wants', 'tu-usted'],
     ],
     ['Numbers, dates and shopping', ['numbers', 'days-months', 'clock-time', 'prices', 'spelling']],
     [
@@ -195,32 +197,6 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     [
-      'Talking about the past',
-      [
-        'preterite-ar',
-        'preterite-er-ir',
-        'preterite-irregular',
-        'past-spelling',
-        'past-ser-ir',
-        'preterite-stem',
-        'hace-ago',
-        'ya-todavia',
-        'recent-acabar',
-        'reflexive-past',
-      ],
-    ],
-    ['Storytelling', ['imperfect', 'imperfect-irregular', 'story-possession']],
-    [
-      'Deep dive: conjugation method',
-      [
-        'dd-verb-checklist',
-        'dd-irregular-yo',
-        'dd-stem-changing',
-        'dd-reflexive-deep',
-        'dd-gustar-family',
-      ],
-    ],
-    [
       'Real life: travel, phone and shopping',
       [
         'rl-airport-hotel',
@@ -232,32 +208,22 @@ export const FOUNDATION_UNITS = {
         'wd-pronunciation-rules',
       ],
     ],
+    ['Real life: health and getting around', ['rl-pharmacy-medical', 'rl-public-transport']],
+    ['Listen and repeat: daily dialogues', ['ls-dialogue-market', 'ls-dialogue-doctor']],
+    ['Grammar: por and para', ['gr-por-para']],
+    [
+      'Word power: contrasts and tenses',
+      [
+        'wd-saber-conocer',
+        'wd-pret-vs-imperfect',
+        'wd-tan-tanto',
+        'wd-must-have-to',
+        'wd-antonym-nouns',
+      ],
+    ],
     [
       'Native expressions: everyday',
       ['ex-mexico-everyday', 'ex-reactions', 'ex-yes-no-ways', 'ex-courtesy-latam'],
-    ],
-    [
-      'Elementary: roads, jobs and rhymes',
-      ['sb-road-safety', 'sb-future-jobs', 'sb-rhymes-twisters'],
-    ],
-    ['Real life: health and getting around', ['rl-pharmacy-medical', 'rl-public-transport']],
-    ['Grammar: por and para', ['gr-por-para']],
-    ['Culture: music and symbols', ['cu-music-dance', 'cu-national-symbols']],
-    ['Listen and repeat: daily dialogues', ['ls-dialogue-market', 'ls-dialogue-doctor']],
-    ['Review: elementary', ['rv-elementary']],
-    [
-      'School basics: food around the world',
-      [
-        'sb-cooking-verbs',
-        'sb-simple-recipe',
-        'sb-mexican-food',
-        'sb-spain-food',
-        'sb-latam-dishes',
-        'sb-herbs-spices',
-        'sb-supermarket',
-        'sb-desserts',
-        'sb-food-allergies',
-      ],
     ],
     [
       'School basics: elementary',
@@ -283,13 +249,37 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     [
-      'Word power: contrasts and tenses',
+      'Elementary: roads, jobs and rhymes',
+      ['sb-road-safety', 'sb-future-jobs', 'sb-rhymes-twisters'],
+    ],
+    ['Culture: music and symbols', ['cu-music-dance', 'cu-national-symbols']],
+    ['Review: elementary', ['rv-elementary']],
+  ],
+  A3: [
+    [
+      'Talking about the past',
       [
-        'wd-saber-conocer',
-        'wd-pret-vs-imperfect',
-        'wd-tan-tanto',
-        'wd-must-have-to',
-        'wd-antonym-nouns',
+        'preterite-ar',
+        'preterite-er-ir',
+        'preterite-irregular',
+        'past-spelling',
+        'past-ser-ir',
+        'preterite-stem',
+        'hace-ago',
+        'ya-todavia',
+        'recent-acabar',
+        'reflexive-past',
+      ],
+    ],
+    ['Storytelling', ['imperfect', 'imperfect-irregular', 'story-possession']],
+    [
+      'Deep dive: conjugation method',
+      [
+        'dd-verb-checklist',
+        'dd-irregular-yo',
+        'dd-stem-changing',
+        'dd-reflexive-deep',
+        'dd-gustar-family',
       ],
     ],
     [
@@ -331,6 +321,20 @@ export const FOUNDATION_UNITS = {
         'por-para',
         'duration-desde',
         'adverbs-mente',
+      ],
+    ],
+    [
+      'School basics: food around the world',
+      [
+        'sb-cooking-verbs',
+        'sb-simple-recipe',
+        'sb-mexican-food',
+        'sb-spain-food',
+        'sb-latam-dishes',
+        'sb-herbs-spices',
+        'sb-supermarket',
+        'sb-desserts',
+        'sb-food-allergies',
       ],
     ],
   ],
@@ -385,19 +389,6 @@ export const FOUNDATION_UNITS = {
     ],
     ['Professional Spanish', ['formal-email']],
     [
-      'Deep dive: building longer sentences',
-      [
-        'dd-sentence-recipe',
-        'dd-object-pronouns',
-        'dd-relative-pronouns',
-        'dd-verb-prepositions',
-        'dd-passive-se',
-        'dd-por-para-deep',
-        'dd-ser-estar-adjectives',
-        'dd-ser-events',
-      ],
-    ],
-    [
       'Real life: money, housing and work',
       ['rl-banking', 'rl-renting', 'rl-job-interview', 'rl-email-etiquette'],
     ],
@@ -414,45 +405,20 @@ export const FOUNDATION_UNITS = {
     ],
     ['Real life: home and relationships', ['rl-dating-friends', 'rl-home-repairs']],
     [
-      'Word power: connectors and tricks',
+      'Deep dive: building longer sentences',
       [
-        'wd-se-accidental',
-        'wd-lo-adjective',
-        'wd-time-connectors',
-        'wd-aunque-sin-embargo',
-        'wd-reported-speech',
+        'dd-sentence-recipe',
+        'dd-object-pronouns',
+        'dd-relative-pronouns',
+        'dd-verb-prepositions',
+        'dd-passive-se',
+        'dd-por-para-deep',
+        'dd-ser-estar-adjectives',
+        'dd-ser-events',
       ],
     ],
-    [
-      'Native expressions: slang and sayings',
-      [
-        'ex-mexico-slang',
-        'ex-spain-everyday',
-        'ex-argentina-che',
-        'ex-colombia-caribbean',
-        'ex-chile-peru-venezuela',
-        'ex-cool-by-country',
-        'ex-work-money-slang',
-        'ex-food-animal-idioms',
-        'ex-refranes',
-        'ex-text-chat',
-      ],
-    ],
-    [
-      'Word power: moods and tables',
-      ['wd-synonym-verbs', 'wd-subjunctive-table', 'wd-irregular-commands'],
-    ],
-    [
-      'Word power: synonyms and regional words',
-      [
-        'wd-synonyms',
-        'wd-regional-words',
-        'wd-false-friends',
-        'wd-future-irregular',
-        'wd-diminutives',
-        'wd-body-idioms',
-      ],
-    ],
+  ],
+  B2: [
     [
       'Deep dive: more tenses and moods',
       [
@@ -464,32 +430,6 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     ['Deep dive: lo que and lo de', ['dd-lo-que-what', 'dd-lo-que-pasa', 'dd-lo-de']],
-    [
-      'Deep dive: fillers and discourse markers',
-      [
-        'dd-o-sea',
-        'dd-es-que',
-        'dd-mira-oye',
-        'dd-tag-questions',
-        'dd-la-verdad',
-        'dd-como-que',
-        'dd-ni-idea',
-        'dd-storytelling-markers',
-        'dd-understanding-checks',
-        'dd-agree-disagree',
-        'dd-ahorita-ahora',
-        'dd-mas-bien-hedges',
-        'dd-entonces-asi-que',
-        'dd-bueno-pues-deep',
-        'dd-filler-stacking',
-      ],
-    ],
-  ],
-  B2: [
-    [
-      'Deep dive: conditions and the past subjunctive',
-      ['dd-si-clauses', 'dd-imperfect-subjunctive'],
-    ],
     [
       'Mood and doubt',
       [
@@ -513,6 +453,26 @@ export const FOUNDATION_UNITS = {
         'como-si',
       ],
     ],
+    [
+      'Deep dive: conditions and the past subjunctive',
+      ['dd-si-clauses', 'dd-imperfect-subjunctive'],
+    ],
+    [
+      'Word power: connectors and tricks',
+      [
+        'wd-se-accidental',
+        'wd-lo-adjective',
+        'wd-time-connectors',
+        'wd-aunque-sin-embargo',
+        'wd-reported-speech',
+      ],
+    ],
+    [
+      'Word power: moods and tables',
+      ['wd-synonym-verbs', 'wd-subjunctive-table', 'wd-irregular-commands'],
+    ],
+  ],
+  B3: [
     [
       'Fluent patterns',
       [
@@ -538,8 +498,58 @@ export const FOUNDATION_UNITS = {
         'lo-cual',
       ],
     ],
+    [
+      'Native expressions: slang and sayings',
+      [
+        'ex-mexico-slang',
+        'ex-spain-everyday',
+        'ex-argentina-che',
+        'ex-colombia-caribbean',
+        'ex-chile-peru-venezuela',
+        'ex-cool-by-country',
+        'ex-work-money-slang',
+        'ex-food-animal-idioms',
+        'ex-refranes',
+        'ex-text-chat',
+      ],
+    ],
+    [
+      'Word power: synonyms and regional words',
+      [
+        'wd-synonyms',
+        'wd-regional-words',
+        'wd-false-friends',
+        'wd-future-irregular',
+        'wd-diminutives',
+        'wd-body-idioms',
+      ],
+    ],
+    [
+      'Deep dive: fillers and discourse markers',
+      [
+        'dd-o-sea',
+        'dd-es-que',
+        'dd-mira-oye',
+        'dd-tag-questions',
+        'dd-la-verdad',
+        'dd-como-que',
+        'dd-ni-idea',
+        'dd-storytelling-markers',
+        'dd-understanding-checks',
+        'dd-agree-disagree',
+        'dd-ahorita-ahora',
+        'dd-mas-bien-hedges',
+        'dd-entonces-asi-que',
+        'dd-bueno-pues-deep',
+        'dd-filler-stacking',
+      ],
+    ],
   ],
   C1: [
+    [
+      'Advanced grammar: passives, relatives and periphrases',
+      ['ad-passive', 'ad-relatives', 'ad-periphrases', 'ad-ser-estar-nuance'],
+    ],
     [
       'Argument and nuance',
       [
@@ -564,6 +574,59 @@ export const FOUNDATION_UNITS = {
         'regional-you',
         'idioms-money',
         'verbs-of-change',
+      ],
+    ],
+  ],
+  C2: [
+    [
+      'Mastery grammar: tenses and moods',
+      [
+        'ad-conditional-perfect',
+        'ad-adverbial-subjunctive',
+        'ad-sequence-of-tenses',
+        'ad-emphasis',
+        'ad-nominalization',
+      ],
+    ],
+    [
+      'Mastery: style and register',
+      [
+        'ad-formal-register',
+        'ad-academic-connectors',
+        'ad-news-style',
+        'ad-hedging',
+        'ad-debate-phrases',
+        'ad-negotiation',
+      ],
+    ],
+    [
+      'Mastery: idioms and word building',
+      ['ad-idioms-advanced', 'ad-literary-tenses', 'ad-word-building'],
+    ],
+  ],
+  C3: [
+    [
+      'Native-level: dialects, sound and word origins',
+      [
+        'ad-voseo-leismo',
+        'ad-accents-sound',
+        'ad-translation-traps',
+        'ad-arabic-roots',
+        'ad-indigenous-words',
+      ],
+    ],
+    [
+      'Native-level: literature, humor and nuance',
+      ['ad-literary-analysis', 'ad-poetry-forms', 'ad-humor-irony', 'ad-subtle-subjunctive'],
+    ],
+    [
+      'Native-level: work and public life',
+      [
+        'ad-legal-spanish',
+        'ad-academic-essay',
+        'ad-politics-media',
+        'ad-public-speaking',
+        'ad-mastery-review',
       ],
     ],
   ],
