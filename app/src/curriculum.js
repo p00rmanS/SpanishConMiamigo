@@ -39,6 +39,16 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     [
+      'Little learners: play, safety and feelings',
+      ['sb-safety-rules', 'sb-play-shopping', 'sb-opposites-kids', 'sb-feelings-stories'],
+    ],
+    [
+      'Grammar for little learners',
+      ['gr-ser-estar-pictures', 'gr-gustar-kids', 'gr-gender-plural-drills'],
+    ],
+    ['Listen and repeat: first dialogues', ['ls-dialogue-greetings']],
+    ['Review: little learners', ['rv-kindergarten', 'rv-food']],
+    [
       'First conversations',
       ['hello', 'courtesy', 'origin', 'feeling', 'help', 'wants', 'tu-usted'],
     ],
@@ -227,6 +237,15 @@ export const FOUNDATION_UNITS = {
       ['ex-mexico-everyday', 'ex-reactions', 'ex-yes-no-ways', 'ex-courtesy-latam'],
     ],
     [
+      'Elementary: roads, jobs and rhymes',
+      ['sb-road-safety', 'sb-future-jobs', 'sb-rhymes-twisters'],
+    ],
+    ['Real life: health and getting around', ['rl-pharmacy-medical', 'rl-public-transport']],
+    ['Grammar: por and para', ['gr-por-para']],
+    ['Culture: music and symbols', ['cu-music-dance', 'cu-national-symbols']],
+    ['Listen and repeat: daily dialogues', ['ls-dialogue-market', 'ls-dialogue-doctor']],
+    ['Review: elementary', ['rv-elementary']],
+    [
       'School basics: food around the world',
       [
         'sb-cooking-verbs',
@@ -378,6 +397,11 @@ export const FOUNDATION_UNITS = {
         'dd-ser-events',
       ],
     ],
+    [
+      'Real life: money, housing and work',
+      ['rl-banking', 'rl-renting', 'rl-job-interview', 'rl-email-etiquette'],
+    ],
+    ['Culture: artists and authors', ['cu-artists-authors']],
     [
       'School basics: high school',
       [

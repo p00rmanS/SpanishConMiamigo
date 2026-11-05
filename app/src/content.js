@@ -22,6 +22,9 @@ import { schoolBasics2 } from './school-basics-2.js';
 import { schoolBasics3 } from './school-basics-3.js';
 import { schoolBasics4 } from './school-basics-4.js';
 import { schoolBasics5 } from './school-basics-5.js';
+import { kidsMoreLessons } from './kids-more-lessons.js';
+import { everydayLifeLessons } from './everyday-life-lessons.js';
+import { grammarCultureReview } from './grammar-culture-review-lessons.js';
 const authored = [
   {
     id: 'hello',
@@ -224,6 +227,9 @@ const authored = [
   ...schoolBasics3,
   ...schoolBasics4,
   ...schoolBasics5,
+  ...kidsMoreLessons,
+  ...everydayLifeLessons,
+  ...grammarCultureReview,
   ...toolkitLessons,
   ...extraToolkitLessons,
   ...workplaceLessons,
