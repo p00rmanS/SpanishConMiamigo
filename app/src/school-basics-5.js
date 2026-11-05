@@ -1,0 +1,436 @@
+import { L } from './home-world-lessons.js';
+import { vocab } from './little-learner-lessons.js';
+import { grid } from './school-basics-1.js';
+
+// School basics, part 5 (A2): cooking, recipes, regional dishes, spices, shopping, desserts, allergies.
+export const FOOD2 = 'School basics: food around the world';
+
+export const schoolBasics5 = [
+  L(
+    [
+      'sb-cooking-verbs',
+      'A2',
+      'Cooking verbs: cut, mix, fry, bake.',
+      FOOD2,
+      'Primero corta las cebollas, después fríelas y al final añade el arroz.',
+      'First cut the onions, then fry them and at the end add the rice.',
+      'Gamitin ang command na tú para sa recipe: corta, mezcla, añade. Ang freír ay magprito, hornear ay mag-bake, hervir ay pakuluan.',
+      'Recipes use tú commands: corta, mezcla, fríe, añade. Pronouns attach to the end of a command: fríelas, mézclalo. Cooking verbs: cortar, pelar, mezclar, batir, freír, hervir, hornear, asar.',
+    ],
+    [
+      'command + pronoun',
+      'Attach lo, la, los, las to the end of a command.',
+      'Pela las papas y córtalas.',
+      'When you attach a pronoun, an accent often appears to keep the stress: fríelas, mézclalo, córtalas.',
+    ],
+    [
+      'What does "hornear" mean?',
+      ['to bake', 'to fry', 'to boil'],
+      'to bake',
+      'Hornear is to bake in the oven. Freír is to fry and hervir is to boil.',
+      'You help grandma make a cake.',
+    ],
+    [
+      ['Bate los huevos con azúcar.', 'Beat the eggs with sugar.'],
+      ['Hierve el agua y añade la pasta.', 'Boil the water and add the pasta.'],
+    ],
+    [
+      {
+        heading: 'En la cocina',
+        table: grid(
+          ['Verb', 'Tú command', 'English'],
+          [
+            ['cortar', 'corta', 'cut'],
+            ['pelar', 'pela', 'peel'],
+            ['mezclar', 'mezcla', 'mix'],
+            ['batir', 'bate', 'beat'],
+            ['freír', 'fríe', 'fry'],
+            ['hervir', 'hierve', 'boil'],
+            ['hornear', 'hornea', 'bake'],
+            ['asar', 'asa', 'roast / grill'],
+            ['añadir', 'añade', 'add'],
+            ['servir', 'sirve', 'serve'],
+          ],
+        ),
+      },
+    ],
+  ),
+  L(
+    [
+      'sb-simple-recipe',
+      'A2',
+      'Reading a recipe: ingredientes y pasos.',
+      FOOD2,
+      'Se necesitan dos huevos, una taza de harina y media taza de leche.',
+      'You need two eggs, one cup of flour and half a cup of milk.',
+      'Ang se necesitan ay kailangan. Ang ingredientes ay sangkap at ang pasos ay hakbang. Ang una taza ay isang tasa at media taza ay kalahating tasa.',
+      'Recipes use se + verb for general instructions: se necesitan, se mezcla, se hornea. Amounts: una taza, una cucharada, una pizca, media taza. Steps: primero, luego, después, por último.',
+    ],
+    [
+      'se necesita(n) + ingredient',
+      'Se necesita for one thing, se necesitan for many.',
+      'Se necesita una cucharada de azúcar.',
+      'The verb agrees with the ingredient: se necesita sal, se necesitan huevos.',
+    ],
+    [
+      'What is "una pizca de sal"?',
+      ['a pinch of salt', 'a cup of salt', 'a bag of salt'],
+      'a pinch of salt',
+      'Pizca means a pinch, a tiny amount.',
+      'You read a recipe card.',
+    ],
+    [
+      [
+        'Se mezcla todo y se hornea por veinte minutos.',
+        'Everything is mixed and baked for twenty minutes.',
+      ],
+      ['Primero lava las manos.', 'First wash your hands.'],
+    ],
+    [
+      {
+        heading: 'Medidas de cocina',
+        table: grid(
+          ['Spanish', 'Use', 'English'],
+          [
+            ['una taza', 'flour, milk', 'a cup'],
+            ['una cucharada', 'oil, sugar', 'a tablespoon'],
+            ['una cucharadita', 'salt, spices', 'a teaspoon'],
+            ['una pizca', 'salt, spices', 'a pinch'],
+            ['un diente de ajo', 'garlic', 'a clove of garlic'],
+            ['una rebanada', 'bread, cheese', 'a slice'],
+            ['un trozo', 'meat, cheese', 'a piece'],
+            ['al gusto', 'salt, pepper', 'to taste'],
+          ],
+        ),
+      },
+    ],
+  ),
+  L(
+    [
+      'sb-mexican-food',
+      'A2',
+      'Mexican food: tacos, tamales and more.',
+      FOOD2,
+      'En México comemos tacos, tamales y pozole, y bebemos horchata.',
+      'In Mexico we eat tacos, tamales and pozole, and we drink horchata.',
+      'Ang taco ay tortilla na may palaman. Ang tamal ay nilutong masa sa dahon ng mais. Ang horchata ay malamig na inuming kanin at kanela.',
+      'Typical Mexican foods: tacos, quesadillas, tamales, pozole, mole, chilaquiles, elote. Plural in Spanish just adds s: taco, tacos. The singular tamal is correct; tamale is an English form.',
+    ],
+    [
+      'comemos + dish',
+      'Tamal is singular, tamales is plural.',
+      'Comemos tamales en Navidad.',
+      'In Mexico horchata is rice milk with cinnamon; in Spain horchata is made from tiger nuts.',
+    ],
+    [
+      'What is "elote"?',
+      ['corn on the cob', 'a tortilla', 'a salsa'],
+      'corn on the cob',
+      'Elote is corn on the cob, often sold with mayonnaise and cheese.',
+      'You are at a street fair in Mexico.',
+    ],
+    [
+      ['Quiero tres tacos de pollo, por favor.', 'I want three chicken tacos, please.'],
+      ['La salsa está muy picante.', 'The salsa is very spicy.'],
+    ],
+    [
+      {
+        heading: 'Comida mexicana',
+        table: vocab([
+          ['🌮', 'los tacos', 'tacos', 'tacos'],
+          ['🫔', 'los tamales', 'tamales', 'tamales'],
+          ['🧀', 'la quesadilla', 'quesadilla', 'quesadilla'],
+          ['🍲', 'el pozole', 'hominy stew', 'pozole'],
+          ['🌽', 'el elote', 'corn on the cob', 'mais na may palaman'],
+          ['🥑', 'el guacamole', 'guacamole', 'guacamole'],
+          ['🌶️', 'la salsa', 'salsa', 'salsa'],
+          ['🍫', 'el mole', 'mole sauce', 'mole'],
+          ['🍳', 'los chilaquiles', 'tortilla chip breakfast', 'chilaquiles'],
+          ['🥛', 'la horchata', 'rice drink', 'inuming kanin'],
+        ]),
+      },
+    ],
+  ),
+  L(
+    [
+      'sb-spain-food',
+      'A2',
+      'Food of Spain: tortilla, paella and tapas.',
+      FOOD2,
+      'En España picamos tapas: tortilla de patatas, croquetas y jamón.',
+      'In Spain we snack on tapas: potato omelet, croquettes and ham.',
+      'Ang tapas ay maliliit na kainan. Ang tortilla española ay itlog at patatas, hindi tortilla ng mais. Ang paella ay kanin na may seafood o manok.',
+      'In Spain tortilla means a potato omelet, not a corn flatbread like in Mexico. Tapas are small plates shared at a bar. Ir de tapas means to go out for tapas. Patata is potato.',
+    ],
+    [
+      'tortilla = omelet in Spain',
+      'Same word, different food.',
+      'Pedimos una tortilla de patatas.',
+      'Learn both meanings: Mexican tortilla is flatbread and Spanish tortilla is an omelet. Context decides.',
+    ],
+    [
+      'What is a Spanish tortilla?',
+      ['a potato omelet', 'a corn flatbread', 'a rice dish'],
+      'a potato omelet',
+      'In Spain tortilla de patatas is a thick omelet.',
+      'You eat in a tapas bar in Madrid.',
+    ],
+    [
+      ['Vamos de tapas esta noche.', "Let's go for tapas tonight."],
+      ['La paella lleva arroz y azafrán.', 'Paella has rice and saffron.'],
+    ],
+    [
+      {
+        heading: 'Comida de España',
+        table: vocab([
+          ['🥘', 'la paella', 'paella', 'paella'],
+          ['🍳', 'la tortilla de patatas', 'potato omelet', 'tortilla ng patatas'],
+          ['🍅', 'el gazpacho', 'cold tomato soup', 'malamig na sopas ng kamatis'],
+          ['🥓', 'el jamón ibérico', 'cured ham', 'hamon'],
+          ['🧆', 'las croquetas', 'croquettes', 'kroket'],
+          ['🍟', 'las patatas bravas', 'spicy fried potatoes', 'maanghang na patatas'],
+          ['🥖', 'el pan con tomate', 'bread with tomato', 'tinapay na may kamatis'],
+          ['🍩', 'los churros', 'churros', 'churros'],
+          ['🍷', 'la sangría', 'sangria', 'sangria'],
+          ['🍽️', 'las tapas', 'small plates', 'maliliit na putahe'],
+        ]),
+      },
+    ],
+  ),
+  L(
+    [
+      'sb-latam-dishes',
+      'A2',
+      'Famous dishes across Latin America.',
+      FOOD2,
+      'En Perú comen ceviche, en Venezuela comen arepas y en Argentina comen asado.',
+      'In Peru they eat ceviche, in Venezuela they eat arepas and in Argentina they eat barbecue.',
+      'Ang ceviche ay hilaw na isda na binabad sa kalamansi. Ang arepa ay bilog na masa ng mais. Ang asado ay malaking ihaw na karne. Gamitin ang en + bansa para sabihin kung saan.',
+      'Dishes by country: Perú ceviche, Venezuela and Colombia arepas, Argentina asado, El Salvador pupusas, Costa Rica gallo pinto, Puerto Rico mofongo. Use en + country + comen to say what people eat there.',
+    ],
+    [
+      'en + país + comen + plato',
+      'Comen is they eat. Use en for the place.',
+      'En El Salvador comen pupusas.',
+      'Comen can also mean you all eat. The subject is clear from context or from the place.',
+    ],
+    [
+      'Which country is famous for ceviche?',
+      ['Perú', 'Argentina', 'El Salvador'],
+      'Perú',
+      'Ceviche is the national dish of Peru. Argentina is known for asado and El Salvador for pupusas.',
+      'Geography-and-food quiz.',
+    ],
+    [
+      ['¿Has probado las arepas?', 'Have you tried arepas?'],
+      [
+        'El asado se hace los domingos con la familia.',
+        'The barbecue is made on Sundays with family.',
+      ],
+    ],
+    [
+      {
+        heading: 'Platos famosos',
+        table: grid(
+          ['Dish', 'Country', 'English'],
+          [
+            ['el ceviche', 'Perú', 'raw fish marinated in lime'],
+            ['las arepas', 'Venezuela / Colombia', 'corn cakes'],
+            ['el asado', 'Argentina / Uruguay', 'barbecue'],
+            ['las pupusas', 'El Salvador', 'stuffed corn cakes'],
+            ['el gallo pinto', 'Costa Rica / Nicaragua', 'rice and beans'],
+            ['el mofongo', 'Puerto Rico', 'mashed plantain'],
+            ['la bandeja paisa', 'Colombia', 'big platter'],
+            ['las empanadas', 'Argentina / Chile', 'turnovers'],
+            ['el lomo saltado', 'Perú', 'stir-fried beef'],
+            ['el sancocho', 'Colombia / Rep. Dominicana', 'hearty stew'],
+          ],
+        ),
+      },
+    ],
+  ),
+  L(
+    [
+      'sb-herbs-spices',
+      'A2',
+      'Spices, herbs and sauces.',
+      FOOD2,
+      'Le echo sal, pimienta y un poco de cilantro a la sopa.',
+      'I put salt, pepper and a bit of cilantro in the soup.',
+      'Ang echar ay maglagay: le echo sal. Ang un poco de ay kaunting. Ang cilantro, ajo at cebolla ay karaniwang sangkap.',
+      'Use echar or poner to add seasoning: le echo sal. Un poco de = a little. Spices: sal, pimienta, ajo, canela, comino, orégano. Sauces: salsa, mayonesa, ketchup, mostaza, aceite, vinagre.',
+    ],
+    [
+      'le echo + seasoning',
+      'Echar means to put in or toss in.',
+      'Échale un poco más de sal.',
+      'Le here means to it (the food). Echar also means to throw, so the context matters.',
+    ],
+    [
+      'Which one is cinnamon?',
+      ['la canela', 'el comino', 'el ajo'],
+      'la canela',
+      'Canela is cinnamon. Comino is cumin and ajo is garlic.',
+      'You season soup with your aunt.',
+    ],
+    [
+      ['La sopa necesita más sal.', 'The soup needs more salt.'],
+      ['No me gusta el ajo.', 'I do not like garlic.'],
+    ],
+    [
+      {
+        heading: 'Condimentos',
+        table: vocab([
+          ['🧂', 'la sal', 'salt', 'asin'],
+          ['⚫', 'la pimienta', 'pepper', 'paminta'],
+          ['🧄', 'el ajo', 'garlic', 'bawang'],
+          ['🧅', 'la cebolla', 'onion', 'sibuyas'],
+          ['🌿', 'el cilantro', 'cilantro', 'kinchay'],
+          ['🌿', 'el perejil', 'parsley', 'parsley'],
+          ['🪵', 'la canela', 'cinnamon', 'kanela'],
+          ['🌶️', 'el chile', 'chili pepper', 'sili'],
+          ['🫒', 'el aceite', 'oil', 'mantika'],
+          ['🍶', 'el vinagre', 'vinegar', 'suka'],
+        ]),
+      },
+    ],
+  ),
+  L(
+    [
+      'sb-supermarket',
+      'A2',
+      'At the supermarket.',
+      FOOD2,
+      '¿Dónde están los huevos? Están en el pasillo de los lácteos.',
+      'Where are the eggs? They are in the dairy aisle.',
+      'Ang pasillo ay pasilyo, ang carrito ay kariton, ang caja ay kahera. Gamitin ang están para sa lugar ng mga bagay.',
+      'Use estar for location: ¿dónde está la leche? está en... Supermarket words: el carrito, la canasta, el pasillo, la caja, la bolsa, la oferta, la fila. Ask ¿Cuánto cuesta? for price.',
+    ],
+    [
+      '¿dónde está / están + thing?',
+      'Está for one, están for many.',
+      '¿Dónde está el pan? ¿Dónde están las manzanas?',
+      'Location always uses estar, never ser. Ser is used for identity and origin, not for where a thing is.',
+    ],
+    [
+      'Where do you pay?',
+      ['en la caja', 'en el pasillo', 'en el carrito'],
+      'en la caja',
+      'La caja is the checkout. Pasillo is an aisle and carrito is a cart.',
+      'You shop for groceries with a parent.',
+    ],
+    [
+      ['¿Me da una bolsa, por favor?', 'Could you give me a bag, please?'],
+      ['Hay una oferta en las manzanas.', 'There is a sale on apples.'],
+    ],
+    [
+      {
+        heading: 'El supermercado',
+        table: vocab([
+          ['🛒', 'el carrito', 'cart', 'kariton'],
+          ['🧺', 'la canasta', 'basket', 'basket'],
+          ['🏬', 'el pasillo', 'aisle', 'pasilyo'],
+          ['💳', 'la caja', 'checkout', 'kahera'],
+          ['🛍️', 'la bolsa', 'bag', 'supot'],
+          ['🏷️', 'la oferta', 'sale / special', 'sale'],
+          ['🧾', 'el recibo', 'receipt', 'resibo'],
+          ['👥', 'la fila', 'line', 'pila'],
+          ['🧊', 'el congelador', 'freezer', 'freezer'],
+          ['💵', 'el precio', 'price', 'presyo'],
+        ]),
+      },
+    ],
+  ),
+  L(
+    [
+      'sb-desserts',
+      'A2',
+      'Desserts and sweet treats.',
+      FOOD2,
+      'De postre hay flan, arroz con leche y helado de vainilla.',
+      'For dessert there is flan, rice pudding and vanilla ice cream.',
+      'Ang postre ay panghimagas. Ang flan ay leche flan, ang arroz con leche ay malagkit na kanin sa gatas, ang helado ay sorbetes.',
+      'Say de postre + hay / quiero. Desserts: flan, pastel, tres leches, arroz con leche, helado, gelatina, churros, paleta (Mexico: popsicle). In Spain, tarta means cake; in Mexico pastel; in some places torta.',
+    ],
+    [
+      'de postre + hay / quiero',
+      'De postre = for dessert.',
+      'De postre quiero un helado.',
+      'Postre is masculine: el postre. The word for sweet dessert in general is dulce.',
+    ],
+    [
+      'What is "arroz con leche"?',
+      ['rice pudding', 'a rice and bean dish', 'a drink'],
+      'rice pudding',
+      'Arroz con leche is a sweet rice dessert with milk and cinnamon.',
+      'Grandmother asks what you want after lunch.',
+    ],
+    [
+      ['¿Quieres más pastel?', 'Do you want more cake?'],
+      ['Mi postre favorito es el flan.', 'My favorite dessert is flan.'],
+    ],
+    [
+      {
+        heading: 'Los postres',
+        table: vocab([
+          ['🍮', 'el flan', 'caramel custard', 'leche flan'],
+          ['🍰', 'el pastel', 'cake', 'cake'],
+          ['🥛', 'el pastel de tres leches', 'tres leches cake', 'cake na tatlong gatas'],
+          ['🍚', 'el arroz con leche', 'rice pudding', 'kanin sa gatas'],
+          ['🍦', 'el helado', 'ice cream', 'sorbetes'],
+          ['🍧', 'la paleta / el polo', 'ice pop', 'ice pop'],
+          ['🍮', 'la gelatina', 'gelatin / Jell-O', 'gulaman'],
+          ['🍩', 'los churros', 'churros', 'churros'],
+          ['🍫', 'el chocolate', 'chocolate', 'tsokolate'],
+          ['🍬', 'el dulce', 'candy', 'kendi'],
+        ]),
+      },
+    ],
+  ),
+  L(
+    [
+      'sb-food-allergies',
+      'A2',
+      'Allergies and special diets.',
+      FOOD2,
+      'Soy alérgico a los cacahuates y no puedo comer nada con nueces.',
+      'I am allergic to peanuts and I cannot eat anything with nuts.',
+      'Ang alérgico a ay may allergy sa. Ang vegetariano ay hindi kumakain ng karne. Ang sin gluten ay walang gluten.',
+      'Say soy alérgico/a a + food. Diets: soy vegetariano/a, soy vegano/a, sin gluten, sin lactosa. Ask ¿Esto lleva ...? to know if a dish has an ingredient. Use no puedo comer for I cannot eat.',
+    ],
+    [
+      'soy alérgico/a a + food',
+      'Alérgico changes for the speaker: -o or -a.',
+      'Soy alérgica a la leche.',
+      'Allergy is la alergia. Peanuts are cacahuates in Mexico and maní in other countries.',
+    ],
+    [
+      'How do you ask if a dish contains nuts?',
+      ['¿Esto lleva nueces?', '¿Esto es una nuez?', '¿Dónde está la nuez?'],
+      '¿Esto lleva nueces?',
+      'Llevar here means to contain. Use it for ingredients.',
+      'You order at a restaurant and want to be safe.',
+    ],
+    [
+      ['No como carne porque soy vegetariano.', 'I do not eat meat because I am vegetarian.'],
+      ['¿Hay algo sin gluten?', 'Is there anything gluten-free?'],
+    ],
+    [
+      {
+        heading: 'Alergias y dietas',
+        table: vocab([
+          ['🥜', 'los cacahuates / el maní', 'peanuts', 'mani'],
+          ['🌰', 'las nueces', 'nuts', 'mani at nuwes'],
+          ['🥛', 'la lactosa', 'lactose', 'lactose'],
+          ['🌾', 'el gluten', 'gluten', 'gluten'],
+          ['🥚', 'el huevo', 'egg', 'itlog'],
+          ['🦐', 'el marisco', 'shellfish', 'lamang-dagat'],
+          ['🥦', 'vegetariano', 'vegetarian', 'vegetarian'],
+          ['🌱', 'vegano', 'vegan', 'vegan'],
+          ['🚫', 'alérgico', 'allergic', 'may allergy'],
+          ['💊', 'la alergia', 'allergy', 'allergy'],
+        ]),
+      },
+    ],
+  ),
+];

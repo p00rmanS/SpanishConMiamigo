@@ -20,6 +20,22 @@ export const FOUNDATION_UNITS = {
         'sb-snacks-sweets',
         'sb-nursery-songs',
         'sb-ask-teacher',
+        'sb-pets',
+        'sb-bedtime',
+        'sb-art-class',
+      ],
+    ],
+    [
+      'School basics: food and kitchen',
+      [
+        'sb-breakfast',
+        'sb-bakery',
+        'sb-dairy-eggs',
+        'sb-tastes',
+        'sb-meat-fish',
+        'sb-grains-beans',
+        'sb-drinks-kids',
+        'sb-lunchbox',
       ],
     ],
     [
@@ -209,6 +225,20 @@ export const FOUNDATION_UNITS = {
     [
       'Native expressions: everyday',
       ['ex-mexico-everyday', 'ex-reactions', 'ex-yes-no-ways', 'ex-courtesy-latam'],
+    ],
+    [
+      'School basics: food around the world',
+      [
+        'sb-cooking-verbs',
+        'sb-simple-recipe',
+        'sb-mexican-food',
+        'sb-spain-food',
+        'sb-latam-dishes',
+        'sb-herbs-spices',
+        'sb-supermarket',
+        'sb-desserts',
+        'sb-food-allergies',
+      ],
     ],
     [
       'School basics: elementary',
