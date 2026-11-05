@@ -20,6 +20,8 @@ import { travelGrammarLessons } from './travel-grammar-lessons.js';
 import { schoolBasics1 } from './school-basics-1.js';
 import { schoolBasics2 } from './school-basics-2.js';
 import { schoolBasics3 } from './school-basics-3.js';
+import { schoolBasics4 } from './school-basics-4.js';
+import { schoolBasics5 } from './school-basics-5.js';
 const authored = [
   {
     id: 'hello',
@@ -220,6 +222,8 @@ const authored = [
   ...schoolBasics1,
   ...schoolBasics2,
   ...schoolBasics3,
+  ...schoolBasics4,
+  ...schoolBasics5,
   ...toolkitLessons,
   ...extraToolkitLessons,
   ...workplaceLessons,
