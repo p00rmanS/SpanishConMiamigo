@@ -2,7 +2,8 @@ import { Fire, Lightning, CalendarCheck, Check, Trophy, GearSix } from '@phospho
 import { ProgressDashboard } from '../ProgressDashboard.jsx';
 import { ProgressBar } from '../components/ui.jsx';
 import { lessons } from '../content.js';
-import { courses, courseStats, countDone } from '../course.js';
+import { courses, courseStats, currentLevel, levelStatus } from '../course.js';
+import { Fragment } from 'react';
 import { streakInfo } from '../lib/store-core.js';
 import { navigate, href } from '../lib/router.js';
 
@@ -62,24 +63,39 @@ export function ProgressPage({ progress, now, onSettings }) {
                   </span>
                 </div>
                 <ProgressBar value={stats.percent} label={course.title} />
+                {course.id === 'foundations' && (
+                  <p className="muted">
+                    You are working on{' '}
+                    <strong>
+                      {currentLevel(course, progress.completed)?.code}{' '}
+                      {currentLevel(course, progress.completed)?.title}
+                    </strong>
+                    .
+                  </p>
+                )}
                 <ul className="level-stats">
-                  {course.levels.map((level) => {
-                    const done = countDone(level.lessons, progress.completed);
+                  {course.levels.map((level, li) => {
                     const cp = progress.checkpoints[level.id];
+                    const status = levelStatus(level, progress.completed, cp);
+                    const newStage = level.stage && course.levels[li - 1]?.stage !== level.stage;
                     return (
-                      <li key={level.id}>
-                        <span className="level-code">{level.code}</span>
-                        <span>
-                          {level.title}
-                          <small>
-                            {done}/{level.lessons.length} lessons
-                            {cp ? ` · checkpoint ${cp.best}/${cp.total}` : ''}
-                          </small>
-                        </span>
-                        <a className="text-link" href={href('/checkpoint/' + level.id)}>
-                          {cp ? 'Retake' : 'Checkpoint'}
-                        </a>
-                      </li>
+                      <Fragment key={level.id}>
+                        {newStage && <li className="stage-li">{level.stage}</li>}
+                        <li>
+                          <span className="level-code">{level.code}</span>
+                          <span>
+                            {level.title}
+                            <small>
+                              {status.done}/{status.total} lessons
+                              {cp ? ` · checkpoint ${cp.best}/${cp.total}` : ''}
+                              {status.complete ? ' · level complete' : ''}
+                            </small>
+                          </span>
+                          <a className="text-link" href={href('/checkpoint/' + level.id)}>
+                            {cp ? 'Retake' : 'Checkpoint'}
+                          </a>
+                        </li>
+                      </Fragment>
                     );
                   })}
                 </ul>

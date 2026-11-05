@@ -105,7 +105,8 @@ export function Home({ progress, dueCount }) {
               {next.sentence}
             </p>
             <p className="meta">
-              {where && `${where.level.code} · ${where.level.title} · `}
+              {where &&
+                `${where.level.stage ? where.level.stage + ' · ' : ''}${where.level.code} · ${where.level.title} · `}
               {MINUTES_PER_LESSON} min
             </p>
             <div className="continue-progress">

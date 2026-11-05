@@ -8,24 +8,150 @@ import { shuffle } from './lib/random.js';
 export { seededRandom, shuffle } from './lib/random.js';
 
 export const MINUTES_PER_LESSON = 6;
-export const CEFR_ORDER = ['A1', 'A2', 'B1', 'B2', 'C1'];
+export const CEFR_ORDER = ['A1', 'A2', 'A3', 'B1', 'B2', 'B3', 'C1', 'C2', 'C3'];
 
 export function cefrOf(lesson) {
-  const match = (lesson.level || 'A1').match(/[ABC][12]/);
+  const match = (lesson.level || 'A1').match(/[ABC][123]/);
   const code = match ? match[0] : 'A1';
-  return CEFR_ORDER.includes(code) ? code : 'C1';
+  return CEFR_ORDER.includes(code) ? code : 'C3';
 }
 
+// Four stages, ten levels. Kinder is the picture-book start for any age; Beginner, Intermediate
+// and Advanced each have three steps. Skills are what a learner can do once the level is done.
+export const LEVEL_UP_SCORE = 0.7;
+export const STAGES = ['Kids', 'Beginner', 'Intermediate', 'Advanced'];
+
 const FOUNDATION_LEVELS = [
-  ['A1', 'Starter', 'Greet people, introduce yourself and handle simple everyday needs.'],
-  ['A2', 'Elementary', 'Talk about routines, plans and the past in connected sentences.'],
-  ['B1', 'Intermediate', 'Tell fuller stories, make requests and connect ideas with more control.'],
+  [
+    'K',
+    'Kinder',
+    'Kids',
+    'Learn the way children do: letters, numbers, colors, body, family, food and school words.',
+    [
+      'Say the alphabet and count to 100',
+      'Name colors, shapes, animals, fruit and vegetables',
+      'Name body parts, family, rooms and classroom things',
+      'Tell the time, days and months in simple words',
+      'Use short classroom phrases and sing simple songs',
+    ],
+  ],
+  [
+    'A1',
+    'Starter',
+    'Beginner',
+    'Greet people, introduce yourself and handle simple everyday needs.',
+    [
+      'Greet, say goodbye and introduce yourself',
+      'Use ser, estar, tener and ir in the present',
+      'Build simple sentences with a subject, verb and object',
+      'Ask and answer basic questions',
+      'Handle numbers, dates and simple shopping',
+    ],
+  ],
+  [
+    'A2',
+    'Elementary',
+    'Beginner',
+    'Talk about routines, wants, health and everyday places in connected sentences.',
+    [
+      'Use pronouns and polite requests',
+      'Describe your day, body and health',
+      'Handle travel, phone calls and shopping',
+      'Use por and para and common everyday expressions',
+      'Name school subjects, directions, money and countries',
+    ],
+  ],
+  [
+    'A3',
+    'Pre-intermediate',
+    'Beginner',
+    'Tell what happened in the past and make plans with the right tense.',
+    [
+      'Conjugate common verbs in the preterite and imperfect',
+      'Choose between the preterite and the imperfect',
+      'Tell a short story in order',
+      'Compare things and make plans',
+      'Use word-power tables for opposites, pairs and conjugations',
+    ],
+  ],
+  [
+    'B1',
+    'Intermediate',
+    'Intermediate',
+    'Tell fuller stories, make requests and connect ideas with more control.',
+    [
+      'Use the present subjunctive after wishes, feelings and doubts',
+      'Give opinions and talk about conditions',
+      'Use natural expressions and longer sentences',
+      'Handle money, housing, work and email in real life',
+      'Understand school-level science and grammar words',
+    ],
+  ],
   [
     'B2',
     'Upper intermediate',
+    'Intermediate',
     'Handle hypotheticals, mood and formal writing with growing precision.',
+    [
+      'Use the imperfect subjunctive and si clauses',
+      'Express doubt, probability and hypotheticals',
+      'Use lo que, lo de and relative clauses',
+      'Connect ideas with a wide range of connectors',
+      'Recognise the moods in tables and real text',
+    ],
   ],
-  ['C1', 'Advanced', 'Argue, hedge and write with the precision of a professional.'],
+  [
+    'B3',
+    'Fluent intermediate',
+    'Intermediate',
+    'Sound natural: slang, fillers, regional words and formal writing.',
+    [
+      'Use fillers and discourse markers the way natives do',
+      'Understand common slang and sayings across countries',
+      'Write formal emails and short essays',
+      'Use fluent patterns and varied word choice',
+      'Follow fast, informal speech',
+    ],
+  ],
+  [
+    'C1',
+    'Advanced',
+    'Advanced',
+    'Argue, hedge and write with the precision of a professional.',
+    [
+      'Argue a point and soften or strengthen a claim',
+      'Write and speak in formal and professional Spanish',
+      'Use the passive, relative clauses and verb periphrases',
+      'Handle nuance in ser, estar and mood',
+      'Use precise, fluent patterns with few mistakes',
+    ],
+  ],
+  [
+    'C2',
+    'Mastery',
+    'Advanced',
+    'Command every tense and mood, shift register and write with style.',
+    [
+      'Use the conditional perfect and past wishes',
+      'Choose the subjunctive after adverbial conjunctions',
+      'Match tenses across a long text',
+      'Shift between formal, neutral and informal registers',
+      'Use idioms, literary tenses and word-building rules',
+    ],
+  ],
+  [
+    'C3',
+    'Native-level',
+    'Advanced',
+    'Understand dialects, literature, humor and specialist language like an educated native.',
+    [
+      'Recognise voseo, leísmo and other regional grammar',
+      'Understand accents and sound changes across the Spanish world',
+      'Read literature, poetry, legal and academic Spanish',
+      'Catch humor, irony and subtle mood choices',
+      'Speak in public and interpret between languages',
+    ],
+  ],
 ];
 
 const CAREER_LEVELS = [
@@ -81,15 +207,15 @@ function groupUnits(levelId, items) {
   return units;
 }
 
-function curriculumUnits(levelId, code, items) {
+function curriculumUnits(levelId, code, items, placed) {
   const byId = new Map(items.map((l) => [l.id, l]));
   const units = (FOUNDATION_UNITS[code] ?? []).map(([title, ids], i) => ({
     id: `${levelId}-${i + 1}`,
     title,
     lessons: ids.map((id) => byId.get(id)).filter(Boolean),
   }));
-  const placed = new Set(units.flatMap((u) => u.lessons.map((l) => l.id)));
-  const rest = items.filter((l) => !placed.has(l.id));
+  // Lessons the curriculum has not placed fall back to the level that matches their label.
+  const rest = items.filter((l) => !placed.has(l.id) && cefrOf(l) === code);
   if (rest.length) units.push({ id: `${levelId}-more`, title: 'More practice', lessons: rest });
   return units.filter((u) => u.lessons.length);
 }
@@ -109,12 +235,14 @@ function toolkitLevel(key, code, title, blurb, all) {
   return { id, code, title, blurb, lessons: units.flatMap((u) => u.lessons), units };
 }
 
-function makeLevel(courseId, key, code, title, blurb, items) {
+const PLACED = new Set(Object.values(FOUNDATION_UNITS).flatMap((us) => us.flatMap((u) => u[1])));
+
+function makeLevel(courseId, key, code, title, blurb, items, extra = {}) {
   const id = `${courseId}-${key}`.toLowerCase();
   const units =
-    courseId === 'foundations' ? curriculumUnits(id, code, items) : groupUnits(id, items);
+    courseId === 'foundations' ? curriculumUnits(id, code, items, PLACED) : groupUnits(id, items);
   // Lessons follow the unit order so "next lesson" matches what the curriculum shows.
-  return { id, code, title, blurb, lessons: units.flatMap((u) => u.lessons), units };
+  return { id, code, title, blurb, ...extra, lessons: units.flatMap((u) => u.lessons), units };
 }
 
 export function buildCourses(all) {
@@ -126,7 +254,7 @@ export function buildCourses(all) {
   const foundations = {
     id: 'foundations',
     title: 'Spanish Foundations',
-    tagline: 'A1 to C1 · Grammar, vocabulary and conversation',
+    tagline: 'Kinder to C3 · Grammar, vocabulary and conversation',
     description:
       'A structured path from your first hello to professional-level nuance. Every lesson pairs a real sentence with a pattern, a pro tip, a conjugation guide and speaking practice. Levels follow CEFR-style descriptors loosely and are not a certification.',
     outcomes: [
@@ -137,15 +265,8 @@ export function buildCourses(all) {
     ],
     audience: 'For anyone starting Spanish or filling gaps in grammar.',
     icon: 'graduation',
-    levels: FOUNDATION_LEVELS.map(([code, title, blurb]) =>
-      makeLevel(
-        'foundations',
-        code,
-        code,
-        title,
-        blurb,
-        foundationLessons.filter((l) => cefrOf(l) === code),
-      ),
+    levels: FOUNDATION_LEVELS.map(([code, title, stage, blurb, skills]) =>
+      makeLevel('foundations', code, code, title, blurb, foundationLessons, { stage, skills }),
     ).filter((level) => level.lessons.length),
   };
 
@@ -302,11 +423,13 @@ export function checkpointQuiz(level, count = 10, random = Math.random) {
 
 // Two questions per level, easiest first, used to suggest where to begin in Foundations.
 export function placementQuiz(course, random = Math.random) {
-  return course.levels.flatMap((level) =>
-    shuffle(level.lessons, random)
-      .slice(0, 2)
-      .map((l) => ({ ...quizItem(l, random), level: level.code })),
-  );
+  return course.levels
+    .filter((level) => level.stage !== 'Kids')
+    .flatMap((level) =>
+      shuffle(level.lessons, random)
+        .slice(0, 2)
+        .map((l) => ({ ...quizItem(l, random), level: level.code })),
+    );
 }
 
 // First level where fewer than half the questions were right; beyond the last level means B2.
@@ -322,4 +445,40 @@ export function placementResult(items, answers) {
     if (right / total < 0.5) return code;
   }
   return [...byLevel.keys()].at(-1);
+}
+
+// Levels grouped by stage (Kids, Beginner, ...). Courses without stages return one group.
+export function stagesOf(course) {
+  if (!course.levels.some((lv) => lv.stage)) return [{ name: null, levels: course.levels }];
+  return STAGES.map((name) => ({
+    name,
+    levels: course.levels.filter((lv) => lv.stage === name),
+  })).filter((s) => s.levels.length);
+}
+
+// What a learner still needs to move up: every lesson done and the checkpoint passed.
+export function levelStatus(level, completed, checkpoint) {
+  const done = countDone(level.lessons, completed);
+  const total = level.lessons.length;
+  const lessonsLeft = total - done;
+  const passed = Boolean(checkpoint) && checkpoint.best / checkpoint.total >= LEVEL_UP_SCORE;
+  return {
+    done,
+    total,
+    lessonsLeft,
+    percent: total ? Math.round((done / total) * 100) : 0,
+    passed,
+    complete: lessonsLeft === 0 && passed,
+    needs: [
+      ...(lessonsLeft ? [`${lessonsLeft} more lesson${lessonsLeft === 1 ? '' : 's'}`] : []),
+      ...(passed ? [] : [`a checkpoint score of ${Math.round(LEVEL_UP_SCORE * 100)}% or more`]),
+    ],
+  };
+}
+
+// The first level you have not finished, leaving Kinder out unless nothing else exists.
+export function currentLevel(course, completed) {
+  const done = new Set(completed);
+  const levels = course.levels.filter((lv) => lv.stage !== 'Kids');
+  return levels.find((lv) => lv.lessons.some((l) => !done.has(l.id))) ?? levels.at(-1) ?? null;
 }

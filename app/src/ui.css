@@ -1899,3 +1899,41 @@ body[data-focus] .daily-trigger {
   width: 16px;
   height: 16px;
 }
+
+/* Stages and level goals */
+.stage-head {
+  margin: 32px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--line);
+}
+.stage-head h2 {
+  margin: 0;
+}
+.stage-head p {
+  margin: 4px 0 0;
+}
+.level-goals {
+  margin: 8px 0 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.level-goals h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+}
+.level-up {
+  margin: 8px 0 0;
+  font-weight: 600;
+  color: var(--muted);
+}
+.level-up.is-done {
+  color: var(--accent);
+}
+.level-stats .stage-li {
+  display: block;
+  margin-top: 12px;
+  font-weight: 700;
+}
