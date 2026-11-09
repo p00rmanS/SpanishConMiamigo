@@ -28,6 +28,9 @@ import { grammarCultureReview } from './grammar-culture-review-lessons.js';
 import { advancedLessons1 } from './advanced-lessons-1.js';
 import { advancedLessons2 } from './advanced-lessons-2.js';
 import { advancedLessons3 } from './advanced-lessons-3.js';
+import { STICK_BLOCKS } from './memory-aids.js';
+import { zeroLessons } from './zero-lessons.js';
+import { levelUpLessons } from './levelup-lessons.js';
 const authored = [
   {
     id: 'hello',
@@ -236,6 +239,8 @@ const authored = [
   ...advancedLessons1,
   ...advancedLessons2,
   ...advancedLessons3,
+  ...zeroLessons,
+  ...levelUpLessons,
   ...toolkitLessons,
   ...extraToolkitLessons,
   ...workplaceLessons,
@@ -244,6 +249,13 @@ const authored = [
 const genericSound = /^(Listen to the model|Listen, notice)/;
 
 // Every lesson gets a usable pronunciation guide; authored guides are kept as written.
-export const lessons = authored.map((lesson) =>
-  genericSound.test(lesson.sound) ? { ...lesson, sound: pronounce(lesson.sentence) } : lesson,
-);
+const withSound = (lesson) =>
+  genericSound.test(lesson.sound) ? { ...lesson, sound: pronounce(lesson.sentence) } : lesson;
+
+// Core lessons end their "Go deeper" section with a memory trick, a practice routine and a warning.
+const withMemoryAid = (lesson) =>
+  STICK_BLOCKS[lesson.id]
+    ? { ...lesson, deep: [...(lesson.deep ?? []), STICK_BLOCKS[lesson.id]] }
+    : lesson;
+
+export const lessons = authored.map((lesson) => withMemoryAid(withSound(lesson)));

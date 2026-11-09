@@ -119,6 +119,23 @@ export const FOUNDATION_UNITS = {
   ],
   A1: [
     [
+      'Start here: zero Spanish',
+      [
+        'zk-vowels',
+        'zk-consonants',
+        'zk-stress-accents',
+        'zk-cognates',
+        'zk-first-words',
+        'zk-gender-articles',
+        'zk-subject-pronouns',
+        'zk-verb-families',
+        'zk-sentence-order',
+        'zk-numbers-20',
+        'zk-question-words',
+        'zk-how-to-study',
+      ],
+    ],
+    [
       'First conversations',
       ['hello', 'courtesy', 'origin', 'feeling', 'help', 'wants', 'tu-usted'],
     ],
@@ -420,6 +437,19 @@ export const FOUNDATION_UNITS = {
   ],
   B2: [
     [
+      'Upper-intermediate: precision',
+      [
+        'ub-present-perfect-subj',
+        'ub-imperfect-subj',
+        'ub-si-clauses',
+        'ub-double-pronouns',
+        'ub-verbs-of-change',
+        'ub-gerund-participle',
+        'ub-verbs-prepositions',
+        'ub-wishes-commands',
+      ],
+    ],
+    [
       'Deep dive: more tenses and moods',
       [
         'dd-present-perfect',
@@ -546,6 +576,18 @@ export const FOUNDATION_UNITS = {
     ],
   ],
   C1: [
+    [
+      'Advanced: nuance and style',
+      [
+        'uc-subjunctive-relative',
+        'uc-concessive',
+        'uc-se-uses',
+        'uc-probability-future',
+        'uc-personal-a',
+        'uc-articles',
+        'uc-negative-polarity',
+      ],
+    ],
     [
       'Advanced grammar: passives, relatives and periphrases',
       ['ad-passive', 'ad-relatives', 'ad-periphrases', 'ad-ser-estar-nuance'],
