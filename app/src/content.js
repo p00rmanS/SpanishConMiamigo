@@ -28,7 +28,12 @@ import { grammarCultureReview } from './grammar-culture-review-lessons.js';
 import { advancedLessons1 } from './advanced-lessons-1.js';
 import { advancedLessons2 } from './advanced-lessons-2.js';
 import { advancedLessons3 } from './advanced-lessons-3.js';
-import { STICK_BLOCKS } from './memory-aids.js';
+import { STICK_BLOCKS, autoStick } from './memory-aids.js';
+import { kidsReadingLessons } from './kids-reading-lessons.js';
+import { speakingLessons } from './speaking-lessons.js';
+import { realLifeMoreLessons } from './reallife-more-lessons.js';
+import { advancedMoreLessons } from './advanced-more-lessons.js';
+import { drillLessons } from './drill-lessons.js';
 import { zeroLessons } from './zero-lessons.js';
 import { levelUpLessons } from './levelup-lessons.js';
 const authored = [
@@ -241,6 +246,11 @@ const authored = [
   ...advancedLessons3,
   ...zeroLessons,
   ...levelUpLessons,
+  ...kidsReadingLessons,
+  ...speakingLessons,
+  ...realLifeMoreLessons,
+  ...advancedMoreLessons,
+  ...drillLessons,
   ...toolkitLessons,
   ...extraToolkitLessons,
   ...workplaceLessons,
@@ -252,10 +262,13 @@ const genericSound = /^(Listen to the model|Listen, notice)/;
 const withSound = (lesson) =>
   genericSound.test(lesson.sound) ? { ...lesson, sound: pronounce(lesson.sentence) } : lesson;
 
-// Core lessons end their "Go deeper" section with a memory trick, a practice routine and a warning.
-const withMemoryAid = (lesson) =>
-  STICK_BLOCKS[lesson.id]
-    ? { ...lesson, deep: [...(lesson.deep ?? []), STICK_BLOCKS[lesson.id]] }
-    : lesson;
+// Every lesson ends its "Go deeper" section with a memory trick, a practice routine and a warning.
+const hasStick = (lesson) => lesson.deep?.some((d) => d.heading === 'Make it stick');
+
+const withMemoryAid = (lesson) => {
+  if (hasStick(lesson)) return lesson;
+  const block = STICK_BLOCKS[lesson.id] ?? autoStick(lesson);
+  return { ...lesson, deep: [...(lesson.deep ?? []), block] };
+};
 
 export const lessons = authored.map((lesson) => withMemoryAid(withSound(lesson)));

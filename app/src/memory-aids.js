@@ -207,3 +207,26 @@ const AIDS = {
 export const STICK_BLOCKS = Object.fromEntries(
   Object.entries(AIDS).map(([id, aid]) => [id, stickBlock(aid)]),
 );
+
+const trim = (text) =>
+  String(text ?? '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+// Lessons without a hand-written memory aid get one built from their own pattern, model sentence,
+// scene and warning, so the same four habits (chunk, cover, use, avoid) are on every lesson.
+export const autoStick = (lesson) => {
+  const pattern = (lesson.pattern ?? []).filter(Boolean).join(' + ');
+  const points = [
+    pattern
+      ? `Memory trick: chunk the pattern "${pattern}" and say the model sentence twice: "${trim(lesson.sentence)}"`
+      : `Memory trick: say the model sentence twice: "${trim(lesson.sentence)}"`,
+    `Cover and recall: hide the Spanish, read "${trim(lesson.meaning)}", then say the Spanish from memory.`,
+    lesson.scene
+      ? `Use it today: picture this scene (${trim(lesson.scene)}) and say your own version out loud.`
+      : 'Use it today: say one real sentence of your own with this pattern.',
+    lesson.mistake ? `Watch out: ${trim(lesson.mistake)}` : null,
+    'Review rhythm: repeat it tomorrow, in three days and in a week. Short, spaced repetition builds long memory.',
+  ].filter(Boolean);
+  return { heading: 'Make it stick', points };
+};
