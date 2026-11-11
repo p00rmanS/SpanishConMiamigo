@@ -116,8 +116,39 @@ export const FOUNDATION_UNITS = {
       'Word power: opposites and play verbs',
       ['wd-opposites-adjectives', 'wd-action-verbs', 'wd-core-verbs-present'],
     ],
+    [
+      'School basics: reading and phonics',
+      [
+        'kb-syllables-m',
+        'kb-syllables-more',
+        'kb-first-words-reading',
+        'kb-picture-story',
+        'kb-nursery-rhymes-2',
+      ],
+    ],
+    [
+      'School basics: numbers, seasons and school talk',
+      ['kb-word-problems', 'kb-seasons-countries', 'kb-what-i-did-school'],
+    ],
   ],
   A1: [
+    [
+      'Start here: zero Spanish',
+      [
+        'zk-vowels',
+        'zk-consonants',
+        'zk-stress-accents',
+        'zk-cognates',
+        'zk-first-words',
+        'zk-gender-articles',
+        'zk-subject-pronouns',
+        'zk-verb-families',
+        'zk-sentence-order',
+        'zk-numbers-20',
+        'zk-question-words',
+        'zk-how-to-study',
+      ],
+    ],
     [
       'First conversations',
       ['hello', 'courtesy', 'origin', 'feeling', 'help', 'wants', 'tu-usted'],
@@ -179,6 +210,7 @@ export const FOUNDATION_UNITS = {
         'dd-adjective-position',
       ],
     ],
+    ['Practice drills: first steps', ['gd-gender-drill', 'gd-ser-estar-drill', 'gd-accent-drill']],
   ],
   A2: [
     [
@@ -254,6 +286,16 @@ export const FOUNDATION_UNITS = {
     ],
     ['Culture: music and symbols', ['cu-music-dance', 'cu-national-symbols']],
     ['Review: elementary', ['rv-elementary']],
+    [
+      'Speaking lab: sounds and shadowing',
+      ['sp-intonation', 'sp-shadow-rr', 'sp-shadow-j-g', 'sp-b-v'],
+    ],
+    [
+      'Speaking lab: role-plays',
+      ['sp-role-restaurant', 'sp-role-hotel', 'sp-role-directions', 'sp-role-phone'],
+    ],
+    ['Real life: small talk and friends', ['rl2-small-talk', 'rl2-making-friends', 'rl2-texting']],
+    ['Practice drills: everyday grammar', ['gd-pronoun-drill', 'gd-por-para-drill']],
   ],
   A3: [
     [
@@ -337,6 +379,7 @@ export const FOUNDATION_UNITS = {
         'sb-food-allergies',
       ],
     ],
+    ['Practice drills: the past', ['gd-preterite-imperfect-drill', 'gd-verb-chart']],
   ],
   B1: [
     [
@@ -417,8 +460,38 @@ export const FOUNDATION_UNITS = {
         'dd-ser-events',
       ],
     ],
+    ['Speaking lab: role-plays', ['sp-role-interview']],
+    [
+      'Real life: travel by country',
+      [
+        'rl2-travel-mexico',
+        'rl2-travel-spain',
+        'rl2-travel-argentina',
+        'rl2-travel-colombia',
+        'rl2-travel-peru',
+      ],
+    ],
+    [
+      'Real life: work scripts',
+      ['rl2-work-meetings', 'rl2-work-presentations', 'rl2-callcenter-scripts'],
+    ],
+    ['Spanish for careers', ['rl2-nursing', 'rl2-teaching']],
+    ['Practice drills: moods', ['gd-subjunctive-drill']],
   ],
   B2: [
+    [
+      'Upper-intermediate: precision',
+      [
+        'ub-present-perfect-subj',
+        'ub-imperfect-subj',
+        'ub-si-clauses',
+        'ub-double-pronouns',
+        'ub-verbs-of-change',
+        'ub-gerund-participle',
+        'ub-verbs-prepositions',
+        'ub-wishes-commands',
+      ],
+    ],
     [
       'Deep dive: more tenses and moods',
       [
@@ -471,6 +544,20 @@ export const FOUNDATION_UNITS = {
       'Word power: moods and tables',
       ['wd-synonym-verbs', 'wd-subjunctive-table', 'wd-irregular-commands'],
     ],
+    [
+      'Upper-intermediate: choosing the right form',
+      [
+        'ub2-tense-choice',
+        'ub2-formal-writing',
+        'ub2-connectors',
+        'ub2-reported-advanced',
+        'ub2-passive-ser',
+        'ub2-mood-guide',
+        'ub2-pronoun-placement',
+        'ub2-debate',
+      ],
+    ],
+    ['Practice drills: tense mastery', ['gd-tense-cheatsheet', 'gd-irregular-trainer']],
   ],
   B3: [
     [
@@ -547,6 +634,18 @@ export const FOUNDATION_UNITS = {
   ],
   C1: [
     [
+      'Advanced: nuance and style',
+      [
+        'uc-subjunctive-relative',
+        'uc-concessive',
+        'uc-se-uses',
+        'uc-probability-future',
+        'uc-personal-a',
+        'uc-articles',
+        'uc-negative-polarity',
+      ],
+    ],
+    [
       'Advanced grammar: passives, relatives and periphrases',
       ['ad-passive', 'ad-relatives', 'ad-periphrases', 'ad-ser-estar-nuance'],
     ],
@@ -576,6 +675,19 @@ export const FOUNDATION_UNITS = {
         'verbs-of-change',
       ],
     ],
+    [
+      'Advanced: reading, writing and exams',
+      [
+        'cx-reading-strategies',
+        'cx-fast-speech',
+        'cx-cover-letter',
+        'cx-complaint-letter',
+        'cx-summary',
+        'cx-opinion-article',
+        'cx-dele-c1',
+        'cx-collocations',
+      ],
+    ],
   ],
   C2: [
     [
@@ -603,6 +715,20 @@ export const FOUNDATION_UNITS = {
       'Mastery: idioms and word building',
       ['ad-idioms-advanced', 'ad-literary-tenses', 'ad-word-building'],
     ],
+    [
+      'Mastery: exams, rhetoric and nuance',
+      [
+        'cx-dele-c2',
+        'cx-editorial-reading',
+        'cx-paraphrasing',
+        'cx-rhetoric',
+        'cx-technical-report',
+        'cx-media-interview',
+        'cx-translation',
+        'cx-verbs-of-saying',
+        'cx-cohesion',
+      ],
+    ],
   ],
   C3: [
     [
@@ -627,6 +753,18 @@ export const FOUNDATION_UNITS = {
         'ad-politics-media',
         'ad-public-speaking',
         'ad-mastery-review',
+      ],
+    ],
+    [
+      'Native-level: language, culture and immersion',
+      [
+        'cx-spanglish',
+        'cx-language-history',
+        'cx-proverbs',
+        'cx-latin-literature',
+        'cx-film-tv',
+        'cx-interpreting',
+        'cx-immersion-plan',
       ],
     ],
   ],
