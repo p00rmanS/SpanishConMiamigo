@@ -211,6 +211,10 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     ['Practice drills: first steps', ['gd-gender-drill', 'gd-ser-estar-drill', 'gd-accent-drill']],
+    [
+      'Daily life: survival Spanish',
+      ['dl-survival-phrases', 'dl-ordering-coffee', 'dl-describing-people'],
+    ],
   ],
   A2: [
     [
@@ -296,6 +300,7 @@ export const FOUNDATION_UNITS = {
     ],
     ['Real life: small talk and friends', ['rl2-small-talk', 'rl2-making-friends', 'rl2-texting']],
     ['Practice drills: everyday grammar', ['gd-pronoun-drill', 'gd-por-para-drill']],
+    ['Daily life: services and plans', ['dl-pharmacy', 'dl-renting-apartment', 'dl-invitations']],
   ],
   A3: [
     [
@@ -477,6 +482,10 @@ export const FOUNDATION_UNITS = {
     ],
     ['Spanish for careers', ['rl2-nursing', 'rl2-teaching']],
     ['Practice drills: moods', ['gd-subjunctive-drill']],
+    [
+      'Daily life: opinions and problems',
+      ['dl-complaints-service', 'dl-giving-advice', 'dl-plans-future'],
+    ],
   ],
   B2: [
     [
@@ -558,6 +567,7 @@ export const FOUNDATION_UNITS = {
       ],
     ],
     ['Practice drills: tense mastery', ['gd-tense-cheatsheet', 'gd-irregular-trainer']],
+    ['Daily life: sounding natural', ['dl-hedging', 'dl-persuading', 'dl-news-reading']],
   ],
   B3: [
     [
