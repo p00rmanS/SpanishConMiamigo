@@ -130,6 +130,10 @@ export const FOUNDATION_UNITS = {
       'School basics: numbers, seasons and school talk',
       ['kb-word-problems', 'kb-seasons-countries', 'kb-what-i-did-school'],
     ],
+    [
+      'Little learners: farm, park and routine',
+      ['mp-farm-animals', 'mp-at-the-park', 'mp-my-routine'],
+    ],
   ],
   A1: [
     [
@@ -215,6 +219,7 @@ export const FOUNDATION_UNITS = {
       'Daily life: survival Spanish',
       ['dl-survival-phrases', 'dl-ordering-coffee', 'dl-describing-people'],
     ],
+    ['Dialogues to shadow: first conversations', ['mp-dialogue-meeting', 'mp-dialogue-market']],
   ],
   A2: [
     [
@@ -301,6 +306,7 @@ export const FOUNDATION_UNITS = {
     ['Real life: small talk and friends', ['rl2-small-talk', 'rl2-making-friends', 'rl2-texting']],
     ['Practice drills: everyday grammar', ['gd-pronoun-drill', 'gd-por-para-drill']],
     ['Daily life: services and plans', ['dl-pharmacy', 'dl-renting-apartment', 'dl-invitations']],
+    ['Dialogues to shadow: weekends and hobbies', ['mp-dialogue-weekend', 'mp-hobbies-routine']],
   ],
   A3: [
     [
@@ -486,6 +492,7 @@ export const FOUNDATION_UNITS = {
       'Daily life: opinions and problems',
       ['dl-complaints-service', 'dl-giving-advice', 'dl-plans-future'],
     ],
+    ['Real situations: travel trouble and health', ['mp-lost-luggage', 'mp-doctor-appointment']],
   ],
   B2: [
     [
@@ -568,6 +575,7 @@ export const FOUNDATION_UNITS = {
     ],
     ['Practice drills: tense mastery', ['gd-tense-cheatsheet', 'gd-irregular-trainer']],
     ['Daily life: sounding natural', ['dl-hedging', 'dl-persuading', 'dl-news-reading']],
+    ['Idioms and expressions', ['mp-idioms-animals']],
   ],
   B3: [
     [
@@ -698,6 +706,7 @@ export const FOUNDATION_UNITS = {
         'cx-collocations',
       ],
     ],
+    ['Tone: humor and irony', ['mp-irony-humor']],
   ],
   C2: [
     [
@@ -739,6 +748,7 @@ export const FOUNDATION_UNITS = {
         'cx-cohesion',
       ],
     ],
+    ['Register: formal and informal', ['mp-register-switching']],
   ],
   C3: [
     [
