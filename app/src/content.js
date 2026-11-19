@@ -35,6 +35,7 @@ import { realLifeMoreLessons } from './reallife-more-lessons.js';
 import { advancedMoreLessons } from './advanced-more-lessons.js';
 import { drillLessons } from './drill-lessons.js';
 import { dailyLifeLessons } from './daily-life-lessons.js';
+import { morePracticeLessons } from './more-practice-lessons.js';
 import { zeroLessons } from './zero-lessons.js';
 import { levelUpLessons } from './levelup-lessons.js';
 const authored = [
@@ -253,6 +254,7 @@ const authored = [
   ...advancedMoreLessons,
   ...drillLessons,
   ...dailyLifeLessons,
+  ...morePracticeLessons,
   ...toolkitLessons,
   ...extraToolkitLessons,
   ...workplaceLessons,
